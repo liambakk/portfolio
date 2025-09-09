@@ -166,7 +166,6 @@ body {
   grid-area: main;
   padding: 24px 40px 30px 0;
   overflow-y: auto;
-  border-right: 1px solid var(--border);
   position: relative;
 }
 
@@ -240,9 +239,11 @@ body {
   grid-area: right-sidebar;
   display: flex;
   align-items: flex-start;
-  padding-top: 30px;
-  padding-right: 32px;
-  justify-content: flex-end;
+  padding-top: 90px;
+  padding-left: 0;
+  margin-left: -120px;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .social-links {
@@ -252,7 +253,7 @@ body {
 }
 
 .social-link {
-  color: var(--muted);
+  color: #ffffff;
   text-decoration: none;
   font-size: 13px;
   transition: color 0.2s;
