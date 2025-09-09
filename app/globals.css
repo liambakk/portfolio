@@ -108,10 +108,10 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 400;
-  text-align: center;
+  text-align: left;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .nav-tabs-right .tab:first-child {
@@ -138,31 +138,57 @@ body {
   grid-area: left-sidebar;
   display: flex;
   align-items: flex-start;
-  padding-top: 30px;
+  padding-top: 24px;
   padding-left: 32px;
-  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.left-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 72px;
+  left: 30px;
+  right: 0;
+  height: 1px;
+  background: var(--border);
 }
 
 .logo {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 400;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
   font-family: 'Inter', sans-serif;
+  line-height: 1;
 }
 
 /* Main Content */
 .main-content {
   grid-area: main;
-  padding: 30px 40px;
+  padding: 24px 40px 30px 0;
   overflow-y: auto;
   border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
 }
 
 .section-title {
-  font-size: 56px;
+  font-size: 40px;
   font-weight: 400;
-  margin-bottom: 30px;
-  letter-spacing: -2px;
+  margin-bottom: 5px;
+  margin-top: 0;
+  letter-spacing: -1.5px;
+  padding-left: calc(57% - 70px);
+  line-height: 1;
+  padding-bottom: 5px;
 }
 
 /* Cases Section */
@@ -170,15 +196,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
+  padding-left: calc(57% - 70px);
+  position: relative;
 }
 
 .case-item {
-  padding: 24px 0;
+  padding: 24px 20px;
   font-size: 20px;
   border-bottom: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 400;
+  width: 86%;
 }
 
 .case-item:hover {
@@ -191,11 +222,13 @@ body {
   font-size: 16px;
   line-height: 1.8;
   color: var(--muted);
+  padding-left: calc(57% - 70px);
 }
 
 /* Contact Section */
 .contact-content {
   font-size: 18px;
+  padding-left: calc(57% - 70px);
 }
 
 .contact-content p {
