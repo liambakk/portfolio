@@ -22,6 +22,9 @@ const GridLayout = () => {
 
   return (
     <div className="grid-container">
+      {/* Additional border element */}
+      <div className="horizontal-border-bottom"></div>
+      
       {/* Top Bar */}
       <div className="top-bar">
         <div className="copyright">© 2025</div>
@@ -50,7 +53,7 @@ const GridLayout = () => {
 
       {/* Left Sidebar - Logo */}
       <div className="left-sidebar">
-        <div className="logo">IS</div>
+        <div className="logo">LB</div>
       </div>
 
       {/* Main Content */}
