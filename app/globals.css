@@ -238,11 +238,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 400;
-  width: 86%;
-}
-
-.case-item:first-child {
-  border-top: 1px solid var(--border);
+  width: 85%;
 }
 
 .case-item:hover {
@@ -262,12 +258,12 @@ body {
   padding: 24px 20px;
   font-size: 16px;
   line-height: 1.8;
-  border-top: 1px solid var(--border);
+  border-top: 0px solid var(--border);
   border-bottom: 1px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 86%;
+  width: 85%;
   min-height: 325px;
 }
 
@@ -283,11 +279,11 @@ body {
 .contact-content-box {
   padding: 24px 20px;
   font-size: 18px;
-  border-top: 1px solid var(--border);
+  border-top: 0px solid var(--border);
   border-bottom: 1px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
-  width: 86%;
+  width: 85%;
   min-height: 325px;
 }
 
