@@ -12,7 +12,7 @@ const GridLayout = () => {
   const fillRef = useRef<HTMLDivElement>(null);
 
   const cases = [
-    { id: 1, title: "Xsolla Design System" },
+    { id: 1, title: "Relay" },
     { id: 2, title: "Babka Twitch Extension" },
     { id: 3, title: "Babka" },
     { id: 4, title: "Virtual Mate (TBD)" },
