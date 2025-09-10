@@ -80,8 +80,10 @@ const GridLayout = () => {
           <div className="about-section">
             <h1 className="section-title">About</h1>
             <div className="about-content">
-              <p>Product designer with over 7 years of experience focused on developing and maintaining design systems.</p>
-              <p className="mt-4">Currently working as a Design System Expert, creating scalable and consistent design solutions.</p>
+              <div className="about-content-box">
+                <p>Product designer with over 7 years of experience focused on developing and maintaining design systems.</p>
+                <p className="mt-4">Currently working as a Design System Expert, creating scalable and consistent design solutions.</p>
+              </div>
             </div>
           </div>
         )}
@@ -90,8 +92,10 @@ const GridLayout = () => {
           <div className="contact-section">
             <h1 className="section-title">Contact</h1>
             <div className="contact-content">
-              <p>hello@example.com</p>
-              <p className="mt-2">Based in Your City</p>
+              <div className="contact-content-box">
+                <p>hello@example.com</p>
+                <p className="mt-2">Based in Your City</p>
+              </div>
             </div>
           </div>
         )}
