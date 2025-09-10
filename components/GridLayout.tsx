@@ -3,19 +3,21 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
+import CustomCursor from "./CustomCursor";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
 
   const cases = [
-    { id: 1, title: "Relay" },
-    { id: 2, title: "Babka Twitch Extension" },
-    { id: 3, title: "Babka" },
-    { id: 4, title: "Virtual Mate (TBD)" },
+    { id: 1, title: "Relay", preview: "/previews/relay.png" },
+    { id: 2, title: "Neura Browser Extension", preview: null },
+    { id: 3, title: "Babka", preview: null },
+    { id: 4, title: "Virtual Mate (TBD)", preview: null },
   ];
 
   const socialLinks = [
@@ -26,6 +28,7 @@ const GridLayout = () => {
 
   return (
     <div className="grid-container">
+      <CustomCursor />
       {/* Additional border element */}
       <div className="horizontal-border-bottom"></div>
       
@@ -83,6 +86,13 @@ const GridLayout = () => {
         <div className="logo">LB</div>
       </div>
 
+      {/* Project Preview */}
+      {activeTab === "work" && previewImage && (
+        <div className="project-preview">
+          <img src={previewImage} alt="Project preview" />
+        </div>
+      )}
+
       {/* Main Content */}
       <div className="main-content">
         {activeTab === "work" && (
@@ -91,7 +101,10 @@ const GridLayout = () => {
             <div className="cases-list" ref={casesListRef}>
               <div 
                 className="cases-inner"
-                onMouseLeave={() => setHoveredIndex(null)}
+                onMouseLeave={() => {
+                  setHoveredIndex(null);
+                  setPreviewImage(null);
+                }}
               >
                 {hoveredIndex !== null && (
                   <div 
@@ -112,7 +125,10 @@ const GridLayout = () => {
                   <div
                     key={caseItem.id}
                     className="case-item"
-                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseEnter={() => {
+                      setHoveredIndex(index);
+                      setPreviewImage(caseItem.preview);
+                    }}
                   >
                     {caseItem.title}
                   </div>

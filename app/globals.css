@@ -12,6 +12,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: none;
+}
+
+/* Case items and tabs should show custom cursor (hide default) */
+.case-item,
+.tab,
+button.tab {
+  cursor: none !important;
+}
+
+/* Restore default cursor only for specific interactive elements */
+.social-link,
+a:not(.tab):not(.case-item),
+input,
+textarea,
+select {
+  cursor: pointer !important;
 }
 
 html, body {
@@ -143,7 +160,6 @@ body {
   border-bottom: 1px solid var(--border);
   color: var(--foreground);
   font-size: 13px;
-  cursor: pointer;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 400;
   text-align: left;
@@ -307,7 +323,6 @@ body {
   padding: 24px 20px;
   font-size: 20px;
   border-bottom: 1px solid var(--border);
-  cursor: pointer;
   font-weight: 400;
   width: 100%;
   position: relative;
@@ -420,4 +435,45 @@ body {
   width: calc(50% - 30px);
   height: 8px;
   background: #ffffff;
+}
+
+/* Project Preview */
+.project-preview {
+  position: fixed;
+  left: 40px;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 20;
+  animation: fadeIn 0.3s ease-out;
+  pointer-events: none;
+}
+
+.project-preview img {
+  width: 780px;
+  height: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Custom Circle Cursor */
+.cursor {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+  mix-blend-mode: difference;
 }
