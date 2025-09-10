@@ -281,12 +281,13 @@ body {
   font-size: 16px;
   line-height: 1.8;
   border-top: 0px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
   width: 85%;
-  min-height: 325px;
+  min-height: 323px;
+  margin-left: -1px;
 }
 
 /* Contact Section */
@@ -302,11 +303,12 @@ body {
   padding: 24px 20px;
   font-size: 18px;
   border-top: 0px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   width: 85%;
-  min-height: 325px;
+  min-height: 323px;
+  margin-left: -1px;
 }
 
 .contact-content-box p {
