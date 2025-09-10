@@ -121,7 +121,7 @@ body {
   align-items: flex-end;
   position: relative;
   margin-left: auto;
-  margin-right: 25px;
+  margin-right: 30px;
 }
 
 .nav-tabs-right::before {
@@ -301,5 +301,16 @@ body {
 /* Bottom Bar */
 .bottom-bar {
   grid-area: bottom-bar;
-  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+/* White rectangle in bottom right corner */
+.bottom-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 30px;
+  width: calc(50% - 30px);
+  height: 8px;
+  background: #ffffff;
 }
