@@ -70,7 +70,7 @@ body {
 /* Horizontal border from bottom of vertical */
 .horizontal-border-bottom {
   position: absolute;
-  top: calc(152px + 324px);
+  top: calc(152px + 325px);
   right: 30px;
   width: 300px;
   height: 1px;
@@ -256,7 +256,6 @@ body {
   gap: 0;
   padding-left: calc(57% - 70px);
   position: relative;
-  width: 86%;
 }
 
 .about-content-box {
@@ -268,8 +267,8 @@ body {
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 100%;
-  min-height: 320px;
+  width: 86%;
+  min-height: 325px;
 }
 
 /* Contact Section */
@@ -279,7 +278,6 @@ body {
   gap: 0;
   padding-left: calc(57% - 70px);
   position: relative;
-  width: 86%;
 }
 
 .contact-content-box {
@@ -289,8 +287,8 @@ body {
   border-bottom: 1px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
-  width: 100%;
-  min-height: 320px;
+  width: 86%;
+  min-height: 325px;
 }
 
 .contact-content-box p {
