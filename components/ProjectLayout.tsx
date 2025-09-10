@@ -27,9 +27,9 @@ const ProjectLayout = ({ title, previewImage }: ProjectLayoutProps) => {
   };
 
   return (
-    <div className="grid-container">
+    <div className="grid-container project-page">
       <CustomCursor />
-      <div className="horizontal-border-bottom-project"></div>
+      <div className="project-vertical-border"></div>
       
       {/* Top Bar */}
       <div className="top-bar">

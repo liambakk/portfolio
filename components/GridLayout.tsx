@@ -19,7 +19,7 @@ const GridLayout = () => {
     { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay" },
     { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png", slug: "neura" },
     { id: 3, title: "Poap Global", preview: "/previews/poap.png", slug: "poap-global" },
-    { id: 4, title: "Virtual Mate (TBD)", preview: null, slug: "virtual-mate" },
+    { id: 4, title: "Heuristic", preview: "/previews/heuristic.png", slug: "essai" },
   ];
 
   const handleProjectClick = (slug: string) => {

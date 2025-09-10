@@ -84,6 +84,7 @@ body {
   z-index: 10;
 }
 
+
 /* Horizontal border from bottom of vertical - Main page */
 .horizontal-border-bottom {
   position: absolute;
@@ -95,26 +96,15 @@ body {
   z-index: 10;
 }
 
-/* Horizontal border from bottom of vertical - Project page */
-.horizontal-border-bottom-project {
+/* Vertical border only for project pages */
+.project-vertical-border {
   position: absolute;
-  top: calc(152px + 324px);
-  right: 30px;
-  width: 300px;
-  height: 1px;
-  background: var(--border);
-  z-index: 10;
-}
-
-/* Vertical border at the left edge of horizontal border - Project page */
-.horizontal-border-bottom-project::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  top: calc(152px + 324px - 325px);
+  right: 330px;
   width: 1px;
   height: 325px;
   background: var(--border);
+  z-index: 10;
 }
 
 /* Top Bar */
