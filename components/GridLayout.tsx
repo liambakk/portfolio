@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+  const casesListRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
 
   const cases = [
     { id: 1, title: "Xsolla Design System" },
@@ -29,22 +33,45 @@ const GridLayout = () => {
       <div className="top-bar">
         <div className="copyright">© 2025</div>
         
-        <div className="nav-tabs-right">
+        <div 
+          className="nav-tabs-right"
+          onMouseLeave={() => setHoveredTab(null)}
+        >
+          <div 
+            className="tab-fill"
+            style={{
+              transform: `translateX(${
+                (hoveredTab || activeTab) === "work" ? 0 :
+                (hoveredTab || activeTab) === "about" ? 100 :
+                200
+              }%)`,
+              opacity: hoveredTab !== null || activeTab ? 1 : 0
+            }}
+          />
           <button
-            className={`tab ${activeTab === "work" ? "active" : ""}`}
+            className={`tab ${activeTab === "work" ? "active" : ""} ${
+              (hoveredTab === "work" || (!hoveredTab && activeTab === "work")) ? "has-fill" : ""
+            }`}
             onClick={() => setActiveTab("work")}
+            onMouseEnter={() => setHoveredTab("work")}
           >
             Work
           </button>
           <button
-            className={`tab ${activeTab === "about" ? "active" : ""}`}
+            className={`tab ${activeTab === "about" ? "active" : ""} ${
+              (hoveredTab === "about" || (!hoveredTab && activeTab === "about")) ? "has-fill" : ""
+            }`}
             onClick={() => setActiveTab("about")}
+            onMouseEnter={() => setHoveredTab("about")}
           >
             About
           </button>
           <button
-            className={`tab ${activeTab === "contact" ? "active" : ""}`}
+            className={`tab ${activeTab === "contact" ? "active" : ""} ${
+              (hoveredTab === "contact" || (!hoveredTab && activeTab === "contact")) ? "has-fill" : ""
+            }`}
             onClick={() => setActiveTab("contact")}
+            onMouseEnter={() => setHoveredTab("contact")}
           >
             Contact
           </button>
@@ -61,17 +88,36 @@ const GridLayout = () => {
         {activeTab === "work" && (
           <div className="cases-section">
             <h1 className="section-title">Work</h1>
-            <div className="cases-list">
-              {cases.map((caseItem) => (
-                <motion.div
-                  key={caseItem.id}
-                  className="case-item"
-                  whileHover={{ opacity: 0.7 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {caseItem.title}
-                </motion.div>
-              ))}
+            <div className="cases-list" ref={casesListRef}>
+              <div 
+                className="cases-inner"
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {hoveredIndex !== null && (
+                  <div 
+                    className="cases-fill"
+                    ref={fillRef}
+                    style={{
+                      transform: `translateY(${
+                        hoveredIndex === 0 ? -1 : 
+                        hoveredIndex === 1 ? 79 :
+                        hoveredIndex === 2 ? 160 :
+                        hoveredIndex === 3 ? 241 :
+                        hoveredIndex * 74 + 5
+                      }px)`
+                    }}
+                  />
+                )}
+                {cases.map((caseItem, index) => (
+                  <div
+                    key={caseItem.id}
+                    className="case-item"
+                    onMouseEnter={() => setHoveredIndex(index)}
+                  >
+                    {caseItem.title}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

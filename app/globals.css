@@ -122,6 +122,7 @@ body {
   position: relative;
   margin-left: auto;
   margin-right: 30px;
+  overflow: hidden;
 }
 
 .nav-tabs-right::before {
@@ -143,12 +144,15 @@ body {
   color: var(--foreground);
   font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 400;
   text-align: left;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .nav-tabs-right .tab:first-child {
@@ -159,15 +163,26 @@ body {
   border-right: 1px solid var(--border);
 }
 
-.tab.active {
-  background: #f5f5f5;
-  color: #000000;
-  border-right-color: var(--border);
-  border-bottom-color: #f5f5f5;
+/* Sliding fill for tabs */
+.tab-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 33.333%;
+  height: 48px;
+  background: #ffffff;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.tab:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.03);
+/* Tab text colors based on where the fill is */
+.tab.has-fill {
+  color: #000000;
+}
+
+.tab:not(.has-fill) {
+  color: #ffffff;
 }
 
 /* Left Sidebar */
@@ -249,14 +264,55 @@ body {
   background: var(--border);
 }
 
+/* Inner container for cases */
+.cases-inner {
+  position: relative;
+  width: 85%;
+}
+
+.cases-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 1px;
+  background: var(--border);
+}
+
+.cases-inner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  width: 1px;
+  background: var(--border);
+}
+
+/* Sliding fill that moves between items */
+.cases-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 82px;
+  background: #ffffff;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
 .case-item {
   padding: 24px 20px;
   font-size: 20px;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
-  transition: all 0.2s;
   font-weight: 400;
-  width: 85%;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .case-item:last-child {
@@ -264,7 +320,7 @@ body {
 }
 
 .case-item:hover {
-  color: var(--muted);
+  color: #000000;
 }
 
 /* About Section */
