@@ -61,7 +61,7 @@ body {
   position: absolute;
   top: 152px;
   right: 30px;
-  height: 325px;
+  height: 324px;
   width: 1px;
   background: var(--border);
   z-index: 10;
@@ -70,9 +70,9 @@ body {
 /* Horizontal border from bottom of vertical */
 .horizontal-border-bottom {
   position: absolute;
-  top: calc(152px + 325px);
+  top: calc(152px + 324px);
   right: 30px;
-  width: 300px;
+  width: 892px;
   height: 1px;
   background: var(--border);
   z-index: 10;
@@ -229,16 +229,38 @@ body {
   position: relative;
 }
 
+.cases-list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(85% - 482px);
+  width: 1px;
+  background: var(--border);
+}
+
+.cases-list::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(85% + 114px);
+  width: 1px;
+  background: var(--border);
+}
+
 .case-item {
   padding: 24px 20px;
   font-size: 20px;
   border-bottom: 1px solid var(--border);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 400;
   width: 85%;
+}
+
+.case-item:last-child {
+  border-bottom: none;
 }
 
 .case-item:hover {
