@@ -22,13 +22,13 @@ button.tab {
   cursor: none !important;
 }
 
-/* Restore default cursor only for specific interactive elements */
+/* Keep cursor hidden for all elements - custom cursor handles everything */
 .social-link,
 a:not(.tab):not(.case-item),
 input,
 textarea,
 select {
-  cursor: pointer !important;
+  cursor: none !important;
 }
 
 html, body {
@@ -84,7 +84,7 @@ body {
   z-index: 10;
 }
 
-/* Horizontal border from bottom of vertical */
+/* Horizontal border from bottom of vertical - Main page */
 .horizontal-border-bottom {
   position: absolute;
   top: calc(152px + 324px);
@@ -93,6 +93,28 @@ body {
   height: 1px;
   background: var(--border);
   z-index: 10;
+}
+
+/* Horizontal border from bottom of vertical - Project page */
+.horizontal-border-bottom-project {
+  position: absolute;
+  top: calc(152px + 324px);
+  right: 30px;
+  width: 300px;
+  height: 1px;
+  background: var(--border);
+  z-index: 10;
+}
+
+/* Vertical border at the left edge of horizontal border - Project page */
+.horizontal-border-bottom-project::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 325px;
+  background: var(--border);
 }
 
 /* Top Bar */
@@ -133,7 +155,7 @@ body {
 .nav-tabs-right {
   display: flex;
   gap: 0;
-  width: 50%;
+  width: calc(50% - 2px);
   height: 100%;
   align-items: flex-end;
   position: relative;
@@ -270,7 +292,8 @@ body {
   background: var(--border);
 }
 
-.cases-list::after {
+/* Removed border to the left of social section */
+/* .cases-list::after {
   content: '';
   position: absolute;
   top: 0;
@@ -278,7 +301,7 @@ body {
   left: calc(85% + 114px);
   width: 1px;
   background: var(--border);
-}
+} */
 
 /* Inner container for cases */
 .cases-inner {
@@ -435,6 +458,55 @@ body {
   width: calc(50% - 30px);
   height: 8px;
   background: #ffffff;
+}
+
+/* Project Section */
+.project-section {
+  width: 100%;
+  position: relative;
+}
+
+/* Project Image Container */
+.project-image-container {
+  position: absolute;
+  left: 50px;
+  top: 130px;
+  z-index: 15;
+}
+
+.project-image-container img {
+  border-radius: 0px;
+  width: 1200px;
+  height: auto;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: calc(57% - 70px);
+  position: relative;
+}
+
+.project-content-box {
+  padding: 24px 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  border-top: 0px solid var(--border);
+  border-bottom: 0px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  width: 85%;
+  min-height: 323px;
+  margin-left: -1px;
+}
+
+.project-subtitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: 16px;
 }
 
 /* Project Preview */

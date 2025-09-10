@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
 import CustomCursor from "./CustomCursor";
@@ -12,13 +13,18 @@ const GridLayout = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const cases = [
-    { id: 1, title: "Relay", preview: "/previews/relay.png" },
-    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png" },
-    { id: 3, title: "Babka", preview: null },
-    { id: 4, title: "Virtual Mate (TBD)", preview: null },
+    { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay" },
+    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png", slug: "neura" },
+    { id: 3, title: "Babka", preview: null, slug: "babka" },
+    { id: 4, title: "Virtual Mate (TBD)", preview: null, slug: "virtual-mate" },
   ];
+
+  const handleProjectClick = (slug: string) => {
+    router.push(`/projects/${slug}`);
+  };
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
@@ -129,6 +135,7 @@ const GridLayout = () => {
                       setHoveredIndex(index);
                       setPreviewImage(caseItem.preview);
                     }}
+                    onClick={() => handleProjectClick(caseItem.slug)}
                   >
                     {caseItem.title}
                   </div>

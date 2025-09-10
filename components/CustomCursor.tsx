@@ -12,17 +12,16 @@ const CustomCursor = () => {
       setPosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
       
-      // Check if hovering over interactive elements (excluding case-items and tabs which should show cursor)
+      // Check if hovering over interactive elements (excluding case-items, tabs, and social links which should show cursor)
       const target = e.target as HTMLElement;
       const isInteractive = 
         (target.tagName === 'BUTTON' && !target.classList.contains('tab')) ||
-        target.tagName === 'A' ||
+        (target.tagName === 'A' && !target.classList.contains('social-link')) ||
         target.tagName === 'INPUT' ||
         target.tagName === 'TEXTAREA' ||
         target.tagName === 'SELECT' ||
         (target.closest('button') && !target.closest('.tab')) ||
-        target.closest('a') ||
-        target.closest('.social-link');
+        (target.closest('a') && !target.closest('.social-link'));
       
       setIsHidden(!!isInteractive);
     };
