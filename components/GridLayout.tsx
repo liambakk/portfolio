@@ -15,7 +15,7 @@ const GridLayout = () => {
 
   const cases = [
     { id: 1, title: "Relay", preview: "/previews/relay.png" },
-    { id: 2, title: "Neura Browser Extension", preview: null },
+    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png" },
     { id: 3, title: "Babka", preview: null },
     { id: 4, title: "Virtual Mate (TBD)", preview: null },
   ];
