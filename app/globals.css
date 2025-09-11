@@ -83,7 +83,7 @@ body {
   height: 80px;
   padding: 0;
   position: relative;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0px solid var(--border);
 }
 
 .project-main-area {
@@ -523,15 +523,37 @@ body {
   position: relative;
 }
 
+/* Project Title Border - spans full width */
+.project-title-border {
+  position: absolute;
+  left: -70px;
+  right: -10px;
+  height: 1px;
+  background: var(--border);
+  margin-top: 0px;
+}
+
+/* Vertical border to the right of image */
+.project-title-border::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 1500px;
+  background: var(--border);
+}
+
 /* Project Sections Container */
 .project-sections-container {
   display: flex;
   flex-direction: column;
   gap: 0;
   position: relative;
-  width: calc(100% + 150px);
+  width: calc(100% + 80px);
   margin-left: 0;
-  margin-top: 600px; /* Space for the image above */
+  margin-top: 620px;
+  right: 70px /* Space for the image above */
 }
 
 /* Individual bordered sections */
@@ -548,7 +570,7 @@ body {
 
 /* Section header - left column */
 .section-header {
-  padding: 16px 24px;
+  padding: 16px 0px;
   font-size: 14px;
   font-weight: 400;
   color: var(--foreground);
