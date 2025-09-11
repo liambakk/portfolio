@@ -173,9 +173,9 @@ body {
 .project-vertical-line-left {
   position: absolute;
   left: -70px;
-  top: 665px;
+  top: 57px;
   width: 1px;
-  height: calc(100vh - 315px);
+  height: calc(100vh + 292px);
   background: var(--border);
   z-index: 10;
 }
@@ -528,6 +528,17 @@ body {
   width: calc(50% - 30px);
   height: 8px;
   background: #ffffff;
+}
+
+/* Name above rectangle */
+.bottom-name {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 /* Project Section */

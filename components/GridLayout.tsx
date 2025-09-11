@@ -189,7 +189,9 @@ const GridLayout = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bottom-bar"></div>
+      <div className="bottom-bar">
+        <span className="bottom-name">Liam Bakker</span>
+      </div>
     </div>
   );
 };
