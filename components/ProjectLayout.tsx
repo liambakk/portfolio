@@ -118,7 +118,7 @@ const ProjectLayout = ({
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
             <div className="project-section">
-              <h1 className="section-title">{title}</h1>
+              <h1 className="project-page-title">{title}</h1>
               <div className="project-title-border"></div>
               {previewImage && (
                 <div className="project-image-container">

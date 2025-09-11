@@ -110,7 +110,7 @@ body {
 
 .project-right-sidebar-fixed {
   position: fixed;
-  right: 30px;
+  right: 130px;
   top: 170px;
   width: 180px;
   display: flex;
@@ -523,6 +523,18 @@ body {
   position: relative;
 }
 
+/* Project page specific title */
+.project-page-title {
+  font-size: 40px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  margin-top: -8px;
+  letter-spacing: -1.5px;
+  padding-left: 770px;
+  line-height: 1;
+  padding-bottom: 5px;
+}
+
 /* Project Title Border - spans full width */
 .project-title-border {
   position: absolute;
@@ -597,6 +609,7 @@ body {
   font-size: 14px;
   line-height: 1.6;
   color: var(--foreground);
+  max-width: 1200px;
 }
 
 /* Full width section */
