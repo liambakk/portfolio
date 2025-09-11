@@ -33,10 +33,10 @@ const ProjectLayout = ({
 
   return (
     <div className="project-page-container">
-      <CustomCursor />
-      
-      {/* Fixed Social Links - Outside scrollable area */}
-      <div className="project-right-sidebar-fixed">
+        <CustomCursor />
+        
+        {/* Fixed Social Links - Outside scrollable area */}
+        <div className="project-right-sidebar-fixed">
         <div className="social-links">
           {socialLinks.map((social) => (
             <a
@@ -117,6 +117,8 @@ const ProjectLayout = ({
           <div className="project-main-content">
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
+            {/* Vertical line on left side */}
+            <div className="project-vertical-line-left"></div>
             <div className="project-section">
               <h1 className="project-page-title">{title}</h1>
               <div className="project-title-border"></div>

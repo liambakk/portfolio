@@ -69,6 +69,7 @@ body {
   position: relative;
 }
 
+
 .project-scrollable-content {
   height: 100vh;
   width: 100%;
@@ -156,6 +157,7 @@ body {
   z-index: 10;
 }
 
+
 /* Vertical border only for project pages */
 .project-vertical-border {
   position: absolute;
@@ -163,6 +165,17 @@ body {
   right: 330px;
   width: 1px;
   height: 325px;
+  background: var(--border);
+  z-index: 10;
+}
+
+/* Vertical line on left side for project pages - from bottom to under preview */
+.project-vertical-line-left {
+  position: absolute;
+  left: -70px;
+  top: 665px;
+  width: 1px;
+  height: calc(100vh - 315px);
   background: var(--border);
   z-index: 10;
 }
@@ -593,7 +606,7 @@ body {
 
 /* Section header - left column */
 .section-header {
-  padding: 16px 0px;
+  padding: 16px 0px 16px 20px;
   font-size: 14px;
   font-weight: 400;
   color: var(--foreground);
