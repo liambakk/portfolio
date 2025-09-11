@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
 import CustomCursor from "./CustomCursor";
+import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import { ProjectData } from "@/types/project";
 
@@ -208,6 +209,9 @@ const ProjectLayout = ({
         )}
           </div>
         </div>
+        
+        {/* Mobile Footer - only visible on mobile */}
+        <MobileFooter />
       </div>
     </div>
   );

@@ -505,6 +505,10 @@ body {
   display: inline-block;
 }
 
+.mobile-copyright-home {
+  display: none; /* Hide on desktop */
+}
+
 /* Bottom Bar */
 .bottom-bar {
   grid-area: bottom-bar;
@@ -838,6 +842,8 @@ body {
   .project-sections-container {
     width: 100%;
     margin-top: clamp(280px, 40vh, 400px);
+    margin-left: 0;
+    margin-right: 0;
     padding-right: 0;
   }
   
@@ -989,9 +995,7 @@ body {
   }
   
   .copyright {
-    margin-left: 0;
-    padding: 10px 20px;
-    border: none;
+    display: none; /* Hide copyright in top bar on mobile */
   }
   
   .copyright::before {
@@ -1072,12 +1076,23 @@ body {
     padding-top: 20px;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .social-links {
     flex-direction: row;
     justify-content: center;
     gap: 30px;
+    flex: 1;
+  }
+  
+  .mobile-copyright-home {
+    display: block;
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 400;
   }
   
   .bottom-bar {
@@ -1100,5 +1115,68 @@ body {
   
   .project-preview {
     display: none; /* Hide preview on mobile */
+  }
+  
+  /* Mobile Footer for Project Pages */
+  .project-mobile-footer {
+    display: none;
+  }
+}
+
+/* Mobile Footer for Project Pages - only visible on mobile */
+@media screen and (max-width: 768px) {
+  .project-mobile-footer {
+    display: block;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  
+  .mobile-footer-social {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .mobile-footer-social .social-links-group {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .mobile-footer-social .social-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  
+  .mobile-copyright {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 400;
+  }
+  
+  .mobile-footer-name {
+    display: block;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .mobile-footer-name .bottom-name {
+    position: static;
+    display: block;
+    text-align: center;
+    font-size: 60px;
+    letter-spacing: -2px;
+    line-height: 1;
+    color: #ffffff;
+  }
+  
+  /* Hide desktop social links on mobile */
+  .project-right-sidebar-fixed {
+    display: none;
   }
 }
