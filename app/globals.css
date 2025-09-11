@@ -533,6 +533,17 @@ body {
   margin-top: 0px;
 }
 
+/* Left vertical border */
+.project-title-border::before {
+  content: '';
+  position: absolute;
+  right: 300px;
+  top: 0;
+  width: 1px;
+  height: 1330px;
+  background: var(--border);
+  }
+
 /* Vertical border to the right of image */
 .project-title-border::after {
   content: '';
@@ -540,7 +551,7 @@ body {
   right: 0;
   top: 0;
   width: 1px;
-  height: 1500px;
+  height: 1330px;
   background: var(--border);
 }
 
