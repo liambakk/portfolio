@@ -551,7 +551,7 @@ body {
   margin-bottom: 12px;
   margin-top: -8px;
   letter-spacing: -1.5px;
-  padding-left: 770px;
+  padding-left: 620px;
   line-height: 1;
   padding-bottom: 5px;
 }
@@ -777,7 +777,7 @@ body {
 /* Responsive Design - Tablet */
 @media screen and (max-width: 1024px) {
   .project-page-title {
-    padding-left: clamp(100px, 40vw, 500px);
+    padding-left: clamp(110px, 32vw, 420px);
     font-size: clamp(24px, 3.5vw, 36px);
   }
   
@@ -830,13 +830,19 @@ body {
   }
   
   .project-left-sidebar {
-    width: 100%;
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--border);
+    display: none !important; /* Hide the entire sidebar including LB logo on mobile */
+    width: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  .project-left-sidebar .logo {
+    display: none !important;
   }
   
   .project-main-content {
     padding: 20px;
+    width: 100%;
   }
   
   .project-sections-container {
@@ -918,7 +924,7 @@ body {
 /* Large screens */
 @media screen and (min-width: 1440px) {
   .project-page-title {
-    padding-left: clamp(500px, 60vw, 900px);
+    padding-left: clamp(470px, 52vw, 770px);
   }
   
   .project-sections-container {
@@ -970,10 +976,9 @@ body {
 @media screen and (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr;
-    grid-template-rows: 60px auto 1fr auto 60px;
+    grid-template-rows: 60px 1fr auto 60px;
     grid-template-areas:
       "top-bar"
-      "left-sidebar"
       "main"
       "right-sidebar"
       "bottom-bar";
@@ -1026,12 +1031,7 @@ body {
   }
   
   .left-sidebar {
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .logo {
-    font-size: 32px;
+    display: none; /* Hide the entire sidebar including LB logo on mobile */
   }
   
   .main-content {
@@ -1116,19 +1116,24 @@ body {
   .project-preview {
     display: none; /* Hide preview on mobile */
   }
-  
-  /* Mobile Footer for Project Pages */
-  .project-mobile-footer {
-    display: none;
-  }
+}
+
+/* Mobile Footer - hidden by default on desktop */
+.project-mobile-footer {
+  display: none;
 }
 
 /* Mobile Footer for Project Pages - only visible on mobile */
 @media screen and (max-width: 768px) {
   .project-mobile-footer {
     display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--background);
     border-top: 1px solid var(--border);
-    margin-top: 40px;
+    z-index: 100;
   }
   
   .mobile-footer-social {
@@ -1178,5 +1183,10 @@ body {
   /* Hide desktop social links on mobile */
   .project-right-sidebar-fixed {
     display: none;
+  }
+  
+  /* Add padding to scrollable content to account for fixed footer */
+  .project-scrollable-content {
+    padding-bottom: 180px; /* Adjust based on footer height */
   }
 }
