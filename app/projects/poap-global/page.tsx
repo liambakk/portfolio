@@ -62,7 +62,7 @@ export default function PoapGlobalProject() {
     <div className="project-page-container">
         <CustomCursor />
         
-        {/* Fixed Social Links - Outside scrollable area */}
+        {/* Fixed Social Links - Responsive positioning */}
         <div className="project-right-sidebar-fixed">
         <div className="social-links">
           {socialLinks.map((social) => (
