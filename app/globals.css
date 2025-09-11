@@ -1009,7 +1009,16 @@ body {
   
   .tab {
     border-left: none;
-    border-right: none;
+    border-right: none !important;
+    border-bottom: none;
+  }
+  
+  .nav-tabs-right .tab:first-child {
+    border-left: none !important;
+  }
+  
+  .nav-tabs-right .tab:last-child {
+    border-right: none !important;
   }
   
   .left-sidebar {
