@@ -847,7 +847,7 @@ body {
   
   .project-sections-container {
     width: 100%;
-    margin-top: clamp(280px, 40vh, 400px);
+    margin-top: 40px; /* Reduced spacing under image on mobile */
     margin-left: 0;
     margin-right: 0;
     padding-right: 0;
@@ -1127,18 +1127,15 @@ body {
 @media screen and (max-width: 768px) {
   .project-mobile-footer {
     display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     background: var(--background);
     border-top: 1px solid var(--border);
-    z-index: 100;
+    margin-top: 40px;
   }
   
   .mobile-footer-social {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid var(--border);
@@ -1183,10 +1180,5 @@ body {
   /* Hide desktop social links on mobile */
   .project-right-sidebar-fixed {
     display: none;
-  }
-  
-  /* Add padding to scrollable content to account for fixed footer */
-  .project-scrollable-content {
-    padding-bottom: 180px; /* Adjust based on footer height */
   }
 }

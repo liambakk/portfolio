@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
 import CustomCursor from "@/components/CustomCursor";
+import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
 
 export default function EssaiProject() {
@@ -235,6 +236,9 @@ export default function EssaiProject() {
         )}
           </div>
         </div>
+        
+        {/* Mobile Footer - only visible on mobile */}
+        <MobileFooter />
       </div>
     </div>
   );

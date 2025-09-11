@@ -186,7 +186,6 @@ const GridLayout = () => {
             </a>
           ))}
         </div>
-        <div className="mobile-copyright-home">© 2025</div>
       </div>
 
       {/* Bottom Bar */}

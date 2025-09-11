@@ -27,7 +27,6 @@ const MobileFooter = () => {
             </a>
           ))}
         </div>
-        <div className="mobile-copyright">© 2025</div>
       </div>
       <div className="mobile-footer-name">
         <span className="bottom-name">Liam Bakker</span>
