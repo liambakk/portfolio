@@ -15,10 +15,10 @@ export default function RelayProject() {
   const title = "Relay";
   const previewImage = "/previews/relay1.png";
   const overview = {
-    description: "A real-time collaboration platform for distributed teams. Relay enables seamless communication, file sharing, and project management with an emphasis on speed and reliability."
+    description: "Relay is a mobile app that helps you find compatible workout partners nearby when you want to exercise. Think of it as a social network specifically designed for fitness enthusiasts who want to connect with others for workouts."
   };
   const team = {
-    description: "System Architect, UI/UX Designer, DevOps Engineer",
+    description: "Ever wanted to go for a run, hit the gym, or play a sport but didn't have anyone to join you? Or maybe your usual workout partner cancelled last minute? Relay instantly connects you with people nearby who share your fitness interests, so that you can connect through the shared medium of exercise. Over the past 3 years we have seen the proliferation of exercise clubs of all types- predeminantly running clubs. While these have been great, and responsible for the forming of numerous new relationships, they still lack the intamicy that working out provides- the ability to push each other, and grow together. Relay was created as the platform to enable this, by simplifying the process of finding those who have similar interests, and share the same goals as you do- allowing you to find people to train with, regardless of where you are.",
     members: [
       { name: "James Wilson", role: "System Architect" },
       { name: "Sofia Martinez", role: "UI/UX Designer" },
@@ -27,25 +27,37 @@ export default function RelayProject() {
   };
   const goals = {
     items: [
-      { text: "Enable real-time collaboration across time zones" },
-      { text: "Minimize latency in message delivery" },
-      { text: "Provide robust file sharing and versioning" },
-      { text: "Ensure end-to-end encryption for security" },
-      { text: "Create intuitive project management workflows" }
+      { text: "Broadcast Your Workout - When you're ready to exercise, simply open the app and share what activity you want to do (running, cycling, gym, yoga, etc.)." },
+      { text: "Find Compatible Partners - The app shows you nearby users who match your fitness level, schedule, and activity preferences." },
+      { text: "Connect Safely - Message potential workout partners, check out verified safe meeting spots, and coordinate your meetup—all within the app." },
+      { text: "Build Your Fitness Community - Over time, you'll discover regular workout partners, join fitness clubs, and build a network of like-minded friends." },
     ]
   };
-  const roleProcess = [
+  const roleProcess: Array<{
+    title: string;
+    description: string;
+    tasks: Array<{ description: string }>;
+    image?: string;
+    images?: string[];
+    bottomImage?: string;
+  }> = [
     {
-      title: "Role & Process: System Designer",
-      description: "Architected the distributed system infrastructure to handle real-time communication at scale.",
+      title: "Key Features",
+      description: "",
       tasks: [
-        { description: "Designed microservices architecture for scalability" },
-        { description: "Implemented WebSocket connections for real-time updates" },
-        { description: "Created message queuing system for reliability" },
-        { description: "Developed data synchronization protocols" },
-        { description: "Optimized database schema for performance" },
-        { description: "Established monitoring and alerting systems" }
+        { description: "Smart Matching - Finds partners at your fitness level for enjoyable workouts" },
+        { description: "Spontaneous or Planned - Works for both \"I want to run right now\" and \"Let's plan a hike this weekend\"" },
+        { description: "Safety First - Verified venues, safety check-ins, and user ratings ensure secure meetups" },
+        { description: "Social Motivation - Share achievements, give kudos, and stay motivated with your fitness community" },
+        { description: "Multiple Activities - Supports everything from running and cycling to tennis, basketball, yoga, and more" }
       ]
+    },
+    {
+      title: "",
+      description: "",
+      tasks: [],
+      images: ["/relayfull.png", "/relayofull.png"],
+      bottomImage: "/relaylogo.png"
     }
   ];
 
@@ -174,7 +186,7 @@ export default function RelayProject() {
 
             {/* Team Section */}
             <div className="project-section-bordered">
-              <div className="section-header">Team</div>
+              <div className="section-header">The Problem</div>
               <div className="section-content">
                 {team.description}
               </div>
@@ -182,7 +194,7 @@ export default function RelayProject() {
 
             {/* Goals Section */}
             <div className="project-section-bordered">
-              <div className="section-header">Goals</div>
+              <div className="section-header">How it Works</div>
               <div className="section-content">
                 <ul className="goals-list">
                   {goals.items.map((goal, index) => (
@@ -197,13 +209,60 @@ export default function RelayProject() {
               <div key={index} className="project-section-bordered">
                 <div className="section-header">{role.title}</div>
                 <div className="section-content">
-                  <p className="role-description">{role.description}</p>
-                  {role.tasks.length > 0 && (
-                    <ul className="process-tasks">
-                      {role.tasks.map((task, taskIndex) => (
-                        <li key={taskIndex}>{task.description}</li>
-                      ))}
-                    </ul>
+                  {(role.image || role.images || role.bottomImage) ? (
+                    <>
+                      {(role.image || role.images) && (
+                        <div className="relay-images-container" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '40px', padding: '20px 0', width: '100%', maxWidth: 'none' }}>
+                          {role.images ? (
+                            <>
+                              {role.images.map((img, imgIndex) => (
+                                <Image 
+                                  key={imgIndex}
+                                  src={img} 
+                                  alt="Relay logo"
+                                  width={450}
+                                  height={150}
+                                  quality={100}
+                                  style={{ width: '450px', height: 'auto' }}
+                                />
+                              ))}
+                            </>
+                          ) : role.image ? (
+                            <Image 
+                              src={role.image} 
+                              alt="Relay logo"
+                              width={450}
+                              height={150}
+                              quality={100}
+                              style={{ width: '450px', height: 'auto' }}
+                            />
+                          ) : null}
+                        </div>
+                      )}
+                      {role.bottomImage && (
+                        <div className="relay-logo-container" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '20px 0', marginTop: '0', width: '100%', maxWidth: 'none' }}>
+                          <Image 
+                            src={role.bottomImage} 
+                            alt="Relay logo"
+                            width={938}
+                            height={501}
+                            quality={100}
+                            style={{ width: '938px', height: 'auto', maxWidth: 'none' }}
+                          />
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {role.description && <p className="role-description">{role.description}</p>}
+                      {role.tasks.length > 0 && (
+                        <ul className="process-tasks">
+                          {role.tasks.map((task, taskIndex) => (
+                            <li key={taskIndex}>{task.description}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -220,13 +279,59 @@ export default function RelayProject() {
                 <div key={index} className="project-section-bordered">
                   <div className="section-header">{role.title}</div>
                   <div className="section-content">
-                    <p className="role-description">{role.description}</p>
-                    {role.tasks.length > 0 && (
-                      <ul className="process-tasks">
-                        {role.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex}>{task.description}</li>
-                        ))}
-                      </ul>
+                    {(role.image || role.images || role.bottomImage) ? (
+                      <>
+                        {(role.image || role.images) && (
+                          <div className="role-image-container relay-images-container">
+                            {role.images ? (
+                              <>
+                                {role.images.map((img, imgIndex) => (
+                                  <Image 
+                                    key={imgIndex}
+                                    src={img} 
+                                    alt="Relay logo"
+                                    width={450}
+                                    height={150}
+                                    quality={100}
+                                    style={{ width: '450px', height: 'auto' }}
+                                  />
+                                ))}
+                              </>
+                            ) : role.image ? (
+                              <Image 
+                                src={role.image} 
+                                alt="Relay logo"
+                                width={450}
+                                height={150}
+                                quality={100}
+                              />
+                            ) : null}
+                          </div>
+                        )}
+                        {role.bottomImage && (
+                          <div className="role-image-container relay-logo-container" style={{ marginTop: '0', padding: '20px 0' }}>
+                            <Image 
+                              src={role.bottomImage} 
+                              alt="Relay logo"
+                              width={938}
+                              height={501}
+                              quality={100}
+                              style={{ width: '938px', height: 'auto' }}
+                            />
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {role.description && <p className="role-description">{role.description}</p>}
+                        {role.tasks.length > 0 && (
+                          <ul className="process-tasks">
+                            {role.tasks.map((task, taskIndex) => (
+                              <li key={taskIndex}>{task.description}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

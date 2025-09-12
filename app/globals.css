@@ -629,8 +629,66 @@ body {
   padding: 16px 32px;
   font-size: 14px;
   line-height: 1.6;
-  color: var(--foreground);
-  max-width: 1200px;
+  color: #fff;
+  max-width: 400px;
+}
+
+/* Override max-width for sections with images */
+.section-content:has(.relay-images-container),
+.section-content:has(.relay-logo-container),
+.section-content:has(.role-image-container) {
+  max-width: none !important;
+}
+
+/* Override max-width for image containers */
+.section-content > div[style*="display: flex"] {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.role-image-container {
+  max-width: none !important;
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Desktop styles for Relay images - move right on desktop */
+@media screen and (min-width: 769px) {
+  .relay-images-container {
+    padding-left: 100px !important;
+    margin-left: 0 !important;
+    max-width: none !important;
+    justify-content: flex-start !important;
+  }
+  
+  .relay-images-container img {
+    width: 450px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+  
+  .relay-logo-container {
+    padding-left: 100px !important;
+    margin-left: 0 !important;
+    max-width: none !important;
+    justify-content: flex-start !important;
+  }
+  
+  .relay-logo-container img {
+    width: 938px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+  
+  .role-image-container.relay-images-container,
+  .role-image-container.relay-logo-container {
+    padding-left: 100px !important;
+    margin-left: 0 !important;
+    max-width: none !important;
+    justify-content: flex-start !important;
+  }
 }
 
 /* Full width section */
@@ -656,14 +714,14 @@ body {
   position: relative;
   padding-left: 20px;
   margin-bottom: 12px;
-  color: var(--foreground);
+  color: #fff;
 }
 
 .goals-list li::before {
   content: '•';
   position: absolute;
   left: 0;
-  color: var(--foreground);
+  color: #fff;
 }
 
 .role-description {
@@ -680,14 +738,14 @@ body {
   position: relative;
   padding-left: 20px;
   margin-bottom: 12px;
-  color: var(--muted);
+  color: #fff;
 }
 
 .process-tasks li::before {
   content: '•';
   position: absolute;
   left: 0;
-  color: var(--muted);
+  color: #fff;
 }
 
 /* Project Image Container */
@@ -867,6 +925,53 @@ body {
   
   .section-content {
     padding: 16px 20px;
+    max-width: none !important;
+  }
+  
+  /* Mobile styles for Relay images */
+  .relay-images-container,
+  .role-image-container.relay-images-container {
+    display: flex !important;
+    gap: 20px !important;
+    padding: 20px 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .relay-images-container img {
+    width: 140px !important;
+    height: auto !important;
+  }
+  
+  .relay-logo-container,
+  .role-image-container.relay-logo-container {
+    display: flex !important;
+    padding: 0px 0 20px 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .relay-logo-container img {
+    width: 300px !important;
+    height: auto !important;
+  }
+  
+  .role-image-container {
+    display: flex !important;
+    padding: 20px 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  .role-image-container img {
+    max-width: 100% !important;
+    height: auto !important;
   }
   
   .project-image-container {
@@ -912,6 +1017,17 @@ body {
   .tab {
     font-size: 11px;
     padding: 10px 8px;
+  }
+  
+  /* Hide copyright in project top bar to match main page */
+  .project-top-bar .copyright {
+    display: none;
+  }
+  
+  /* Add bottom border to project top bar to match main page */
+  .project-top-bar {
+    border-bottom: 1px solid var(--border);
+    height: 60px; /* Match main page mobile header height */
   }
   
   .copyright {
