@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import Image from "next/image";
@@ -25,7 +26,7 @@ const ProjectLayout = ({
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
     { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: FaBehance, href: "https://behance.net", label: "Behance" },
+    { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
   const handleBackToWork = () => {

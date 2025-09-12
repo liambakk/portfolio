@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
@@ -52,7 +53,7 @@ export default function NeuraProject() {
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
     { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: FaBehance, href: "https://behance.net", label: "Behance" },
+    { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
   const handleBackToWork = () => {
@@ -92,12 +93,11 @@ export default function NeuraProject() {
             onMouseLeave={() => setHoveredTab(null)}
           >
             <div 
-              className="tab-fill"
+              className="tab-fill-two"
               style={{
                 transform: `translateX(${
                   (hoveredTab || activeTab) === "overview" ? 0 :
-                  (hoveredTab || activeTab) === "process" ? 100 :
-                  200
+                  100
                 }%)`,
                 opacity: hoveredTab !== null || activeTab ? 1 : 0
               }}
@@ -110,15 +110,6 @@ export default function NeuraProject() {
               onMouseEnter={() => setHoveredTab("overview")}
             >
               Overview
-            </button>
-            <button
-              className={`tab ${activeTab === "process" ? "active" : ""} ${
-                (hoveredTab === "process" || (!hoveredTab && activeTab === "process")) ? "has-fill" : ""
-              }`}
-              onClick={() => setActiveTab("process")}
-              onMouseEnter={() => setHoveredTab("process")}
-            >
-              Process
             </button>
             <button
               className={`tab ${activeTab === "back" ? "active" : ""} ${
@@ -212,28 +203,6 @@ export default function NeuraProject() {
           </div>
         )}
 
-        {activeTab === "process" && (
-          <div className="project-content-wrapper">
-            <div className="project-sections-container" style={{ marginTop: '0' }}>
-              {/* Role & Process Section for Process Tab */}
-              {roleProcess.map((role, index) => (
-                <div key={index} className="project-section-bordered">
-                  <div className="section-header">{role.title}</div>
-                  <div className="section-content">
-                    <p className="role-description">{role.description}</p>
-                    {role.tasks.length > 0 && (
-                      <ul className="process-tasks">
-                        {role.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex}>{task.description}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
           </div>
         </div>
         

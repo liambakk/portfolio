@@ -31,6 +31,45 @@ select {
   cursor: none !important;
 }
 
+/* Restore default cursor on mobile/tablet */
+@media screen and (max-width: 1024px) {
+  * {
+    cursor: auto !important;
+  }
+  
+  .case-item,
+  .tab,
+  button.tab,
+  .social-link,
+  a:not(.tab):not(.case-item),
+  input,
+  textarea,
+  select {
+    cursor: pointer !important;
+  }
+}
+
+/* Hide scrollbar on mobile while maintaining scroll functionality */
+@media screen and (max-width: 768px) {
+  /* Hide scrollbar for webkit browsers */
+  .main-content::-webkit-scrollbar,
+  .project-scrollable-content::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for Firefox */
+  .main-content,
+  .project-scrollable-content {
+    scrollbar-width: none;
+  }
+  
+  /* Hide scrollbar for IE/Edge */
+  .main-content,
+  .project-scrollable-content {
+    -ms-overflow-style: none;
+  }
+}
+
 html, body {
   height: 100%;
   overflow: hidden;
@@ -74,7 +113,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 .project-top-bar {
@@ -175,7 +214,7 @@ body {
   left: -70px;
   top: 57px;
   width: 1px;
-  height: calc(100vh + 292px);
+  height: 9999px;
   background: var(--border);
   z-index: 10;
 }
@@ -264,12 +303,25 @@ body {
   border-right: 1px solid var(--border);
 }
 
-/* Sliding fill for tabs */
+/* Sliding fill for tabs - 3 tabs */
 .tab-fill {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 33.333%;
+  height: 48px;
+  background: #ffffff;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Sliding fill for tabs - 2 tabs (project pages) */
+.tab-fill-two {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
   height: 48px;
   background: #ffffff;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
@@ -560,7 +612,7 @@ body {
 .project-title-border {
   position: absolute;
   left: -70px;
-  right: 17px;
+  right: -10px;
   height: 1px;
   background: var(--border);
   margin-top: 0px;
@@ -570,21 +622,21 @@ body {
 .project-title-border::before {
   content: '';
   position: absolute;
-  right: 270px;
+  right: 300px;
   top: 0;
   width: 1px;
-  height: 1330px;
+  height: 9999px;
   background: var(--border);
-  }
+}
 
 /* Vertical border to the right of image */
 .project-title-border::after {
   content: '';
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 0;
   width: 1px;
-  height: 1330px;
+  height: 9999px;
   background: var(--border);
 }
 
@@ -597,7 +649,7 @@ body {
   width: calc(100% + 80px);
   margin-left: -70px;
   margin-top: 620px;
-  margin-right: -40px;
+  margin-right: 0;
 }
 
 /* Individual bordered sections */
@@ -666,6 +718,19 @@ body {
   .relay-images-container img {
     width: 450px !important;
     max-width: none !important;
+    height: auto !important;
+  }
+  
+  .relay-design-system-container {
+    padding: 40px 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    justify-content: center !important;
+  }
+  
+  .relay-design-system-container img {
+    width: 100% !important;
+    max-width: 1600px !important;
     height: auto !important;
   }
   
@@ -819,7 +884,7 @@ body {
   }
 }
 
-/* Custom Circle Cursor */
+/* Custom Circle Cursor - Desktop only */
 .cursor {
   width: 20px;
   height: 20px;
@@ -830,6 +895,13 @@ body {
   z-index: 9999;
   transition: transform 0.1s ease-out;
   mix-blend-mode: difference;
+}
+
+/* Hide custom cursor on mobile/tablet */
+@media screen and (max-width: 1024px) {
+  .cursor {
+    display: none !important;
+  }
 }
 
 /* Responsive Design - Tablet */
@@ -942,6 +1014,21 @@ body {
   
   .relay-images-container img {
     width: 140px !important;
+    height: auto !important;
+  }
+  
+  .relay-design-system-container {
+    display: flex !important;
+    padding: 30px 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .relay-design-system-container img {
+    width: 100% !important;
+    max-width: none !important;
     height: auto !important;
   }
   

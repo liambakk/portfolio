@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram, FaBehance } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
@@ -42,14 +43,14 @@ export default function RelayProject() {
     bottomImage?: string;
   }> = [
     {
-      title: "Key Features",
+      title: "Design Principles",
       description: "",
       tasks: [
-        { description: "Smart Matching - Finds partners at your fitness level for enjoyable workouts" },
-        { description: "Spontaneous or Planned - Works for both \"I want to run right now\" and \"Let's plan a hike this weekend\"" },
-        { description: "Safety First - Verified venues, safety check-ins, and user ratings ensure secure meetups" },
-        { description: "Social Motivation - Share achievements, give kudos, and stay motivated with your fitness community" },
-        { description: "Multiple Activities - Supports everything from running and cycling to tennis, basketball, yoga, and more" }
+        { description: "Energetic Color Palette - Vibrant gradients and bold accents that inspire movement and activity" },
+        { description: "Dynamic Typography - Athletic, modern typefaces that convey strength and approachability" },
+        { description: "Fluid Animations - Smooth transitions and micro-interactions that mirror physical movement" },
+        { description: "Accessible Interface - High contrast ratios and clear visual hierarchy for outdoor visibility" },
+        { description: "Intuitive Navigation - Gesture-based controls optimized for one-handed use during workouts" }
       ]
     },
     {
@@ -58,13 +59,25 @@ export default function RelayProject() {
       tasks: [],
       images: ["/relayfull.png", "/relayofull.png"],
       bottomImage: "/relaylogo.png"
+    },
+    {
+      title: "Design System Components",
+      description: "A cohesive visual language built for fitness enthusiasts, combining functionality with motivation through thoughtful UI patterns.",
+      tasks: [
+        { description: "Activity Cards - Modular components displaying workout types with custom iconography and color coding" },
+        { description: "Partner Profiles - Clean, scannable layouts emphasizing fitness compatibility metrics" },
+        { description: "Real-time Map Interface - Minimalist location markers with distance indicators and safe zone overlays" },
+        { description: "Progress Visualizations - Circular progress rings, achievement badges, and streak counters" },
+        { description: "Social Feed Elements - Condensed activity updates with engagement CTAs and kudos animations" }
+      ],
+      image: "/relaydesign.png"
     }
   ];
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
     { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: FaBehance, href: "https://behance.net", label: "Behance" },
+    { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
   const handleBackToWork = () => {
@@ -104,12 +117,11 @@ export default function RelayProject() {
             onMouseLeave={() => setHoveredTab(null)}
           >
             <div 
-              className="tab-fill"
+              className="tab-fill-two"
               style={{
                 transform: `translateX(${
                   (hoveredTab || activeTab) === "overview" ? 0 :
-                  (hoveredTab || activeTab) === "process" ? 100 :
-                  200
+                  100
                 }%)`,
                 opacity: hoveredTab !== null || activeTab ? 1 : 0
               }}
@@ -122,15 +134,6 @@ export default function RelayProject() {
               onMouseEnter={() => setHoveredTab("overview")}
             >
               Overview
-            </button>
-            <button
-              className={`tab ${activeTab === "process" ? "active" : ""} ${
-                (hoveredTab === "process" || (!hoveredTab && activeTab === "process")) ? "has-fill" : ""
-              }`}
-              onClick={() => setActiveTab("process")}
-              onMouseEnter={() => setHoveredTab("process")}
-            >
-              Process
             </button>
             <button
               className={`tab ${activeTab === "back" ? "active" : ""} ${
@@ -211,8 +214,16 @@ export default function RelayProject() {
                 <div className="section-content">
                   {(role.image || role.images || role.bottomImage) ? (
                     <>
+                      {role.description && <p className="role-description">{role.description}</p>}
+                      {role.tasks.length > 0 && (
+                        <ul className="process-tasks">
+                          {role.tasks.map((task, taskIndex) => (
+                            <li key={taskIndex}>{task.description}</li>
+                          ))}
+                        </ul>
+                      )}
                       {(role.image || role.images) && (
-                        <div className="relay-images-container" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '40px', padding: '20px 0', width: '100%', maxWidth: 'none' }}>
+                        <div className={role.image === "/relaydesign.png" ? "relay-design-system-container" : "relay-images-container"} style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '40px', padding: '20px 0', width: '100%', maxWidth: 'none' }}>
                           {role.images ? (
                             <>
                               {role.images.map((img, imgIndex) => (
@@ -230,11 +241,11 @@ export default function RelayProject() {
                           ) : role.image ? (
                             <Image 
                               src={role.image} 
-                              alt="Relay logo"
-                              width={450}
-                              height={150}
+                              alt="Relay design system"
+                              width={1600}
+                              height={1000}
                               quality={100}
-                              style={{ width: '450px', height: 'auto' }}
+                              style={{ width: '100%', height: 'auto', maxWidth: 'none' }}
                             />
                           ) : null}
                         </div>
@@ -271,74 +282,6 @@ export default function RelayProject() {
           </div>
         )}
 
-        {activeTab === "process" && (
-          <div className="project-content-wrapper">
-            <div className="project-sections-container" style={{ marginTop: '0' }}>
-              {/* Role & Process Section for Process Tab */}
-              {roleProcess.map((role, index) => (
-                <div key={index} className="project-section-bordered">
-                  <div className="section-header">{role.title}</div>
-                  <div className="section-content">
-                    {(role.image || role.images || role.bottomImage) ? (
-                      <>
-                        {(role.image || role.images) && (
-                          <div className="role-image-container relay-images-container">
-                            {role.images ? (
-                              <>
-                                {role.images.map((img, imgIndex) => (
-                                  <Image 
-                                    key={imgIndex}
-                                    src={img} 
-                                    alt="Relay logo"
-                                    width={450}
-                                    height={150}
-                                    quality={100}
-                                    style={{ width: '450px', height: 'auto' }}
-                                  />
-                                ))}
-                              </>
-                            ) : role.image ? (
-                              <Image 
-                                src={role.image} 
-                                alt="Relay logo"
-                                width={450}
-                                height={150}
-                                quality={100}
-                              />
-                            ) : null}
-                          </div>
-                        )}
-                        {role.bottomImage && (
-                          <div className="role-image-container relay-logo-container" style={{ marginTop: '0', padding: '20px 0' }}>
-                            <Image 
-                              src={role.bottomImage} 
-                              alt="Relay logo"
-                              width={938}
-                              height={501}
-                              quality={100}
-                              style={{ width: '938px', height: 'auto' }}
-                            />
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {role.description && <p className="role-description">{role.description}</p>}
-                        {role.tasks.length > 0 && (
-                          <ul className="process-tasks">
-                            {role.tasks.map((task, taskIndex) => (
-                              <li key={taskIndex}>{task.description}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
           </div>
         </div>
         
