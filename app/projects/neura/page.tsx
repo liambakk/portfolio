@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { FiExternalLink } from "react-icons/fi";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
@@ -139,7 +140,22 @@ export default function NeuraProject() {
             {/* Vertical line on left side */}
             <div className="project-vertical-line-left"></div>
             <div className="project-section">
-              <h1 className="project-page-title">{title}</h1>
+              <h1 className="project-page-title" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                {title}
+                <FiExternalLink
+                  style={{
+                    fontSize: "0.7em",
+                    opacity: 0.7,
+                    cursor: "pointer",
+                    transition: "opacity 0.2s ease",
+                    color: "#FFF",
+                    marginTop: "4px"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = "0.7"}
+                  onClick={() => window.open("https://www.neura.fyi", "_blank")}
+                />
+              </h1>
               <div className="project-title-border"></div>
               {previewImage && (
                 <div className="project-image-container">
