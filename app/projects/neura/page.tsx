@@ -183,12 +183,87 @@ export default function NeuraProject() {
               </div>
             </div>
 
+            {/* Features Section */}
+            <div className="project-section-bordered">
+              <div className="section-header">Key Features</div>
+              <div className="section-content">
+                <p className="role-description">
+                  The extension leverages advanced natural language processing to provide intelligent assistance across various web activities.
+                </p>
+                <div style={{
+                  position: "relative",
+                  width: "100%",
+                  margin: "1.5rem 0",
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "1rem",
+                  flexWrap: "wrap"
+                }}>
+                  <Image
+                    src="/neuraext.png"
+                    alt="Neura Browser Extension Interface"
+                    width={400}
+                    height={300}
+                    quality={100}
+                    style={{
+                      width: "48%",
+                      minWidth: "280px",
+                      height: "auto",
+                      borderRadius: "8px"
+                    }}
+                  />
+                  <Image
+                    src="/box.png"
+                    alt="Neura Extension Settings"
+                    width={400}
+                    height={300}
+                    quality={100}
+                    style={{
+                      width: "48%",
+                      minWidth: "280px",
+                      height: "auto",
+                      borderRadius: "8px"
+                    }}
+                  />
+                </div>
+                <ul className="process-tasks">
+                  <li>One-click page summarization with key point extraction</li>
+                  <li>Smart text selection with contextual AI actions</li>
+                  <li>Automated form filling using intelligent data recognition</li>
+                  <li>Real-time language translation with context awareness</li>
+                  <li>Custom workflow automation with visual scripting</li>
+                  <li>Privacy-focused local processing for sensitive data</li>
+                </ul>
+              </div>
+            </div>
+
             {/* Role & Process Section */}
             {roleProcess.map((role, index) => (
               <div key={index} className="project-section-bordered">
                 <div className="section-header">{role.title}</div>
                 <div className="section-content">
                   <p className="role-description">{role.description}</p>
+                  <div style={{
+                    position: "relative",
+                    width: "100%",
+                    margin: "1.5rem 0",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}>
+                    <Image
+                      src="/neurabox.png"
+                      alt="Neura Extension Features"
+                      width={600}
+                      height={400}
+                      quality={100}
+                      style={{
+                        width: "100%",
+                        maxWidth: "600px",
+                        height: "auto",
+                        borderRadius: "8px"
+                      }}
+                    />
+                  </div>
                   {role.tasks.length > 0 && (
                     <ul className="process-tasks">
                       {role.tasks.map((task, taskIndex) => (
@@ -199,6 +274,38 @@ export default function NeuraProject() {
                 </div>
               </div>
             ))}
+
+            {/* Demo Section */}
+            <div className="project-section-bordered">
+              <div className="section-header">Live Demo</div>
+              <div className="section-content">
+                <p className="role-description">
+                  Experience Neura in action as it intelligently extracts and processes information from web pages, providing instant insights and summaries.
+                </p>
+                <div style={{
+                  position: "relative",
+                  width: "100%",
+                  margin: "1.5rem 0",
+                  display: "flex",
+                  justifyContent: "center"
+                }}>
+                  <Image
+                    src="/neura.gif"
+                    alt="Neura Extension Demo"
+                    width={800}
+                    height={500}
+                    quality={100}
+                    unoptimized
+                    style={{
+                      width: "100%",
+                      maxWidth: "800px",
+                      height: "auto",
+                      borderRadius: "8px"
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           </div>
         )}
