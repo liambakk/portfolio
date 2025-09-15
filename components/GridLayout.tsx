@@ -85,8 +85,8 @@ const GridLayout = () => {
         <div
           style={{
             position: 'absolute',
-            top: '476px',
-            left: 'calc(50% - 2px)',
+            top: 'calc(152px + 324px)',
+            left: 'calc(50% + 40px)',
             right: '30px',
             height: '1px',
             background: 'var(--border)',
@@ -216,7 +216,7 @@ const GridLayout = () => {
                   setPreviewImage(null);
                 }}
                 style={!isMobile ? {
-                  marginLeft: '-30px',
+                  marginLeft: '20px',
                   paddingLeft: '0',
                   borderLeft: '1px solid var(--border)',
                   borderRight: '1px solid var(--border)',
@@ -278,7 +278,7 @@ const GridLayout = () => {
               <div
                 className="about-content-box"
                 style={!isMobile ? {
-                  marginLeft: '-30px',
+                  marginLeft: '20px',
                   borderLeft: '1px solid var(--border)',
                   borderRight: '1px solid var(--border)',
                   marginRight: '-1px'
@@ -298,7 +298,7 @@ const GridLayout = () => {
               <div
                 className="contact-content-box"
                 style={!isMobile ? {
-                  marginLeft: '-30px',
+                  marginLeft: '20px',
                   borderLeft: '1px solid var(--border)',
                   borderRight: '1px solid var(--border)',
                   marginRight: '-1px'

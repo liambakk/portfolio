@@ -361,7 +361,7 @@ body {
   margin-bottom: 12px;
   margin-top: -8px;
   letter-spacing: -1.5px;
-  padding-left: calc(50% - 30px);
+  padding-left: calc(50% + 20px);
   line-height: 1;
   padding-bottom: 5px;
 }
@@ -371,7 +371,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(50% - 30px);
+  padding-left: calc(50% + 20px);
   position: relative;
 }
 
@@ -389,7 +389,8 @@ body {
 /* Inner container for cases */
 .cases-inner {
   position: relative;
-  width: 100%;
+  width: 82%;
+  min-height: 324px;
   /* Borders now handled in GridLayout component */
 }
 
@@ -417,7 +418,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(50% - 30px);
+  padding-left: calc(50% + 20px);
   position: relative;
 }
 
@@ -430,8 +431,8 @@ body {
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 100%;
-  min-height: 323px;
+  width: 82%;
+  min-height: 324px;
   margin-left: -1px;
 }
 
@@ -440,7 +441,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(50% - 30px);
+  padding-left: calc(50% + 20px);
   position: relative;
 }
 
@@ -451,8 +452,8 @@ body {
   border-bottom: 0px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
-  width: 100%;
-  min-height: 323px;
+  width: 82%;
+  min-height: 324px;
   margin-left: -1px;
 }
 
@@ -769,7 +770,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(50% - 30px);
+  padding-left: calc(50% + 20px);
   position: relative;
 }
 
@@ -782,8 +783,8 @@ body {
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 100%;
-  min-height: 323px;
+  width: 82%;
+  min-height: 324px;
   margin-left: -1px;
 }
 
