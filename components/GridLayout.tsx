@@ -13,9 +13,19 @@ const GridLayout = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const cases = [
     { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay" },
@@ -37,8 +47,6 @@ const GridLayout = () => {
   return (
     <div className="grid-container">
       <CustomCursor />
-      {/* Additional border element */}
-      <div className="horizontal-border-bottom"></div>
       
       {/* Top Bar */}
       <div className="top-bar">
@@ -107,12 +115,19 @@ const GridLayout = () => {
           <div className="cases-section">
             <h1 className="section-title">Work</h1>
             <div className="cases-list" ref={casesListRef}>
-              <div 
+              <div
                 className="cases-inner"
                 onMouseLeave={() => {
                   setHoveredIndex(null);
                   setPreviewImage(null);
                 }}
+                style={!isMobile ? {
+                  marginLeft: '-30px',
+                  paddingLeft: '30px',
+                  borderLeft: '1px solid var(--border)',
+                  borderRight: '1px solid var(--border)',
+                  marginRight: '-1px'
+                } : {}}
               >
                 {hoveredIndex !== null && (
                   <div 
@@ -129,19 +144,63 @@ const GridLayout = () => {
                     }}
                   />
                 )}
-                {cases.map((caseItem, index) => (
-                  <div
-                    key={caseItem.id}
-                    className="case-item"
-                    onMouseEnter={() => {
-                      setHoveredIndex(index);
-                      setPreviewImage(caseItem.preview);
-                    }}
-                    onClick={() => handleProjectClick(caseItem.slug)}
-                  >
-                    {caseItem.title}
-                  </div>
-                ))}
+                {cases.map((caseItem, index) => {
+                  const isLastItem = index === cases.length - 1;
+
+                  return (
+                    <div
+                      key={caseItem.id}
+                      className="case-item"
+                      onMouseEnter={() => {
+                        setHoveredIndex(index);
+                        setPreviewImage(caseItem.preview);
+                      }}
+                      onClick={() => handleProjectClick(caseItem.slug)}
+                      style={{
+                        padding: '24px 20px',
+                        fontSize: '20px',
+                        borderBottom: isLastItem ? 'none' : '1px solid var(--border)',
+                        fontWeight: 400,
+                        width: '100%',
+                        position: 'relative',
+                        zIndex: 1,
+                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        color: hoveredIndex === index ? '#000000' : 'inherit'
+                      }}
+                    >
+                      {caseItem.title}
+                      {isLastItem && !isMobile && (
+                        <>
+                          {/* Horizontal border extending from last case item */}
+                          <div
+                            style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: '-30px',
+                              width: 'calc(100% + 30px + 892px)',
+                              height: '1px',
+                              background: 'var(--border)',
+                              pointerEvents: 'none'
+                            }}
+                          />
+                          {/* Right vertical border extending upward */}
+                          <div
+                            style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 'calc(100% + 862px)',
+                              width: '1px',
+                              height: '324px',
+                              background: 'var(--border)',
+                              zIndex: 10,
+                              pointerEvents: 'none'
+                            }}
+                          />
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

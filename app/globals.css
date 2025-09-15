@@ -189,41 +189,7 @@ body {
   z-index: 100;
 }
 
-/* Horizontal border line */
-.grid-container::after {
-  content: '';
-  position: absolute;
-  top: 152px;
-  left: 100px;
-  right: 30px;
-  height: 1px;
-  background: var(--border);
-  z-index: 10;
-}
-
-/* Vertical border line from right edge */
-.grid-container::before {
-  content: '';
-  position: absolute;
-  top: 152px;
-  right: 30px;
-  height: 324px;
-  width: 1px;
-  background: var(--border);
-  z-index: 10;
-}
-
-
-/* Horizontal border from bottom of vertical - Main page */
-.horizontal-border-bottom {
-  position: absolute;
-  top: calc(152px + 324px);
-  right: 30px;
-  width: 892px;
-  height: 1px;
-  background: var(--border);
-  z-index: 10;
-}
+/* All main page borders now handled in GridLayout component */
 
 
 /* Vertical border only for project pages */
@@ -433,16 +399,6 @@ body {
   position: relative;
 }
 
-.cases-list::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(100% - 922px);
-  width: 1px;
-  background: var(--border);
-}
-
 /* Removed border to the left of social section */
 /* .cases-list::after {
   content: '';
@@ -458,18 +414,7 @@ body {
 .cases-inner {
   position: relative;
   width: 85%;
-}
-
-
-
-.cases-inner::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -1px;
-  width: 1px;
-  background: var(--border);
+  /* Borders now handled in GridLayout component */
 }
 
 /* Sliding fill that moves between items */
@@ -485,23 +430,10 @@ body {
   pointer-events: none;
 }
 
+/* Case item styles moved to GridLayout component */
 .case-item {
-  padding: 24px 20px;
-  font-size: 20px;
-  border-bottom: 1px solid var(--border);
-  font-weight: 400;
-  width: 100%;
-  position: relative;
-  z-index: 1;
-  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.case-item:last-child {
-  border-bottom: none;
-}
-
-.case-item:hover {
-  color: #000000;
+  /* Base styles now in component inline styles */
+  cursor: pointer;
 }
 
 /* About Section */
@@ -1219,9 +1151,6 @@ body {
     width: clamp(250px, 40vw, 600px);
   }
   
-  .horizontal-border-bottom {
-    width: clamp(50%, 60vw, 700px);
-  }
 }
 
 /* Main Page Responsive - Mobile */
@@ -1239,14 +1168,13 @@ body {
   }
   
   /* Hide decorative borders on mobile */
-  .grid-container::after,
-  .grid-container::before,
-  .horizontal-border-bottom,
-  .cases-list::before,
-  .cases-inner::before,
-  .cases-inner::after,
   .left-sidebar::after {
     display: none;
+  }
+
+  .cases-inner {
+    /* Reset for mobile */
+    width: 100%;
   }
   
   .top-bar {
