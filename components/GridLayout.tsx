@@ -14,13 +14,14 @@ const GridLayout = () => {
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth < 1025);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -47,7 +48,39 @@ const GridLayout = () => {
   return (
     <div className="grid-container">
       <CustomCursor />
-      
+
+      {/* Top horizontal border */}
+      {!isMobile && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '152px',
+            left: '100px',
+            right: '30px',
+            height: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
+      {/* Vertical border connecting top to bottom at right edge */}
+      {!isMobile && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '152px',
+            right: '30px',
+            width: '1px',
+            height: '324px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
       {/* Top Bar */}
       <div className="top-bar">
         <div className="copyright">© 2025</div>
@@ -98,8 +131,32 @@ const GridLayout = () => {
       </div>
 
       {/* Left Sidebar - Logo */}
-      <div className="left-sidebar">
+      <div
+        className="left-sidebar"
+        style={{
+          gridArea: 'left-sidebar',
+          display: isMobile ? 'none' : 'flex',
+          alignItems: 'flex-start',
+          paddingTop: '16px',
+          paddingLeft: '32px',
+          position: 'relative'
+        }}
+      >
         <div className="logo">LB</div>
+        {/* Horizontal border under logo */}
+        {!isMobile && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '72px',
+              left: '30px',
+              right: '0',
+              height: '1px',
+              background: 'var(--border)',
+              pointerEvents: 'none'
+            }}
+          />
+        )}
       </div>
 
       {/* Project Preview */}
@@ -123,7 +180,7 @@ const GridLayout = () => {
                 }}
                 style={!isMobile ? {
                   marginLeft: '-30px',
-                  paddingLeft: '30px',
+                  paddingLeft: '0',
                   borderLeft: '1px solid var(--border)',
                   borderRight: '1px solid var(--border)',
                   marginRight: '-1px'
@@ -176,8 +233,8 @@ const GridLayout = () => {
                             style={{
                               position: 'absolute',
                               bottom: 0,
-                              left: '-30px',
-                              width: 'calc(100% + 30px + 892px)',
+                              left: '0',
+                              right: 'calc(-100vw + 30px + 100px)',
                               height: '1px',
                               background: 'var(--border)',
                               pointerEvents: 'none'
@@ -232,18 +289,46 @@ const GridLayout = () => {
       </div>
 
       {/* Right Sidebar - Social Links */}
-      <div className="right-sidebar">
-        <div className="social-links">
+      <div
+        className="right-sidebar"
+        style={!isMobile ? {
+          gridArea: 'right-sidebar',
+          display: 'flex',
+          alignItems: 'flex-start',
+          paddingTop: '90px',
+          paddingLeft: '0',
+          marginLeft: 'calc(-15% - 160px)',
+          justifyContent: 'flex-start',
+          position: 'relative'
+        } : {
+          display: 'none'
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}
+        >
           {socialLinks.map((social) => (
             <a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="social-link"
               aria-label={social.label}
+              onMouseEnter={() => setHoveredSocial(social.label)}
+              onMouseLeave={() => setHoveredSocial(null)}
+              style={{
+                color: hoveredSocial === social.label ? 'var(--foreground)' : '#ffffff',
+                textDecoration: 'none',
+                fontSize: '13px',
+                transition: 'color 0.2s',
+                fontWeight: 400
+              }}
             >
-              <span className="social-text">{social.label}</span>
+              {social.label}
             </a>
           ))}
         </div>

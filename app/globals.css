@@ -68,7 +68,7 @@ select {
 }
 
 /* Hide scrollbar on mobile while maintaining scroll functionality */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   /* Hide scrollbar for webkit browsers */
   .main-content::-webkit-scrollbar,
   .project-scrollable-content::-webkit-scrollbar {
@@ -189,7 +189,7 @@ body {
   z-index: 100;
 }
 
-/* All main page borders now handled in GridLayout component */
+/* Top horizontal border now handled in GridLayout component */
 
 
 /* Vertical border only for project pages */
@@ -333,24 +333,10 @@ body {
   color: #ffffff;
 }
 
-/* Left Sidebar */
+/* Left Sidebar - styles moved to GridLayout component */
 .left-sidebar {
+  /* Grid area preserved for layout */
   grid-area: left-sidebar;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 16px;
-  padding-left: 32px;
-  position: relative;
-}
-
-.left-sidebar::after {
-  content: '';
-  position: absolute;
-  top: 72px;
-  left: 30px;
-  right: 0;
-  height: 1px;
-  background: var(--border);
 }
 
 .logo {
@@ -484,35 +470,12 @@ body {
   color: var(--muted);
 }
 
-/* Right Sidebar */
+/* Right Sidebar - styles moved to GridLayout component */
 .right-sidebar {
   grid-area: right-sidebar;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 90px;
-  padding-left: 0;
-  margin-left: -120px;
-  justify-content: flex-start;
-  position: relative;
 }
 
-.social-links {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.social-link {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 13px;
-  transition: color 0.2s;
-  font-weight: 400;
-}
-
-.social-link:hover {
-  color: var(--foreground);
-}
+/* Social links styles moved to GridLayout component */
 
 .social-text {
   display: inline-block;
@@ -668,7 +631,7 @@ body {
 }
 
 /* Desktop styles for Relay images - move right on desktop */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1025px) {
   .relay-images-container {
     padding-left: 100px !important;
     margin-left: 0 !important;
@@ -920,7 +883,7 @@ body {
 }
 
 /* Responsive Design - Mobile */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .project-page-container {
     overflow-x: hidden;
   }
@@ -1120,41 +1083,8 @@ body {
   }
 }
 
-/* Main Page Responsive - Tablet */
+/* Main Page Responsive - Mobile (all screens < 1025px) */
 @media screen and (max-width: 1024px) {
-  .grid-container {
-    grid-template-columns: 80px 1fr 140px;
-  }
-  
-  .section-title {
-    padding-left: 20px;
-    font-size: 32px;
-  }
-  
-  .cases-list,
-  .about-content,
-  .contact-content {
-    padding-left: 20px;
-  }
-  
-  .cases-inner,
-  .about-content-box,
-  .contact-content-box {
-    width: 90%;
-  }
-  
-  .right-sidebar {
-    margin-left: -80px;
-  }
-  
-  .project-preview img {
-    width: clamp(250px, 40vw, 600px);
-  }
-  
-}
-
-/* Main Page Responsive - Mobile */
-@media screen and (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr auto;
@@ -1167,11 +1097,6 @@ body {
     flex-direction: column;
   }
   
-  /* Hide decorative borders on mobile */
-  .left-sidebar::after {
-    display: none;
-  }
-
   .cases-inner {
     /* Reset for mobile */
     width: 100%;
@@ -1212,9 +1137,7 @@ body {
     border-right: none !important;
   }
   
-  .left-sidebar {
-    display: none; /* Hide the entire sidebar including LB logo on mobile */
-  }
+  /* Left sidebar hidden via component on mobile */
   
   .main-content {
     padding: 20px;
@@ -1254,16 +1177,9 @@ body {
     display: none;
   }
   
-  .right-sidebar {
-    display: none; /* Hide on mobile since we use MobileFooter */
-  }
+  /* Right sidebar hidden via component on mobile */
   
-  .social-links {
-    flex-direction: row;
-    justify-content: center;
-    gap: 30px;
-    flex: 1;
-  }
+  /* Social links styles handled in component */
   
   .mobile-copyright-home {
     display: block;
@@ -1301,7 +1217,7 @@ body {
 }
 
 /* Mobile Footer for Project Pages - only visible on mobile */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .project-mobile-footer {
     display: block;
     position: relative;
@@ -1378,7 +1294,7 @@ body {
 }
 
 /* Mobile responsive for relay videos */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .relay-videos-container {
     flex-direction: column;
     gap: 20px;
