@@ -152,7 +152,6 @@ body {
   height: 80px;
   padding: 0;
   position: relative;
-  border-bottom: 0px solid var(--border);
 }
 
 .project-main-area {
@@ -180,7 +179,7 @@ body {
 .project-right-sidebar-fixed {
   position: fixed;
   right: 130px;
-  top: 170px;
+  top: 145px; /* Precisely aligned with title bottom border */
   width: 180px;
   display: flex;
   align-items: flex-start;
@@ -203,16 +202,7 @@ body {
   z-index: 10;
 }
 
-/* Vertical line on left side for project pages - from bottom to under preview */
-.project-vertical-line-left {
-  position: absolute;
-  left: -70px;
-  top: 57px;
-  width: 1px;
-  height: 3473px;
-  background: var(--border);
-  z-index: 10;
-}
+/* Vertical line now handled by BorderSystem component */
 
 /* Top Bar */
 .top-bar {
@@ -475,7 +465,27 @@ body {
   grid-area: right-sidebar;
 }
 
-/* Social links styles moved to GridLayout component */
+/* Social links styles */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 20px;
+  padding-top: 30px; /* Position text content below the border junction */
+}
+
+.social-link {
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.social-link:hover {
+  opacity: 1;
+}
 
 .social-text {
   display: inline-block;
@@ -532,36 +542,13 @@ body {
   padding-bottom: 5px;
 }
 
-/* Project Title Border - spans full width */
+/* Project Title Border - now handled by BorderSystem component */
 .project-title-border {
   position: absolute;
   left: -70px;
   right: -10px;
   height: 1px;
-  background: var(--border);
   margin-top: 0px;
-}
-
-/* Left vertical border */
-.project-title-border::before {
-  content: '';
-  position: absolute;
-  right: 300px;
-  top: 0;
-  width: 1px;
-  height: 3530px;
-  background: var(--border);
-}
-
-/* Vertical border to the right of image */
-.project-title-border::after {
-  content: '';
-  position: absolute;
-  right: 0px;
-  top: 0;
-  width: 1px;
-  height: 3530px;
-  background: var(--border);
 }
 
 /* Project Sections Container */
@@ -576,16 +563,12 @@ body {
   margin-right: 0;
 }
 
-/* Individual bordered sections */
+/* Individual bordered sections - borders now handled by BorderSystem */
 .project-section-bordered {
   display: grid;
   grid-template-columns: 240px 1fr;
-  border-bottom: 1px solid var(--border);
   min-height: 120px;
-}
-
-.project-section-bordered:first-child {
-  border-top: 1px solid var(--border);
+  position: relative;
 }
 
 /* Section header - left column */
@@ -594,7 +577,6 @@ body {
   font-size: 14px;
   font-weight: 400;
   color: var(--foreground);
-  border-right: 1px solid var(--border);
   background: var(--background);
   display: flex;
   align-items: flex-start;
@@ -843,9 +825,7 @@ body {
     width: clamp(100px, 10vw, 150px);
   }
   
-  .project-title-border::before {
-    right: clamp(150px, 18vw, 250px);
-  }
+  /* Title border positioning handled by BorderSystem */
   
   .nav-tabs-right {
     width: calc(60% - 2px);
@@ -904,13 +884,9 @@ body {
   
   .project-section-bordered {
     grid-template-columns: 1fr;
-    border-left: none;
-    border-right: none;
   }
   
   .section-header {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
     padding: 12px 20px;
   }
   
@@ -1002,12 +978,7 @@ body {
     gap: 24px;
   }
   
-  /* Hide decorative lines on mobile */
-  .project-vertical-line-left,
-  .project-title-border::before,
-  .project-title-border::after {
-    display: none;
-  }
+  /* Decorative lines handled by BorderSystem responsive props */
   
   .project-title-border {
     position: static;

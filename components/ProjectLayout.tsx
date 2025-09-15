@@ -8,11 +8,14 @@ import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import { ProjectData } from "@/types/project";
+import BorderSystem, { BorderContainer } from "./BorderSystem";
 
 type ProjectLayoutProps = ProjectData;
 
 const ProjectLayout = ({
   title,
+  titleIcon,
+  externalLink,
   previewImage,
   overview,
   team,
@@ -75,26 +78,39 @@ const ProjectLayout = ({
         
         {/* Fixed Social Links - Outside scrollable area */}
         <div className="project-right-sidebar-fixed">
-        <div className="social-links">
-          {socialLinks.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link"
-              aria-label={social.label}
-            >
-              <span className="social-text">{social.label}</span>
-            </a>
-          ))}
+          <div className="social-links">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link"
+                aria-label={social.label}
+              >
+                <span className="social-text">{social.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
       
       {/* Scrollable Content Wrapper */}
       <div className="project-scrollable-content">
         {/* Top Bar */}
-        <div className="project-top-bar">
+        <BorderContainer
+          className="project-top-bar"
+          borders={[
+            {
+              type: "horizontal",
+              position: "bottom",
+              customStyles: {
+                left: "70px",
+                right: "70px",
+                width: "calc(100% - 140px)"
+              }
+            }
+          ]}
+        >
           <div className="copyright">© 2025</div>
           
           <div
@@ -159,7 +175,7 @@ const ProjectLayout = ({
               Back to Work
             </button>
           </div>
-        </div>
+        </BorderContainer>
 
         {/* Main Content Area */}
         <div className="project-main-area">
@@ -174,11 +190,19 @@ const ProjectLayout = ({
           <div className="project-main-content">
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
-            {/* Vertical line on left side */}
-            <div className="project-vertical-line-left"></div>
             <div className="project-section">
-              <h1 className="project-page-title">{title}</h1>
-              <div className="project-title-border"></div>
+              <h1 className="project-page-title" style={externalLink ? { display: "flex", alignItems: "center", gap: "12px" } : undefined}>
+                {title}
+                {externalLink && titleIcon}
+              </h1>
+              <BorderContainer
+                className="project-title-border"
+                borders={[
+                  { type: "horizontal", position: "bottom" }
+                ]}
+              >
+                <div />
+              </BorderContainer>
               {previewImage && (
                 <div className="project-image-container">
                   <Image 
@@ -194,23 +218,39 @@ const ProjectLayout = ({
             </div>
             <div className="project-sections-container">
               {/* Overview Section */}
-              <div className="project-section-bordered">
+              <BorderContainer
+                className="project-section-bordered"
+                borders={[
+                  { type: "horizontal", position: "top", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } },
+                  { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
+                ]}
+              >
                 <div className="section-header">Overview</div>
                 <div className="section-content">
                   {overview.description}
                 </div>
-              </div>
+              </BorderContainer>
 
             {/* Team Section */}
-            <div className="project-section-bordered">
+            <BorderContainer
+              className="project-section-bordered"
+              borders={[
+                { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
+              ]}
+            >
               <div className="section-header">Team</div>
               <div className="section-content">
                 {team.description}
               </div>
-            </div>
+            </BorderContainer>
 
             {/* Goals Section */}
-            <div className="project-section-bordered">
+            <BorderContainer
+              className="project-section-bordered"
+              borders={[
+                { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
+              ]}
+            >
               <div className="section-header">Goals</div>
               <div className="section-content">
                 <ul className="goals-list">
@@ -219,14 +259,74 @@ const ProjectLayout = ({
                   ))}
                 </ul>
               </div>
-            </div>
+            </BorderContainer>
 
             {/* Role & Process Section */}
             {roleProcess.map((role, index) => (
-              <div key={index} className="project-section-bordered">
+              <BorderContainer
+                key={index}
+                className="project-section-bordered"
+                borders={[
+                  { type: "horizontal", position: "bottom", customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
+                ]}
+              >
                 <div className="section-header">{role.title}</div>
                 <div className="section-content">
-                  <p className="role-description">{role.description}</p>
+                  {role.description && <p className="role-description">{role.description}</p>}
+                  {/* Handle Relay-specific images */}
+                  {role.images && (
+                    <div className="relay-images-container role-image-container" style={{
+                      display: "flex",
+                      gap: "20px",
+                      padding: "20px 0",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}>
+                      {role.images.map((img, imgIndex) => (
+                        <Image
+                          key={imgIndex}
+                          src={img}
+                          alt={`${role.title} image ${imgIndex + 1}`}
+                          width={450}
+                          height={300}
+                          quality={100}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {role.bottomImage && (
+                    <div className="relay-logo-container role-image-container" style={{
+                      display: "flex",
+                      padding: "20px 0",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}>
+                      <Image
+                        src={role.bottomImage}
+                        alt={`${role.title} logo`}
+                        width={938}
+                        height={300}
+                        quality={100}
+                      />
+                    </div>
+                  )}
+                  {role.image && (
+                    <div className="relay-design-system-container" style={{
+                      display: "flex",
+                      padding: "40px 0",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}>
+                      <Image
+                        src={role.image}
+                        alt={`${role.title} design system`}
+                        width={1600}
+                        height={900}
+                        quality={100}
+                      />
+                    </div>
+                  )}
+                  {role.customContent}
                   {role.tasks.length > 0 && (
                     <ul className="process-tasks">
                       {role.tasks.map((task, taskIndex) => (
@@ -235,7 +335,7 @@ const ProjectLayout = ({
                     </ul>
                   )}
                 </div>
-              </div>
+              </BorderContainer>
             ))}
           </div>
           </div>
@@ -246,10 +346,71 @@ const ProjectLayout = ({
             <div className="project-sections-container" style={{ marginTop: '0' }}>
               {/* Role & Process Section for Process Tab */}
               {roleProcess.map((role, index) => (
-                <div key={index} className="project-section-bordered">
+                <BorderContainer
+                  key={index}
+                  className="project-section-bordered"
+                  borders={[
+                    ...(index === 0 ? [{ type: "horizontal" as const, position: "top" as const, thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }] : []),
+                    { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
+                  ]}
+                >
                   <div className="section-header">{role.title}</div>
                   <div className="section-content">
-                    <p className="role-description">{role.description}</p>
+                    {role.description && <p className="role-description">{role.description}</p>}
+                    {/* Handle Relay-specific images */}
+                    {role.images && (
+                      <div className="relay-images-container role-image-container" style={{
+                        display: "flex",
+                        gap: "20px",
+                        padding: "20px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
+                        {role.images.map((img, imgIndex) => (
+                          <Image
+                            key={imgIndex}
+                            src={img}
+                            alt={`${role.title} image ${imgIndex + 1}`}
+                            width={450}
+                            height={300}
+                            quality={100}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {role.bottomImage && (
+                      <div className="relay-logo-container role-image-container" style={{
+                        display: "flex",
+                        padding: "20px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
+                        <Image
+                          src={role.bottomImage}
+                          alt={`${role.title} logo`}
+                          width={938}
+                          height={300}
+                          quality={100}
+                        />
+                      </div>
+                    )}
+                    {role.image && (
+                      <div className="relay-design-system-container" style={{
+                        display: "flex",
+                        padding: "40px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
+                        <Image
+                          src={role.image}
+                          alt={`${role.title} design system`}
+                          width={1600}
+                          height={900}
+                          quality={100}
+                        />
+                      </div>
+                    )}
+                    {role.customContent}
                     {role.tasks.length > 0 && (
                       <ul className="process-tasks">
                         {role.tasks.map((task, taskIndex) => (
@@ -258,7 +419,7 @@ const ProjectLayout = ({
                       </ul>
                     )}
                   </div>
-                </div>
+                </BorderContainer>
               ))}
             </div>
           </div>

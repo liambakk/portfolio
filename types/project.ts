@@ -15,10 +15,16 @@ export interface RoleProcess {
   title: string;
   description: string;
   tasks: ProcessTask[];
+  image?: string;
+  images?: string[];
+  bottomImage?: string;
+  customContent?: React.ReactNode;
 }
 
 export interface ProjectData {
   title: string;
+  titleIcon?: React.ReactNode;
+  externalLink?: string;
   overview: {
     description: string;
   };
