@@ -86,7 +86,7 @@ const GridLayout = () => {
           style={{
             position: 'absolute',
             top: 'calc(152px + 324px)',
-            left: 'calc(50% - 20px)',
+            left: 'calc(50% + 40px)',
             right: '30px',
             height: '1px',
             background: 'var(--border)',
@@ -253,7 +253,7 @@ const GridLayout = () => {
                       style={{
                         padding: '24px 20px',
                         fontSize: '20px',
-                        borderBottom: isLastItem ? 'none' : '1px solid var(--border)',
+                        borderBottom: '1px solid var(--border)',
                         fontWeight: 400,
                         width: '100%',
                         position: 'relative',
