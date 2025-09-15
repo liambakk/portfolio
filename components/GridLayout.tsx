@@ -86,7 +86,7 @@ const GridLayout = () => {
           style={{
             position: 'absolute',
             top: 'calc(152px + 324px)',
-            left: 'calc(50% + 40px)',
+            left: 'calc(50% - 20px)',
             right: '30px',
             height: '1px',
             background: 'var(--border)',
