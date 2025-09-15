@@ -316,14 +316,12 @@ const GridLayout = () => {
       <div
         className="right-sidebar"
         style={!isMobile ? {
-          gridArea: 'right-sidebar',
+          position: 'absolute',
+          right: '60px',
+          top: '242px',
           display: 'flex',
           alignItems: 'flex-start',
-          paddingTop: '90px',
-          paddingLeft: '0',
-          marginLeft: 'calc(-15% - 160px)',
-          justifyContent: 'flex-start',
-          position: 'relative'
+          justifyContent: 'flex-start'
         } : {
           display: 'none'
         }}
