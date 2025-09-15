@@ -787,7 +787,7 @@ body {
 /* Project Preview */
 .project-preview {
   position: fixed;
-  left: 40px;
+  right: calc(43% + max(183px, 182px + 0.8vw - 11px));
   top: 40%;
   transform: translateY(-50%);
   z-index: 20;
@@ -796,8 +796,10 @@ body {
 }
 
 .project-preview img {
-  width: 780px;
+  width: auto;
   height: auto;
+  max-width: calc(57% - 110px - 0.5vw);
+  max-height: 60vh;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -812,16 +814,6 @@ body {
   }
 }
 
-/* Extra large screens (monitors) - move preview images further right */
-@media screen and (min-width: 1920px) {
-  .project-preview {
-    left: 380px;
-  }
-
-  .project-preview img {
-    width: 820px;
-  }
-}
 
 /* Custom Circle Cursor - Desktop only */
 .cursor {

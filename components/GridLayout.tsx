@@ -81,6 +81,23 @@ const GridLayout = () => {
         />
       )}
 
+      {/* Horizontal border connecting bottom of vertical lines */}
+      {!isMobile && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '476px',
+            left: 'calc(57% - 182px)',
+            right: '30px',
+            height: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
+
       {/* Top Bar */}
       <div className="top-bar">
         <div className="copyright">© 2025</div>
@@ -226,35 +243,6 @@ const GridLayout = () => {
                       }}
                     >
                       {caseItem.title}
-                      {isLastItem && !isMobile && (
-                        <>
-                          {/* Horizontal border extending from last case item */}
-                          <div
-                            style={{
-                              position: 'absolute',
-                              bottom: 0,
-                              left: '0',
-                              right: 'calc(-100vw + 30px + 100px)',
-                              height: '1px',
-                              background: 'var(--border)',
-                              pointerEvents: 'none'
-                            }}
-                          />
-                          {/* Right vertical border extending upward */}
-                          <div
-                            style={{
-                              position: 'absolute',
-                              bottom: 0,
-                              left: 'calc(100% + 862px)',
-                              width: '1px',
-                              height: '324px',
-                              background: 'var(--border)',
-                              zIndex: 10,
-                              pointerEvents: 'none'
-                            }}
-                          />
-                        </>
-                      )}
                     </div>
                   );
                 })}
