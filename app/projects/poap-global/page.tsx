@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
@@ -52,7 +52,7 @@ export default function PoapGlobalProject() {
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 

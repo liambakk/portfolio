@@ -1,36 +1,72 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import { ProjectData } from "@/types/project";
 
-interface ProjectLayoutProps extends ProjectData {}
+type ProjectLayoutProps = ProjectData;
 
-const ProjectLayout = ({ 
-  title, 
+const ProjectLayout = ({
+  title,
   previewImage,
   overview,
   team,
   goals,
-  roleProcess 
+  roleProcess
 }: ProjectLayoutProps) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+  // Initialize touch device detection properly
+  const [isTouchDevice, setIsTouchDevice] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+    return false;
+  });
   const router = useRouter();
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
+  useEffect(() => {
+    // Re-check on mount and resize
+    const checkTouchDevice = () => {
+      const isTouch = 'ontouchstart' in window ||
+                     navigator.maxTouchPoints > 0 ||
+                     window.matchMedia('(pointer: coarse)').matches;
+      setIsTouchDevice(isTouch);
+    };
+
+    checkTouchDevice();
+    window.addEventListener('resize', checkTouchDevice);
+
+    return () => {
+      window.removeEventListener('resize', checkTouchDevice);
+    };
+  }, []);
+
   const handleBackToWork = () => {
     router.push("/");
+  };
+
+  const handleTabHover = (tab: string) => {
+    if (!isTouchDevice) {
+      setHoveredTab(tab);
+    }
+  };
+
+  const handleTabLeave = () => {
+    if (!isTouchDevice) {
+      setHoveredTab(null);
+    }
   };
 
   return (
@@ -61,19 +97,26 @@ const ProjectLayout = ({
         <div className="project-top-bar">
           <div className="copyright">© 2025</div>
           
-          <div 
+          <div
             className="nav-tabs-right"
-            onMouseLeave={() => setHoveredTab(null)}
+            onMouseLeave={handleTabLeave}
           >
-            <div 
+            <div
               className="tab-fill"
               style={{
                 transform: `translateX(${
-                  (hoveredTab || activeTab) === "overview" ? 0 :
-                  (hoveredTab || activeTab) === "process" ? 100 :
-                  200
+                  // On touch devices, never move to the third position
+                  isTouchDevice ? (
+                    activeTab === "process" ? 100 : 0
+                  ) : (
+                    (hoveredTab || activeTab) === "overview" ? 0 :
+                    (hoveredTab || activeTab) === "process" ? 100 :
+                    (hoveredTab || activeTab) === "back" ? 200 : 0
+                  )
                 }%)`,
-                opacity: hoveredTab !== null || activeTab ? 1 : 0
+                opacity: hoveredTab !== null || activeTab ? 1 : 0,
+                // Hide completely on touch devices when no active tab
+                display: isTouchDevice && !activeTab ? 'none' : 'block'
               }}
             />
             <button
@@ -81,7 +124,11 @@ const ProjectLayout = ({
                 (hoveredTab === "overview" || (!hoveredTab && activeTab === "overview")) ? "has-fill" : ""
               }`}
               onClick={() => setActiveTab("overview")}
-              onMouseEnter={() => setHoveredTab("overview")}
+              onMouseEnter={() => handleTabHover("overview")}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                setActiveTab("overview");
+              }}
             >
               Overview
             </button>
@@ -90,16 +137,24 @@ const ProjectLayout = ({
                 (hoveredTab === "process" || (!hoveredTab && activeTab === "process")) ? "has-fill" : ""
               }`}
               onClick={() => setActiveTab("process")}
-              onMouseEnter={() => setHoveredTab("process")}
+              onMouseEnter={() => handleTabHover("process")}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                setActiveTab("process");
+              }}
             >
               Process
             </button>
             <button
               className={`tab ${activeTab === "back" ? "active" : ""} ${
-                (hoveredTab === "back" || (!hoveredTab && activeTab === "back")) ? "has-fill" : ""
+                (!isTouchDevice && hoveredTab === "back") ? "has-fill" : ""
               }`}
               onClick={handleBackToWork}
-              onMouseEnter={() => setHoveredTab("back")}
+              onMouseEnter={() => handleTabHover("back")}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleBackToWork();
+              }}
             >
               Back to Work
             </button>

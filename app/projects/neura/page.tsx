@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import { FiExternalLink } from "react-icons/fi";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
@@ -53,7 +53,7 @@ export default function NeuraProject() {
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
@@ -275,6 +275,27 @@ export default function NeuraProject() {
                       style={{
                         width: "100%",
                         maxWidth: "600px",
+                        height: "auto",
+                        borderRadius: "8px"
+                      }}
+                    />
+                  </div>
+                  <div style={{
+                    width: "100%",
+                    margin: "2rem 0",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}>
+                    <Image
+                      src="/neurabox.gif"
+                      alt="Neura Extension Demo"
+                      width={800}
+                      height={600}
+                      quality={100}
+                      unoptimized
+                      style={{
+                        width: "100%",
+                        maxWidth: "800px",
                         height: "auto",
                         borderRadius: "8px"
                       }}

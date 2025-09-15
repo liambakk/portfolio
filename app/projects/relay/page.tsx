@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "@/components/CustomCursor";
 import MobileFooter from "@/components/MobileFooter";
 import Image from "next/image";
@@ -76,7 +76,7 @@ export default function RelayProject() {
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
@@ -252,8 +252,8 @@ export default function RelayProject() {
                       )}
                       {role.bottomImage && (
                         <div className="relay-logo-container" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '20px 0', marginTop: '0', width: '100%', maxWidth: 'none' }}>
-                          <Image 
-                            src={role.bottomImage} 
+                          <Image
+                            src={role.bottomImage}
                             alt="Relay logo"
                             width={938}
                             height={501}
@@ -278,6 +278,39 @@ export default function RelayProject() {
                 </div>
               </div>
             ))}
+
+            {/* Key Features Section */}
+            <div className="project-section-bordered">
+              <div className="section-header">Design in Action</div>
+              <div className="section-content">
+                <div className="relay-videos-container">
+                  <video
+                    src="/mp4/home.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="relay-feature-video"
+                  />
+                  <video
+                    src="/mp4/map.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="relay-feature-video"
+                  />
+                  <video
+                    src="/mp4/messaging.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="relay-feature-video"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           </div>
         )}

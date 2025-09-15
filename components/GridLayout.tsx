@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "./CustomCursor";
+import MobileFooter from "./MobileFooter";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
@@ -29,7 +30,7 @@ const GridLayout = () => {
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
@@ -193,6 +194,9 @@ const GridLayout = () => {
       <div className="bottom-bar">
         <span className="bottom-name">Liam Bakker</span>
       </div>
+
+      {/* Mobile Footer - only visible on mobile */}
+      <MobileFooter />
     </div>
   );
 };

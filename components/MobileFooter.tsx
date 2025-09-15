@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { FaLinkedin, FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin, FaXTwitter, FaGithub } from "react-icons/fa6";
 
 const MobileFooter = () => {
   const socialLinks = [
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
+    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
+    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
   ];
 
   return (
