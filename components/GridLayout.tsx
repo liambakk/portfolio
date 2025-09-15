@@ -50,7 +50,10 @@ const GridLayout = () => {
 
       {/* Top horizontal border */}
       {!isMobile && (
-        <div
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'left' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           style={{
             position: 'absolute',
             top: '152px',
@@ -66,7 +69,10 @@ const GridLayout = () => {
 
       {/* Vertical border connecting top to bottom at right edge */}
       {!isMobile && (
-        <div
+        <motion.div
+          initial={{ scaleY: 0, transformOrigin: 'top' }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           style={{
             position: 'absolute',
             top: '152px',
@@ -82,7 +88,10 @@ const GridLayout = () => {
 
       {/* Horizontal border connecting bottom of vertical lines */}
       {!isMobile && (
-        <div
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'right' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
           style={{
             position: 'absolute',
             top: 'calc(152px + 324px)',
@@ -99,13 +108,23 @@ const GridLayout = () => {
 
       {/* Top Bar */}
       <div className="top-bar">
-        <div className="copyright">© 2025</div>
+        <motion.div
+          className="copyright"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        >
+          © 2025
+        </motion.div>
         
-        <div 
+        <motion.div
           className="nav-tabs-right"
           onMouseLeave={() => setHoveredTab(null)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
         >
-          <div 
+          <div
             className="tab-fill"
             style={{
               transform: `translateX(${
@@ -143,7 +162,7 @@ const GridLayout = () => {
           >
             Contact
           </button>
-        </div>
+        </motion.div>
       </div>
 
       {/* Left Sidebar - Logo */}
@@ -158,10 +177,20 @@ const GridLayout = () => {
           position: 'relative'
         }}
       >
-        <div className="logo">LB</div>
+        <motion.div
+          className="logo"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+        >
+          LB
+        </motion.div>
         {/* Horizontal border under logo */}
         {!isMobile && (
-          <div
+          <motion.div
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
             style={{
               position: 'absolute',
               top: '72px',
@@ -207,7 +236,14 @@ const GridLayout = () => {
       <div className="main-content">
         {activeTab === "work" && (
           <div className="cases-section">
-            <h1 className="section-title">Work</h1>
+            <motion.h1
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            >
+              Work
+            </motion.h1>
             <div className="cases-list" ref={casesListRef}>
               <div
                 className="cases-inner"
@@ -218,11 +254,44 @@ const GridLayout = () => {
                 style={!isMobile ? {
                   marginLeft: '20px',
                   paddingLeft: '0',
-                  borderLeft: '1px solid var(--border)',
-                  borderRight: '1px solid var(--border)',
-                  marginRight: '-1px'
+                  marginRight: '-1px',
+                  position: 'relative'
                 } : {}}
               >
+                {/* Animated left border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                {/* Animated right border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
                 {hoveredIndex !== null && (
                   <div 
                     className="cases-fill"
@@ -239,12 +308,17 @@ const GridLayout = () => {
                   />
                 )}
                 {cases.map((caseItem, index) => {
-                  const isLastItem = index === cases.length - 1;
-
                   return (
-                    <div
+                    <motion.div
                       key={caseItem.id}
                       className="case-item"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "easeOut",
+                        delay: 0.6 + (index * 0.1)
+                      }}
                       onMouseEnter={() => {
                         setHoveredIndex(index);
                         setPreviewImage(caseItem.preview);
@@ -263,7 +337,7 @@ const GridLayout = () => {
                       }}
                     >
                       {caseItem.title}
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -273,19 +347,72 @@ const GridLayout = () => {
 
         {activeTab === "about" && (
           <div className="about-section">
-            <h1 className="section-title">About</h1>
+            <motion.h1
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            >
+              About
+            </motion.h1>
             <div className="about-content">
               <div
                 className="about-content-box"
                 style={!isMobile ? {
                   marginLeft: '20px',
-                  borderLeft: '1px solid var(--border)',
-                  borderRight: '1px solid var(--border)',
-                  marginRight: '-1px'
+                  marginRight: '-1px',
+                  position: 'relative'
                 } : {}}
               >
-                <p>Product designer with over 7 years of experience focused on developing and maintaining design systems.</p>
-                <p className="mt-4">Currently working as a Design System Expert, creating scalable and consistent design solutions.</p>
+                {/* Animated left border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                {/* Animated right border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                >
+                  Product designer with over 7 years of experience focused on developing and maintaining design systems.
+                </motion.p>
+                <motion.p
+                  className="mt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                >
+                  Currently working as a Design System Expert, creating scalable and consistent design solutions.
+                </motion.p>
               </div>
             </div>
           </div>
@@ -293,19 +420,72 @@ const GridLayout = () => {
 
         {activeTab === "contact" && (
           <div className="contact-section">
-            <h1 className="section-title">Contact</h1>
+            <motion.h1
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            >
+              Contact
+            </motion.h1>
             <div className="contact-content">
               <div
                 className="contact-content-box"
                 style={!isMobile ? {
                   marginLeft: '20px',
-                  borderLeft: '1px solid var(--border)',
-                  borderRight: '1px solid var(--border)',
-                  marginRight: '-1px'
+                  marginRight: '-1px',
+                  position: 'relative'
                 } : {}}
               >
-                <p>hello@example.com</p>
-                <p className="mt-2">Based in Your City</p>
+                {/* Animated left border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                {/* Animated right border */}
+                {!isMobile && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                >
+                  hello@example.com
+                </motion.p>
+                <motion.p
+                  className="mt-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                >
+                  Based in Your City
+                </motion.p>
               </div>
             </div>
           </div>
@@ -333,13 +513,20 @@ const GridLayout = () => {
             gap: '8px'
           }}
         >
-          {socialLinks.map((social) => (
-            <a
+          {socialLinks.map((social, index) => (
+            <motion.a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.7 + (index * 0.1)
+              }}
               onMouseEnter={() => setHoveredSocial(social.label)}
               onMouseLeave={() => setHoveredSocial(null)}
               style={{
@@ -351,14 +538,21 @@ const GridLayout = () => {
               }}
             >
               {social.label}
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="bottom-bar">
-        <span className="bottom-name">Liam Bakker</span>
+        <motion.span
+          className="bottom-name"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+        >
+          Liam Bakker
+        </motion.span>
       </div>
 
       {/* Mobile Footer - only visible on mobile */}
