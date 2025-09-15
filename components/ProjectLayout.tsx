@@ -121,18 +121,11 @@ const ProjectLayout = ({
               className="tab-fill"
               style={{
                 transform: `translateX(${
-                  // On touch devices, never move to the third position
-                  isTouchDevice ? (
-                    activeTab === "process" ? 100 : 0
-                  ) : (
-                    (hoveredTab || activeTab) === "overview" ? 0 :
-                    (hoveredTab || activeTab) === "process" ? 100 :
-                    (hoveredTab || activeTab) === "back" ? 200 : 0
-                  )
+                  (hoveredTab || activeTab) === "overview" ? 0 :
+                  (hoveredTab || activeTab) === "back" ? 100 : 0
                 }%)`,
                 opacity: hoveredTab !== null || activeTab ? 1 : 0,
-                // Hide completely on touch devices when no active tab
-                display: isTouchDevice && !activeTab ? 'none' : 'block'
+                width: "50%" // Two tabs instead of three
               }}
             />
             <button
@@ -147,19 +140,6 @@ const ProjectLayout = ({
               }}
             >
               Overview
-            </button>
-            <button
-              className={`tab ${activeTab === "process" ? "active" : ""} ${
-                (hoveredTab === "process" || (!hoveredTab && activeTab === "process")) ? "has-fill" : ""
-              }`}
-              onClick={() => setActiveTab("process")}
-              onMouseEnter={() => handleTabHover("process")}
-              onTouchStart={(e) => {
-                e.preventDefault();
-                setActiveTab("process");
-              }}
-            >
-              Process
             </button>
             <button
               className={`tab ${activeTab === "back" ? "active" : ""} ${
@@ -197,7 +177,7 @@ const ProjectLayout = ({
               </h1>
               {/* Rectangular border: single element for horizontal and both vertical lines */}
               <div
-                className="rectangular-border"
+                className="rectangular-border hidden lg:block"
                 style={{
                   position: "absolute",
                   left: "-70px",
@@ -211,7 +191,21 @@ const ProjectLayout = ({
                   zIndex: 1
                 }}
                 aria-hidden="true"
-              />
+              >
+                {/* Inner vertical line connecting all section borders to bottom */}
+                <div
+                  className="hidden lg:block"
+                  style={{
+                    position: "absolute",
+                    right: "276px", // Aligned with actual content border endpoints
+                    top: "0",
+                    height: "100%", // Full height to connect to bottom border
+                    width: "1px",
+                    backgroundColor: "var(--border)",
+                    zIndex: 1
+                  }}
+                />
+              </div>
               {previewImage && (
                 <div className="project-image-container">
                   <Image 
@@ -275,9 +269,11 @@ const ProjectLayout = ({
               <BorderContainer
                 key={index}
                 className="project-section-bordered"
-                borders={[
-                  { type: "horizontal", position: "bottom", customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
-                ]}
+                borders={
+                  index === roleProcess.length - 1
+                    ? [] // No border for the last item
+                    : [{ type: "horizontal", position: "bottom", customStyles: { right: "-50px", width: "calc(100% + 50px)" } }]
+                }
               >
                 <div className="section-header">{role.title}</div>
                 <div className="section-content">
@@ -350,89 +346,6 @@ const ProjectLayout = ({
           </div>
         )}
 
-        {activeTab === "process" && (
-          <div className="project-content-wrapper">
-            <div className="project-sections-container" style={{ marginTop: '0' }}>
-              {/* Role & Process Section for Process Tab */}
-              {roleProcess.map((role, index) => (
-                <BorderContainer
-                  key={index}
-                  className="project-section-bordered"
-                  borders={[
-                    ...(index === 0 ? [{ type: "horizontal" as const, position: "top" as const, thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }] : []),
-                    { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
-                  ]}
-                >
-                  <div className="section-header">{role.title}</div>
-                  <div className="section-content">
-                    {role.description && <p className="role-description">{role.description}</p>}
-                    {/* Handle Relay-specific images */}
-                    {role.images && (
-                      <div className="relay-images-container role-image-container" style={{
-                        display: "flex",
-                        gap: "20px",
-                        padding: "20px 0",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
-                        {role.images.map((img, imgIndex) => (
-                          <Image
-                            key={imgIndex}
-                            src={img}
-                            alt={`${role.title} image ${imgIndex + 1}`}
-                            width={450}
-                            height={300}
-                            quality={100}
-                          />
-                        ))}
-                      </div>
-                    )}
-                    {role.bottomImage && (
-                      <div className="relay-logo-container role-image-container" style={{
-                        display: "flex",
-                        padding: "20px 0",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
-                        <Image
-                          src={role.bottomImage}
-                          alt={`${role.title} logo`}
-                          width={938}
-                          height={300}
-                          quality={100}
-                        />
-                      </div>
-                    )}
-                    {role.image && (
-                      <div className="relay-design-system-container" style={{
-                        display: "flex",
-                        padding: "40px 0",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
-                        <Image
-                          src={role.image}
-                          alt={`${role.title} design system`}
-                          width={1600}
-                          height={900}
-                          quality={100}
-                        />
-                      </div>
-                    )}
-                    {role.customContent}
-                    {role.tasks.length > 0 && (
-                      <ul className="process-tasks">
-                        {role.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex}>{task.description}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </BorderContainer>
-              ))}
-            </div>
-          </div>
-        )}
           </div>
         </div>
         

@@ -989,11 +989,14 @@ body {
   .nav-tabs-right {
     width: 100%;
     margin-right: 0;
+    overflow: visible;
   }
-  
+
   .tab {
     font-size: 11px;
-    padding: 10px 8px;
+    padding: 10px 12px;
+    flex: 1;
+    min-width: 0;
   }
   
   /* Hide copyright in project top bar to match main page */
@@ -1001,10 +1004,10 @@ body {
     display: none;
   }
   
-  /* Add bottom border to project top bar to match main page */
+  /* Project top bar mobile adjustments */
   .project-top-bar {
-    border-bottom: 1px solid var(--border);
     height: 60px; /* Match main page mobile header height */
+    padding: 0 10px;
   }
   
   .copyright {
