@@ -18,7 +18,6 @@ const GridLayout = () => {
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1025);
@@ -276,7 +275,15 @@ const GridLayout = () => {
           <div className="about-section">
             <h1 className="section-title">About</h1>
             <div className="about-content">
-              <div className="about-content-box">
+              <div
+                className="about-content-box"
+                style={!isMobile ? {
+                  marginLeft: '-30px',
+                  borderLeft: '1px solid var(--border)',
+                  borderRight: '1px solid var(--border)',
+                  marginRight: '-1px'
+                } : {}}
+              >
                 <p>Product designer with over 7 years of experience focused on developing and maintaining design systems.</p>
                 <p className="mt-4">Currently working as a Design System Expert, creating scalable and consistent design solutions.</p>
               </div>
@@ -288,7 +295,15 @@ const GridLayout = () => {
           <div className="contact-section">
             <h1 className="section-title">Contact</h1>
             <div className="contact-content">
-              <div className="contact-content-box">
+              <div
+                className="contact-content-box"
+                style={!isMobile ? {
+                  marginLeft: '-30px',
+                  borderLeft: '1px solid var(--border)',
+                  borderRight: '1px solid var(--border)',
+                  marginRight: '-1px'
+                } : {}}
+              >
                 <p>hello@example.com</p>
                 <p className="mt-2">Based in Your City</p>
               </div>

@@ -195,14 +195,23 @@ const ProjectLayout = ({
                 {title}
                 {externalLink && titleIcon}
               </h1>
-              <BorderContainer
-                className="project-title-border"
-                borders={[
-                  { type: "horizontal", position: "bottom" }
-                ]}
-              >
-                <div />
-              </BorderContainer>
+              {/* Rectangular border: single element for horizontal and both vertical lines */}
+              <div
+                className="rectangular-border"
+                style={{
+                  position: "absolute",
+                  left: "-70px",
+                  top: "52px", // Position at bottom of title (40px + 12px margin)
+                  width: "calc(100% + 80px)", // Extend to the right
+                  height: "calc(100vh + 2386px)", // Extend down to ensure connection
+                  borderLeft: "1px solid var(--border)",
+                  borderTop: "1px solid var(--border)",
+                  borderRight: "1px solid var(--border)",
+                  borderBottom: "1px solid var(--border)",
+                  zIndex: 1
+                }}
+                aria-hidden="true"
+              />
               {previewImage && (
                 <div className="project-image-container">
                   <Image 
