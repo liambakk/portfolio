@@ -9,6 +9,7 @@ import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import { ProjectData } from "@/types/project";
 import BorderSystem, { BorderContainer } from "./BorderSystem";
+import ProjectBorderFrame from "./ProjectBorderFrame";
 
 type ProjectLayoutProps = ProjectData;
 
@@ -175,37 +176,8 @@ const ProjectLayout = ({
                 {title}
                 {externalLink && titleIcon}
               </h1>
-              {/* Rectangular border: single element for horizontal and both vertical lines */}
-              <div
-                className="rectangular-border hidden lg:block"
-                style={{
-                  position: "absolute",
-                  left: "-70px",
-                  top: "52px", // Position at bottom of title (40px + 12px margin)
-                  width: "calc(100% + 80px)", // Extend to the right
-                  height: "calc(100vh + 2386px)", // Extend down to ensure connection
-                  borderLeft: "1px solid var(--border)",
-                  borderTop: "1px solid var(--border)",
-                  borderRight: "1px solid var(--border)",
-                  borderBottom: "1px solid var(--border)",
-                  zIndex: 1
-                }}
-                aria-hidden="true"
-              >
-                {/* Inner vertical line connecting all section borders to bottom */}
-                <div
-                  className="hidden lg:block"
-                  style={{
-                    position: "absolute",
-                    right: "276px", // Aligned with actual content border endpoints
-                    top: "0",
-                    height: "100%", // Full height to connect to bottom border
-                    width: "1px",
-                    backgroundColor: "var(--border)",
-                    zIndex: 1
-                  }}
-                />
-              </div>
+              {/* Unified border frame component */}
+              <ProjectBorderFrame />
               {previewImage && (
                 <div className="project-image-container">
                   <Image 
@@ -221,39 +193,23 @@ const ProjectLayout = ({
             </div>
             <div className="project-sections-container">
               {/* Overview Section */}
-              <BorderContainer
-                className="project-section-bordered"
-                borders={[
-                  { type: "horizontal", position: "top", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } },
-                  { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
-                ]}
-              >
+              <div className="project-section-bordered">
                 <div className="section-header">Overview</div>
                 <div className="section-content">
                   {overview.description}
                 </div>
-              </BorderContainer>
+              </div>
 
             {/* Team Section */}
-            <BorderContainer
-              className="project-section-bordered"
-              borders={[
-                { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
-              ]}
-            >
+            <div className="project-section-bordered">
               <div className="section-header">Team</div>
               <div className="section-content">
                 {team.description}
               </div>
-            </BorderContainer>
+            </div>
 
             {/* Goals Section */}
-            <BorderContainer
-              className="project-section-bordered"
-              borders={[
-                { type: "horizontal", position: "bottom", thickness: 0.5, customStyles: { right: "-50px", width: "calc(100% + 50px)" } }
-              ]}
-            >
+            <div className="project-section-bordered">
               <div className="section-header">Goals</div>
               <div className="section-content">
                 <ul className="goals-list">
@@ -262,18 +218,13 @@ const ProjectLayout = ({
                   ))}
                 </ul>
               </div>
-            </BorderContainer>
+            </div>
 
             {/* Role & Process Section */}
             {roleProcess.map((role, index) => (
-              <BorderContainer
+              <div
                 key={index}
                 className="project-section-bordered"
-                borders={
-                  index === roleProcess.length - 1
-                    ? [] // No border for the last item
-                    : [{ type: "horizontal", position: "bottom", customStyles: { right: "-50px", width: "calc(100% + 50px)" } }]
-                }
               >
                 <div className="section-header">{role.title}</div>
                 <div className="section-content">
@@ -340,7 +291,7 @@ const ProjectLayout = ({
                     </ul>
                   )}
                 </div>
-              </BorderContainer>
+              </div>
             ))}
           </div>
           </div>

@@ -361,7 +361,7 @@ body {
   margin-bottom: 12px;
   margin-top: -8px;
   letter-spacing: -1.5px;
-  padding-left: calc(57% - 70px);
+  padding-left: calc(50% - 30px);
   line-height: 1;
   padding-bottom: 5px;
 }
@@ -371,7 +371,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(57% - 70px);
+  padding-left: calc(50% - 30px);
   position: relative;
 }
 
@@ -389,7 +389,7 @@ body {
 /* Inner container for cases */
 .cases-inner {
   position: relative;
-  width: 85%;
+  width: 100%;
   /* Borders now handled in GridLayout component */
 }
 
@@ -417,7 +417,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(57% - 70px);
+  padding-left: calc(50% - 30px);
   position: relative;
 }
 
@@ -430,7 +430,7 @@ body {
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 85%;
+  width: 100%;
   min-height: 323px;
   margin-left: -1px;
 }
@@ -440,7 +440,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(57% - 70px);
+  padding-left: calc(50% - 30px);
   position: relative;
 }
 
@@ -451,7 +451,7 @@ body {
   border-bottom: 0px solid var(--border);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
-  width: 85%;
+  width: 100%;
   min-height: 323px;
   margin-left: -1px;
 }
@@ -563,12 +563,40 @@ body {
   margin-right: 0;
 }
 
-/* Individual bordered sections - borders now handled by BorderSystem */
+/* Individual bordered sections - borders now handled by ProjectBorderFrame */
 .project-section-bordered {
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 120px;
   position: relative;
+}
+
+/* Add borders to sections on desktop only */
+@media screen and (min-width: 1025px) {
+  .project-section-bordered:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1px; /* Start after the vertical border to prevent overlap */
+    right: -50px;
+    height: 0.5px;
+    background-color: var(--border);
+  }
+
+  .project-section-bordered::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1px; /* Start after the vertical border to prevent overlap */
+    right: -50px;
+    height: 0.5px;
+    background-color: var(--border);
+  }
+
+  /* Remove bottom border from last section */
+  .project-section-bordered:last-child::after {
+    display: none;
+  }
 }
 
 /* Section header - left column */
@@ -741,7 +769,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: calc(57% - 70px);
+  padding-left: calc(50% - 30px);
   position: relative;
 }
 
@@ -754,7 +782,7 @@ body {
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   color: var(--muted);
-  width: 85%;
+  width: 100%;
   min-height: 323px;
   margin-left: -1px;
 }
