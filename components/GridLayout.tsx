@@ -177,9 +177,30 @@ const GridLayout = () => {
       </div>
 
       {/* Project Preview */}
-      {activeTab === "work" && previewImage && (
-        <div className="project-preview">
-          <img src={previewImage} alt="Project preview" />
+      {activeTab === "work" && previewImage && !isMobile && (
+        <div
+          className="project-preview"
+          style={{
+            position: 'fixed',
+            right: 'calc(43% + 280px)',
+            top: '40%',
+            transform: 'translateY(-50%)',
+            width: 'calc(57% - 240px)',
+            maxWidth: '600px',
+            zIndex: 20,
+            pointerEvents: 'none',
+            animation: 'fadeIn 0.3s ease-out'
+          }}
+        >
+          <img
+            src={previewImage}
+            alt="Project preview"
+            style={{
+              width: '100%',
+              height: 'auto',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+            }}
+          />
         </div>
       )}
 

@@ -784,24 +784,7 @@ body {
   margin-bottom: 16px;
 }
 
-/* Project Preview */
-.project-preview {
-  position: fixed;
-  right: calc(43% + max(183px, 182px + 0.8vw - 11px));
-  top: 40%;
-  transform: translateY(-50%);
-  z-index: 20;
-  animation: fadeIn 0.3s ease-out;
-  pointer-events: none;
-}
-
-.project-preview img {
-  width: auto;
-  height: auto;
-  max-width: calc(57% - 110px - 0.5vw);
-  max-height: 60vh;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
+/* Project Preview - animation only, positioning in component */
 
 @keyframes fadeIn {
   from {
