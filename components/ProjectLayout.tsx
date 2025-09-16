@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import { ProjectData } from "@/types/project";
 import BorderSystem, { BorderContainer } from "./BorderSystem";
 import ProjectBorderFrame from "./ProjectBorderFrame";
@@ -25,6 +27,11 @@ const ProjectLayout = ({
 }: ProjectLayoutProps) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
+  const [hoveredSection, setHoveredSection] = useState<number | null>(null);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const [tabFillAnimated, setTabFillAnimated] = useState(false);
+  const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
   // Initialize touch device detection properly
   const [isTouchDevice, setIsTouchDevice] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -51,11 +58,56 @@ const ProjectLayout = ({
 
     checkTouchDevice();
     window.addEventListener('resize', checkTouchDevice);
+    
+    // Mark initial load as complete after animations finish
+    const timer = setTimeout(() => {
+      setHasInitialLoaded(true);
+    }, 1000);
+
+    // Preload priority images
+    if (previewImage && !isTouchDevice) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = previewImage;
+      document.head.appendChild(link);
+    }
+
+    // Preload role process images that are above the fold
+    roleProcess.forEach((role, index) => {
+      if (index === 0) { // Only preload first section's images
+        if (role.images) {
+          role.images.forEach(img => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = img;
+            document.head.appendChild(link);
+          });
+        }
+        // Also preload single images in first section
+        if (role.bottomImage) {
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = role.bottomImage;
+          document.head.appendChild(link);
+        }
+        if (role.image) {
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = role.image;
+          document.head.appendChild(link);
+        }
+      }
+    });
 
     return () => {
       window.removeEventListener('resize', checkTouchDevice);
+      clearTimeout(timer);
     };
-  }, []);
+  }, [previewImage, roleProcess, isTouchDevice]);
 
   const handleBackToWork = () => {
     router.push("/");
@@ -73,6 +125,35 @@ const ProjectLayout = ({
     }
   };
 
+  const handleSectionHover = (index: number) => {
+    if (isTouchDevice) return;
+    
+    setHoveredSection(index);
+    
+    // Preload images in the hovered section if not already loaded
+    const role = roleProcess[index];
+    if (role) {
+      // Preload multiple images
+      if (role.images) {
+        role.images.forEach(img => {
+          if (!imageLoaded[img]) {
+            const image = new window.Image();
+            image.src = img;
+          }
+        });
+      }
+      // Preload single images
+      if (role.bottomImage && !imageLoaded[role.bottomImage]) {
+        const image = new window.Image();
+        image.src = role.bottomImage;
+      }
+      if (role.image && !imageLoaded[role.image]) {
+        const image = new window.Image();
+        image.src = role.image;
+      }
+    }
+  };
+
   return (
     <div className="project-page-container">
         <CustomCursor />
@@ -80,17 +161,30 @@ const ProjectLayout = ({
         {/* Fixed Social Links - Outside scrollable area */}
         <div className="project-right-sidebar-fixed">
           <div className="social-links">
-            {socialLinks.map((social) => (
-              <a
+            {socialLinks.map((social, index) => (
+              <motion.a
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
                 aria-label={social.label}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeOut",
+                  delay: 0.7 + (index * 0.1)
+                }}
+                onMouseEnter={() => setHoveredSocial(social.label)}
+                onMouseLeave={() => setHoveredSocial(null)}
+                style={{
+                  color: hoveredSocial === social.label ? 'var(--foreground)' : 'inherit',
+                  transition: 'color 0.2s'
+                }}
               >
                 <span className="social-text">{social.label}</span>
-              </a>
+              </motion.a>
             ))}
           </div>
         </div>
@@ -112,10 +206,16 @@ const ProjectLayout = ({
             }
           ]}
         >
-          <div className="copyright" style={{ position: 'relative' }}>
+          <motion.div 
+            className="copyright" 
+            style={{ position: 'relative' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+          >
             © 2025
             {/* Copyright left vertical border */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -126,9 +226,23 @@ const ProjectLayout = ({
                   background: 'var(--border)'
                 }}
               />
-            )}
+            ) : (
+              <motion.div
+                initial={{ scaleY: 0, transformOrigin: 'top' }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  bottom: 0,
+                  top: 24,
+                  width: '1px',
+                  background: 'var(--border)'
+                }}
+              />
+            ))}
             {/* Copyright bottom horizontal border */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -139,8 +253,22 @@ const ProjectLayout = ({
                   background: 'var(--border)'
                 }}
               />
-            )}
-          </div>
+            ) : (
+              <motion.div
+                initial={{ scaleX: 0, transformOrigin: 'left' }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: '1px',
+                  background: 'var(--border)'
+                }}
+              />
+            ))}
+          </motion.div>
           
           <div
             className="nav-tabs-right"
@@ -148,7 +276,7 @@ const ProjectLayout = ({
             style={{ position: 'relative' }}
           >
             {/* White bar at top of tabs */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -159,9 +287,23 @@ const ProjectLayout = ({
                   background: '#ffffff'
                 }}
               />
-            )}
+            ) : (
+              <motion.div
+                initial={{ scaleX: 0, transformOrigin: 'left' }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '8px',
+                  background: '#ffffff'
+                }}
+              />
+            ))}
             {/* Left border of tab section */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -173,9 +315,24 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            )}
+            ) : (
+              <motion.div
+                initial={{ scaleY: 0, transformOrigin: 'top' }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            ))}
             {/* Bottom border of tabs */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -187,9 +344,24 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            )}
+            ) : (
+              <motion.div
+                initial={{ scaleX: 0, transformOrigin: 'left' }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            ))}
             {/* Tab divider (between Overview and Back to Work) */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -201,9 +373,24 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            )}
+            ) : (
+              <motion.div
+                initial={{ scaleY: 0, transformOrigin: 'top' }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.35 }}
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            ))}
             {/* Right border of tab section */}
-            {!isTouchDevice && (
+            {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
                   position: 'absolute',
@@ -215,19 +402,51 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            )}
-            <div
+            ) : (
+              <motion.div
+                initial={{ scaleY: 0, transformOrigin: 'top' }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.45 }}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            ))}
+            <motion.div
               className="tab-fill"
+              initial={{ scaleY: 0, x: "0%" }}
+              animate={{
+                scaleY: hoveredTab !== null || activeTab ? 1 : 0,
+                x: (hoveredTab || activeTab) === "overview" ? "0%" :
+                   (hoveredTab || activeTab) === "back" ? "100%" : "0%"
+              }}
+              transition={{
+                scaleY: {
+                  duration: tabFillAnimated ? 0 : 0.8,
+                  ease: [0.25, 0.1, 0.25, 1],
+                  delay: tabFillAnimated ? 0 : 0.7
+                },
+                x: {
+                  duration: 0.3,
+                  ease: "easeOut",
+                  delay: 0
+                }
+              }}
+              onAnimationComplete={() => {
+                if (!tabFillAnimated) setTabFillAnimated(true);
+              }}
               style={{
-                transform: `translateX(${
-                  (hoveredTab || activeTab) === "overview" ? 0 :
-                  (hoveredTab || activeTab) === "back" ? 100 : 0
-                }%)`,
-                opacity: hoveredTab !== null || activeTab ? 1 : 0,
+                transformOrigin: 'bottom',
                 width: "50%" // Two tabs instead of three
               }}
             />
-            <button
+            <motion.button
               className={`tab ${activeTab === "overview" ? "active" : ""} ${
                 (hoveredTab === "overview" || (!hoveredTab && activeTab === "overview")) ? "has-fill" : ""
               }`}
@@ -237,10 +456,13 @@ const ProjectLayout = ({
                 e.preventDefault();
                 setActiveTab("overview");
               }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.55 }}
             >
               Overview
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               className={`tab ${activeTab === "back" ? "active" : ""} ${
                 (!isTouchDevice && hoveredTab === "back") ? "has-fill" : ""
               }`}
@@ -250,9 +472,12 @@ const ProjectLayout = ({
                 e.preventDefault();
                 handleBackToWork();
               }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
             >
               Back to Work
-            </button>
+            </motion.button>
           </div>
         </BorderContainer>
 
@@ -260,9 +485,16 @@ const ProjectLayout = ({
         <div className="project-main-area">
           {/* Left Sidebar - Logo */}
           <div className="project-left-sidebar">
-            <div className="logo" onClick={handleBackToWork} style={{ cursor: "none" }}>
+            <motion.div 
+              className="logo" 
+              onClick={handleBackToWork} 
+              style={{ cursor: "none" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            >
               LB
-            </div>
+            </motion.div>
           </div>
 
           {/* Main Content */}
@@ -270,62 +502,155 @@ const ProjectLayout = ({
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
             <div className="project-section">
-              <h1 className="project-page-title" style={externalLink ? { display: "flex", alignItems: "center", gap: "12px" } : undefined}>
+              <motion.h1 
+                className="project-page-title" 
+                style={externalLink ? { display: "flex", alignItems: "center", gap: "12px" } : undefined}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+              >
                 {title}
                 {externalLink && titleIcon}
-              </h1>
+              </motion.h1>
               {/* Unified border frame component */}
               <ProjectBorderFrame />
               {previewImage && (
-                <div className="project-image-container">
-                  <Image 
+                <motion.div 
+                  className="project-image-container"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                >
+                  <OptimizedImage 
                     src={previewImage} 
                     alt={`${title} preview`}
-                    width={780}
-                    height={520}
-                    quality={100}
+                    width={1560}
+                    height={1040}
+                    quality={95}
                     priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1560px"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      maxWidth: '780px'
+                    }}
+                    useOptimized={false} // Disable optimization for now as these are in previews folder
                   />
-                </div>
+                </motion.div>
               )}
             </div>
             <div className="project-sections-container">
               {/* Overview Section */}
-              <div className="project-section-bordered">
-                <div className="section-header">Overview</div>
-                <div className="section-content">
+              <motion.div 
+                className="project-section-bordered"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+              >
+                <motion.div 
+                  className="section-header"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                >
+                  Overview
+                </motion.div>
+                <motion.div 
+                  className="section-content"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                >
                   {overview.description}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
             {/* Team Section */}
-            <div className="project-section-bordered">
-              <div className="section-header">Team</div>
-              <div className="section-content">
+            <motion.div 
+              className="project-section-bordered"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+            >
+              <motion.div 
+                className="section-header"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+              >
+                Team
+              </motion.div>
+              <motion.div 
+                className="section-content"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
+              >
                 {team.description}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Goals Section */}
-            <div className="project-section-bordered">
-              <div className="section-header">Goals</div>
-              <div className="section-content">
+            <motion.div 
+              className="project-section-bordered"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+            >
+              <motion.div 
+                className="section-header"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
+              >
+                Goals
+              </motion.div>
+              <motion.div 
+                className="section-content"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 }}
+              >
                 <ul className="goals-list">
                   {goals.items.map((goal, index) => (
-                    <li key={index}>{goal.text}</li>
+                    <motion.li 
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 + (index * 0.1) }}
+                    >
+                      {goal.text}
+                    </motion.li>
                   ))}
                 </ul>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Role & Process Section */}
             {roleProcess.map((role, index) => (
-              <div
+              <motion.div
                 key={index}
                 className="project-section-bordered"
+                onMouseEnter={() => handleSectionHover(index)}
+                onMouseLeave={() => setHoveredSection(null)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 + (index * 0.1) }}
               >
-                <div className="section-header">{role.title}</div>
-                <div className="section-content">
+                <motion.div 
+                  className="section-header"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
+                >
+                  {role.title}
+                </motion.div>
+                <motion.div 
+                  className="section-content"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 + (index * 0.1) }}
+                >
                   {role.description && <p className="role-description">{role.description}</p>}
                   {/* Handle Relay-specific images */}
                   {role.images && (
@@ -337,14 +662,20 @@ const ProjectLayout = ({
                       alignItems: "center"
                     }}>
                       {role.images.map((img, imgIndex) => (
-                        <Image
+                        <OptimizedImage
                           key={imgIndex}
-                          src={img}
-                          alt={`${role.title} image ${imgIndex + 1}`}
-                          width={450}
-                          height={300}
-                          quality={100}
-                        />
+                            src={img}
+                            alt={`${role.title} image ${imgIndex + 1}`}
+                            width={450}
+                            height={300}
+                            quality={85}
+                            sizes="(max-width: 768px) 100vw, 450px"
+                            priority={index === 0}
+                            style={{
+                              width: '100%',
+                              height: 'auto'
+                            }}
+                          />
                       ))}
                     </div>
                   )}
@@ -355,12 +686,17 @@ const ProjectLayout = ({
                       justifyContent: "center",
                       alignItems: "center"
                     }}>
-                      <Image
+                      <OptimizedImage
                         src={role.bottomImage}
                         alt={`${role.title} logo`}
                         width={938}
                         height={300}
-                        quality={100}
+                        quality={85}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 938px"
+                        style={{
+                          width: '100%',
+                          height: 'auto'
+                        }}
                       />
                     </div>
                   )}
@@ -371,12 +707,17 @@ const ProjectLayout = ({
                       justifyContent: "center",
                       alignItems: "center"
                     }}>
-                      <Image
+                      <OptimizedImage
                         src={role.image}
                         alt={`${role.title} design system`}
                         width={1600}
                         height={900}
-                        quality={100}
+                        quality={85}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1600px"
+                        style={{
+                          width: '100%',
+                          height: 'auto'
+                        }}
                       />
                     </div>
                   )}
@@ -384,12 +725,19 @@ const ProjectLayout = ({
                   {role.tasks.length > 0 && (
                     <ul className="process-tasks">
                       {role.tasks.map((task, taskIndex) => (
-                        <li key={taskIndex}>{task.description}</li>
+                        <motion.li 
+                          key={taskIndex}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 + (index * 0.1) + (taskIndex * 0.05) }}
+                        >
+                          {task.description}
+                        </motion.li>
                       ))}
                     </ul>
                   )}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
           </div>

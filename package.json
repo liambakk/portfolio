@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "optimize-images": "node scripts/optimize-images.js",
+    "optimize-project-images": "node scripts/optimize-project-images.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",

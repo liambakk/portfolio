@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface SectionBorder {
   top: number;
@@ -17,6 +18,16 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
   sections = [],
   className = ""
 }) => {
+  const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasInitialLoaded(true);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div
       className={`project-border-frame hidden lg:block ${className}`}
@@ -26,41 +37,177 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         top: "52px",
         width: "calc(100% + 80px)",
         height: "calc(100vh + 2386px)",
-        borderLeft: "1px solid var(--border)",
-        borderTop: "1px solid var(--border)",
-        borderRight: "1px solid var(--border)",
-        borderBottom: "1px solid var(--border)",
         zIndex: 1
       }}
       aria-hidden="true"
     >
-      {/* Inner vertical line */}
-      <div
-        className="border-inner-vertical"
-        style={{
+      {/* Left border */}
+      {hasInitialLoaded ? (
+        <div style={{
           position: "absolute",
-          right: "276px",
-          top: "0",
-          height: "100%",
+          left: 0,
+          top: 0,
+          bottom: 0,
           width: "1px",
-          backgroundColor: "var(--border)",
-          zIndex: 1
-        }}
-      />
+          backgroundColor: "var(--border)"
+        }} />
+      ) : (
+        <motion.div
+          initial={{ scaleY: 0, transformOrigin: "top" }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: "1px",
+            backgroundColor: "var(--border)"
+          }}
+        />
+      )}
+      
+      {/* Top border */}
+      {hasInitialLoaded ? (
+        <div style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          right: 0,
+          height: "1px",
+          backgroundColor: "var(--border)"
+        }} />
+      ) : (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: "left" }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            right: 0,
+            height: "1px",
+            backgroundColor: "var(--border)"
+          }}
+        />
+      )}
+      
+      {/* Right border */}
+      {hasInitialLoaded ? (
+        <div style={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: "1px",
+          backgroundColor: "var(--border)"
+        }} />
+      ) : (
+        <motion.div
+          initial={{ scaleY: 0, transformOrigin: "top" }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: "1px",
+            backgroundColor: "var(--border)"
+          }}
+        />
+      )}
+      
+      {/* Bottom border */}
+      {hasInitialLoaded ? (
+        <div style={{
+          position: "absolute",
+          left: 0,
+          bottom: 0,
+          right: 0,
+          height: "1px",
+          backgroundColor: "var(--border)"
+        }} />
+      ) : (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: "left" }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+          style={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            right: 0,
+            height: "1px",
+            backgroundColor: "var(--border)"
+          }}
+        />
+      )}
+      
+      {/* Inner vertical line */}
+      {hasInitialLoaded ? (
+        <div
+          className="border-inner-vertical"
+          style={{
+            position: "absolute",
+            right: "276px",
+            top: "0",
+            height: "100%",
+            width: "1px",
+            backgroundColor: "var(--border)",
+            zIndex: 1
+          }}
+        />
+      ) : (
+        <motion.div
+          className="border-inner-vertical"
+          initial={{ scaleY: 0, transformOrigin: "top" }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
+          style={{
+            position: "absolute",
+            right: "276px",
+            top: "0",
+            height: "100%",
+            width: "1px",
+            backgroundColor: "var(--border)",
+            zIndex: 1
+          }}
+        />
+      )}
 
       {/* Horizontal line at top of first content section */}
-      <div
-        className="border-first-section-top"
-        style={{
-          position: "absolute",
-          top: "610px", // Positioned at 610px
-          left: "1px", // Start after the vertical border to prevent overlap
-          right: "276px",
-          height: "1px",
-          backgroundColor: "var(--border)",
-          zIndex: 2
-        }}
-      />
+      {hasInitialLoaded ? (
+        <div
+          className="border-first-section-top"
+          style={{
+            position: "absolute",
+            top: "610px", // Positioned at 610px
+            left: "1px", // Start after the vertical border to prevent overlap
+            right: "276px",
+            height: "1px",
+            backgroundColor: "var(--border)",
+            zIndex: 2
+          }}
+        />
+      ) : (
+        <motion.div
+          className="border-first-section-top"
+          initial={{ scaleX: 0, transformOrigin: "left" }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          style={{
+            position: "absolute",
+            top: "610px", // Positioned at 610px
+            left: "1px", // Start after the vertical border to prevent overlap
+            right: "276px",
+            height: "1px",
+            backgroundColor: "var(--border)",
+            zIndex: 2
+          }}
+        />
+      )}
     </div>
   );
 };

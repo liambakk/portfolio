@@ -188,6 +188,18 @@ body {
   z-index: 100;
 }
 
+/* Grid/Home page social sidebar - aligned with cases-inner right border */
+.grid-right-sidebar-fixed {
+  position: fixed;
+  left: calc(50% + 40px + 34.5%); /* Fine-tuned position */
+  top: 140px; /* Aligned with content area */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 100;
+  padding-left: 20px; /* Gap from the border */
+}
+
 /* Top horizontal border now handled in GridLayout component */
 
 
@@ -534,7 +546,7 @@ body {
     position: absolute;
     bottom: 0;
     left: 1px; /* Start after the vertical border to prevent overlap */
-    right: 276px;
+    width: calc(100% - 277px);
     height: 1px;
     background-color: var(--border);
   }
@@ -1195,7 +1207,8 @@ body {
   }
   
   /* Hide desktop social links on mobile */
-  .project-right-sidebar-fixed {
+  .project-right-sidebar-fixed,
+  .grid-right-sidebar-fixed {
     display: none;
   }
 }

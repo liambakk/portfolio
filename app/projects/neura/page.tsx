@@ -5,6 +5,7 @@ import { FiExternalLink } from "react-icons/fi";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function NeuraProject() {
   const projectData: ProjectData = {
@@ -68,12 +69,13 @@ export default function NeuraProject() {
             gap: "1rem",
             flexWrap: "wrap"
           }}>
-            <Image
+            <OptimizedImage
               src="/neuraext.png"
               alt="Neura Browser Extension Interface"
               width={400}
               height={300}
-              quality={100}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, 48vw"
               style={{
                 width: "48%",
                 minWidth: "280px",
@@ -81,12 +83,13 @@ export default function NeuraProject() {
                 borderRadius: "8px"
               }}
             />
-            <Image
+            <OptimizedImage
               src="/box.png"
               alt="Neura Extension Settings"
               width={400}
               height={300}
-              quality={100}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, 48vw"
               style={{
                 width: "48%",
                 minWidth: "280px",
@@ -117,12 +120,13 @@ export default function NeuraProject() {
               display: "flex",
               justifyContent: "center"
             }}>
-              <Image
+              <OptimizedImage
                 src="/neurabox.png"
                 alt="Neura Extension Features"
                 width={600}
                 height={400}
-                quality={100}
+                quality={85}
+                sizes="(max-width: 768px) 100vw, 600px"
                 style={{
                   width: "100%",
                   maxWidth: "600px",
@@ -142,8 +146,9 @@ export default function NeuraProject() {
                 alt="Neura Extension Demo"
                 width={800}
                 height={600}
-                quality={100}
+                quality={85}
                 unoptimized
+                sizes="(max-width: 768px) 100vw, 800px"
                 style={{
                   width: "100%",
                   maxWidth: "800px",
@@ -172,8 +177,9 @@ export default function NeuraProject() {
               alt="Neura Extension Demo"
               width={800}
               height={500}
-              quality={100}
+              quality={85}
               unoptimized
+              sizes="(max-width: 768px) 100vw, 800px"
               style={{
                 width: "100%",
                 maxWidth: "800px",

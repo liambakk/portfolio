@@ -363,10 +363,10 @@ const GridLayout = () => {
           className="project-preview"
           style={{
             position: 'fixed',
-            right: 'calc(43% + 280px)',
-            top: '40%',
+            right: 'clamp(45%, calc(50% + 15vw), 60%)',
+            top: 'clamp(25%, 30vh, 35%)',
             transform: 'translateY(-50%)',
-            width: 'calc(57% - 240px)',
+            width: 'clamp(300px, 35vw, 600px)',
             maxWidth: '600px',
             zIndex: 20,
             pointerEvents: 'none',
@@ -856,24 +856,15 @@ const GridLayout = () => {
       </div>
 
       {/* Right Sidebar - Social Links */}
-      <div
-        style={!isMobile ? {
-          position: 'absolute',
-          left: 'calc(50% + 550px)',
-          top: '170px',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start'
-        } : {
-          display: 'none'
-        }}
-      >
+      {!isMobile && (
+        <div className="grid-right-sidebar-fixed">
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
-            paddingLeft: '30px'
+            gap: '16px',
+            paddingLeft: '20px',
+            paddingTop: '30px'
           }}
         >
           {socialLinks.map((social, index) => (
@@ -904,7 +895,8 @@ const GridLayout = () => {
             </motion.a>
           ))}
         </div>
-      </div>
+        </div>
+      )}
 
       {/* Bottom Bar */}
       <div className="bottom-bar">
