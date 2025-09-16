@@ -11,11 +11,13 @@ import MobileFooter from "./MobileFooter";
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null);
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
+  const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -25,7 +27,16 @@ const GridLayout = () => {
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    // Mark initial load as complete after animations finish
+    const timer = setTimeout(() => {
+      setHasInitialLoaded(true);
+    }, 1000);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      clearTimeout(timer);
+    };
   }, []);
 
   const cases = [
@@ -391,6 +402,7 @@ const GridLayout = () => {
                 className="cases-inner"
                 onMouseLeave={() => {
                   setHoveredIndex(null);
+                  setPrevHoveredIndex(null);
                   setPreviewImage(null);
                 }}
                 style={!isMobile ? {
@@ -401,7 +413,19 @@ const GridLayout = () => {
                 } : {}}
               >
                 {/* Animated left border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -416,9 +440,21 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 {/* Animated right border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -433,12 +469,13 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 <motion.div
                   className="cases-fill"
                   ref={fillRef}
+                  initial={{ opacity: 0, y: -1 }}
                   animate={{
-                    scaleY: hoveredIndex !== null ? 1 : 0,
+                    opacity: hoveredIndex !== null ? 1 : 0,
                     y: hoveredIndex === null ? -1 :
                        hoveredIndex === 0 ? -1 :
                        hoveredIndex === 1 ? 79 :
@@ -447,17 +484,14 @@ const GridLayout = () => {
                        hoveredIndex * 74 + 5
                   }}
                   transition={{
-                    y: {
+                    opacity: {
                       duration: 0,
                       ease: "easeOut"
                     },
-                    scaleY: {
-                      duration: 0,
-                      ease: "easeOut"
+                    y: {
+                      duration: prevHoveredIndex === null ? 0 : 0.3,
+                      ease: [0.4, 0, 0.2, 1]
                     }
-                  }}
-                  style={{
-                    transformOrigin: 'top'
                   }}
                 />
                 {cases.map((caseItem, index) => {
@@ -474,6 +508,7 @@ const GridLayout = () => {
                           delay: 0.6 + (index * 0.1)
                         }}
                         onMouseEnter={() => {
+                          setPrevHoveredIndex(hoveredIndex);
                           setHoveredIndex(index);
                           setPreviewImage(caseItem.preview);
                         }}
@@ -485,16 +520,26 @@ const GridLayout = () => {
                           width: '100%',
                           position: 'relative',
                           zIndex: 1,
-                          transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                          color: hoveredIndex === index ? '#000000' : 'inherit'
+                          color: hoveredIndex === index ? '#000000' : 'inherit',
+                          transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                         }}
                       >
                         {caseItem.title}
                       </motion.div>
                       {/* Animated horizontal border after each item except the last */}
-                      {!isLastItem && !isMobile && (
+                      {!isLastItem && (hasInitialLoaded ? (
+                        <div
+                          style={{
+                            height: '1px',
+                            background: 'var(--border)',
+                            width: '100%',
+                            position: 'relative',
+                            zIndex: 0
+                          }}
+                        />
+                      ) : (
                         <motion.div
-                          initial={{ scaleX: 0, transformOrigin: 'left' }}
+                          initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
                           transition={{
                             duration: 0.6,
@@ -506,32 +551,42 @@ const GridLayout = () => {
                             background: 'var(--border)',
                             width: '100%',
                             position: 'relative',
-                            zIndex: 0
+                            zIndex: 0,
+                            transformOrigin: '0% 50%'
                           }}
                         />
-                      )}
-                      {/* Special border for last item that extends to connect with vertical line */}
-                      {isLastItem && !isMobile && (
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: 'calc(100% + 19px)' }}
-                          transition={{
-                            duration: 0.6,
-                            ease: "easeOut",
-                            delay: 0.65 + (index * 0.1)
-                          }}
-                          style={{
-                            height: '1px',
-                            background: 'var(--border)',
-                            position: 'relative',
-                            left: '-19px',
-                            zIndex: 0
-                          }}
-                        />
-                      )}
+                      ))}
                     </React.Fragment>
                   );
                 })}
+                {/* Animated bottom border for the entire container */}
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.95 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -557,7 +612,19 @@ const GridLayout = () => {
                 } : {}}
               >
                 {/* Animated left border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -572,9 +639,21 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 {/* Animated right border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -589,7 +668,7 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -605,6 +684,34 @@ const GridLayout = () => {
                 >
                   Currently working as a Design System Expert, creating scalable and consistent design solutions.
                 </motion.p>
+                {/* Animated bottom border for about content */}
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -630,7 +737,19 @@ const GridLayout = () => {
                 } : {}}
               >
                 {/* Animated left border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -645,9 +764,21 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 {/* Animated right border */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -662,7 +793,7 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -678,6 +809,34 @@ const GridLayout = () => {
                 >
                   Based in Your City
                 </motion.p>
+                {/* Animated bottom border for contact content */}
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -686,11 +845,10 @@ const GridLayout = () => {
 
       {/* Right Sidebar - Social Links */}
       <div
-        className="right-sidebar"
         style={!isMobile ? {
           position: 'absolute',
-          right: '60px',
-          top: '242px',
+          left: 'calc(50% + 550px)',
+          top: '170px',
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'flex-start'
@@ -702,7 +860,8 @@ const GridLayout = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px'
+            gap: '8px',
+            paddingLeft: '30px'
           }}
         >
           {socialLinks.map((social, index) => (

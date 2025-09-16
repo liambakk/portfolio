@@ -375,7 +375,6 @@ body {
   right: 0;
   height: 82px;
   background: #ffffff;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
   pointer-events: none;
 }
@@ -399,14 +398,10 @@ body {
   padding: 24px 20px;
   font-size: 16px;
   line-height: 1.8;
-  border-top: 0px solid var(--border);
-  border-bottom: 0px solid var(--border);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
   color: var(--muted);
   width: 82%;
   min-height: 324px;
-  margin-left: -1px;
+  margin-left: 20px;
 }
 
 /* Contact Section */
@@ -421,13 +416,9 @@ body {
 .contact-content-box {
   padding: 24px 20px;
   font-size: 18px;
-  border-top: 0px solid var(--border);
-  border-bottom: 0px solid var(--border);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
   width: 82%;
   min-height: 324px;
-  margin-left: -1px;
+  margin-left: 20px;
 }
 
 .contact-content-box p {
