@@ -10,7 +10,6 @@ import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import OptimizedImage from "./OptimizedImage";
 import { ProjectData } from "@/types/project";
-import BorderSystem, { BorderContainer } from "./BorderSystem";
 import ProjectBorderFrame from "./ProjectBorderFrame";
 
 type ProjectLayoutProps = ProjectData;
@@ -109,6 +108,7 @@ const ProjectLayout = ({
     };
   }, [previewImage, roleProcess, isTouchDevice]);
 
+
   const handleBackToWork = () => {
     router.push("/");
   };
@@ -192,20 +192,7 @@ const ProjectLayout = ({
       {/* Scrollable Content Wrapper */}
       <div className="project-scrollable-content">
         {/* Top Bar */}
-        <BorderContainer
-          className="project-top-bar"
-          borders={[
-            {
-              type: "horizontal",
-              position: "bottom",
-              customStyles: {
-                left: "70px",
-                right: "70px",
-                width: "calc(100% - 140px)"
-              }
-            }
-          ]}
-        >
+        <div className="project-top-bar" style={{ position: 'relative' }}>
           <motion.div 
             className="copyright" 
             style={{ position: 'relative' }}
@@ -237,33 +224,6 @@ const ProjectLayout = ({
                   bottom: 0,
                   top: 24,
                   width: '1px',
-                  background: 'var(--border)'
-                }}
-              />
-            ))}
-            {/* Copyright bottom horizontal border */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: '1px',
-                  background: 'var(--border)'
-                }}
-              />
-            ) : (
-              <motion.div
-                initial={{ scaleX: 0, transformOrigin: 'left' }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: '1px',
                   background: 'var(--border)'
                 }}
               />
@@ -326,35 +286,6 @@ const ProjectLayout = ({
                   top: 32,
                   bottom: 0,
                   width: '1px',
-                  background: 'var(--border)',
-                  zIndex: 2
-                }}
-              />
-            ))}
-            {/* Bottom border of tabs */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: '1px',
-                  background: 'var(--border)',
-                  zIndex: 2
-                }}
-              />
-            ) : (
-              <motion.div
-                initial={{ scaleX: 0, transformOrigin: 'left' }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: '1px',
                   background: 'var(--border)',
                   zIndex: 2
                 }}
@@ -479,7 +410,33 @@ const ProjectLayout = ({
               Back to Work
             </motion.button>
           </div>
-        </BorderContainer>
+        </div>
+
+        {/* Top horizontal border */}
+        {!isTouchDevice && (hasInitialLoaded ? (
+          <div
+            style={{
+              marginLeft: '30px',
+              marginRight: '30px',
+              height: '1px',
+              background: 'var(--border)',
+              pointerEvents: 'none'
+            }}
+          />
+        ) : (
+          <motion.div
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            style={{
+              marginLeft: '30px',
+              marginRight: '30px',
+              height: '1px',
+              background: 'var(--border)',
+              pointerEvents: 'none'
+            }}
+          />
+        ))}
 
         {/* Main Content Area */}
         <div className="project-main-area">
@@ -718,6 +675,7 @@ const ProjectLayout = ({
                           width: '100%',
                           height: 'auto'
                         }}
+                        useOptimized={false}
                       />
                     </div>
                   )}

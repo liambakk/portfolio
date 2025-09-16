@@ -101,10 +101,10 @@ const GridLayout = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           style={{
             position: 'absolute',
-            top: '80px',
+            top: '152px',
             right: '30px',
             width: '1px',
-            height: '396px',
+            height: '324px',
             background: 'var(--border)',
             zIndex: 10,
             pointerEvents: 'none'
@@ -120,7 +120,7 @@ const GridLayout = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
           style={{
             position: 'absolute',
-            top: 'calc(80px + 396px)',
+            top: 'calc(152px + 324px)',
             left: 'calc(50% + 40px)',
             right: '30px',
             height: '1px',

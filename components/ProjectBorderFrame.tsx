@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { motion } from "framer-motion";
 
 interface SectionBorder {
@@ -177,37 +177,6 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         />
       )}
 
-      {/* Horizontal line at top of first content section */}
-      {hasInitialLoaded ? (
-        <div
-          className="border-first-section-top"
-          style={{
-            position: "absolute",
-            top: "610px", // Positioned at 610px
-            left: "1px", // Start after the vertical border to prevent overlap
-            right: "276px",
-            height: "1px",
-            backgroundColor: "var(--border)",
-            zIndex: 2
-          }}
-        />
-      ) : (
-        <motion.div
-          className="border-first-section-top"
-          initial={{ scaleX: 0, transformOrigin: "left" }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-          style={{
-            position: "absolute",
-            top: "610px", // Positioned at 610px
-            left: "1px", // Start after the vertical border to prevent overlap
-            right: "276px",
-            height: "1px",
-            backgroundColor: "var(--border)",
-            zIndex: 2
-          }}
-        />
-      )}
     </div>
   );
 };

@@ -537,25 +537,7 @@ body {
   position: relative;
 }
 
-/* Add borders to sections on desktop only */
-@media screen and (min-width: 1025px) {
-  /* Removed top border to prevent double lines between sections */
-
-  .project-section-bordered::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 1px; /* Start after the vertical border to prevent overlap */
-    width: calc(100% - 277px);
-    height: 1px;
-    background-color: var(--border);
-  }
-
-  /* Remove bottom border from last section */
-  .project-section-bordered:last-child::after {
-    display: none;
-  }
-}
+/* Borders now handled by ProjectBorderFrame component */
 
 /* Section header - left column */
 .section-header {
