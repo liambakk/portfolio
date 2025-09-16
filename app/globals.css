@@ -1195,6 +1195,26 @@ body {
   }
 }
 
+/* Loading Animation Styles */
+.loading-name-outline,
+.loading-name-filled {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Better text stroke support */
+.loading-name-outline {
+  -webkit-text-stroke: 1px #ffffff;
+  paint-order: stroke fill;
+}
+
+@media screen and (max-width: 768px) {
+  .loading-name-outline,
+  .loading-name-filled {
+    font-size: 60px !important;
+    letter-spacing: -2px !important;
+  }
+}
+
 /* Relay Videos Container */
 .relay-videos-container {
   display: flex;

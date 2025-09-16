@@ -8,6 +8,7 @@ import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import Image from "next/image";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
+import { useNavigation } from "./ClientWrapper";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
@@ -60,8 +61,12 @@ const GridLayout = () => {
     };
   }, []);
 
+  const { triggerTransition } = useNavigation();
+
   const handleProjectClick = (slug: string) => {
-    router.push(`/projects/${slug}`);
+    triggerTransition(() => {
+      router.push(`/projects/${slug}`);
+    });
   };
 
   const socialLinks = [

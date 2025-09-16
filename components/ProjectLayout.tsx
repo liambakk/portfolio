@@ -11,6 +11,7 @@ import Image from "next/image";
 import OptimizedImage from "./OptimizedImage";
 import { ProjectData } from "@/types/project";
 import ProjectBorderFrame from "./ProjectBorderFrame";
+import { useNavigation } from "./ClientWrapper";
 
 type ProjectLayoutProps = ProjectData;
 
@@ -109,8 +110,12 @@ const ProjectLayout = ({
   }, [previewImage, roleProcess, isTouchDevice]);
 
 
+  const { triggerTransition } = useNavigation();
+
   const handleBackToWork = () => {
-    router.push("/");
+    triggerTransition(() => {
+      router.push("/");
+    });
   };
 
   const handleTabHover = (tab: string) => {
@@ -613,26 +618,31 @@ const ProjectLayout = ({
                   {role.images && (
                     <div className="relay-images-container role-image-container" style={{
                       display: "flex",
-                      gap: "20px",
+                      gap: "15px",
                       padding: "20px 0",
                       justifyContent: "center",
                       alignItems: "center"
                     }}>
                       {role.images.map((img, imgIndex) => (
-                        <OptimizedImage
-                          key={imgIndex}
+                        <div key={imgIndex} style={{ 
+                          width: '200px',
+                          flexShrink: 0
+                        }}>
+                          <OptimizedImage
                             src={img}
                             alt={`${role.title} image ${imgIndex + 1}`}
-                            width={450}
-                            height={300}
+                            width={200}
+                            height={400}
                             quality={85}
-                            sizes="(max-width: 768px) 100vw, 450px"
+                            sizes="200px"
                             priority={index === 0}
                             style={{
                               width: '100%',
-                              height: 'auto'
+                              height: 'auto',
+                              display: 'block'
                             }}
                           />
+                        </div>
                       ))}
                     </div>
                   )}
@@ -675,7 +685,6 @@ const ProjectLayout = ({
                           width: '100%',
                           height: 'auto'
                         }}
-                        useOptimized={false}
                       />
                     </div>
                   )}

@@ -28,7 +28,11 @@ const projectImages = [
   'box.png',
   'neurabox.png',
   'neura.gif',
-  'neurabox.gif'
+  'neurabox.gif',
+  'poapdesign.png',
+  'collectible.png',
+  'passport.png',
+  'featured.png'
 ];
 
 async function optimizeImage(inputPath, filename) {
