@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
@@ -57,7 +57,7 @@ const GridLayout = () => {
           style={{
             position: 'absolute',
             top: '152px',
-            left: '100px',
+            left: '30px',
             right: '30px',
             height: '1px',
             background: 'var(--border)',
@@ -185,23 +185,6 @@ const GridLayout = () => {
         >
           LB
         </motion.div>
-        {/* Horizontal border under logo */}
-        {!isMobile && (
-          <motion.div
-            initial={{ scaleX: 0, transformOrigin: 'left' }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-            style={{
-              position: 'absolute',
-              top: '72px',
-              left: '30px',
-              right: '0',
-              height: '1px',
-              background: 'var(--border)',
-              pointerEvents: 'none'
-            }}
-          />
-        )}
       </div>
 
       {/* Project Preview */}
@@ -308,36 +291,56 @@ const GridLayout = () => {
                   />
                 )}
                 {cases.map((caseItem, index) => {
+                  const isLastItem = index === cases.length - 1;
                   return (
-                    <motion.div
-                      key={caseItem.id}
-                      className="case-item"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        ease: "easeOut",
-                        delay: 0.6 + (index * 0.1)
-                      }}
-                      onMouseEnter={() => {
-                        setHoveredIndex(index);
-                        setPreviewImage(caseItem.preview);
-                      }}
-                      onClick={() => handleProjectClick(caseItem.slug)}
-                      style={{
-                        padding: '24px 20px',
-                        fontSize: '20px',
-                        borderBottom: '1px solid var(--border)',
-                        fontWeight: 400,
-                        width: '100%',
-                        position: 'relative',
-                        zIndex: 1,
-                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        color: hoveredIndex === index ? '#000000' : 'inherit'
-                      }}
-                    >
-                      {caseItem.title}
-                    </motion.div>
+                    <React.Fragment key={caseItem.id}>
+                      <motion.div
+                        className="case-item"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                          duration: 0.6,
+                          ease: "easeOut",
+                          delay: 0.6 + (index * 0.1)
+                        }}
+                        onMouseEnter={() => {
+                          setHoveredIndex(index);
+                          setPreviewImage(caseItem.preview);
+                        }}
+                        onClick={() => handleProjectClick(caseItem.slug)}
+                        style={{
+                          padding: '24px 20px',
+                          fontSize: '20px',
+                          fontWeight: 400,
+                          width: '100%',
+                          position: 'relative',
+                          zIndex: 1,
+                          transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          color: hoveredIndex === index ? '#000000' : 'inherit'
+                        }}
+                      >
+                        {caseItem.title}
+                      </motion.div>
+                      {/* Animated horizontal border after each item except the last */}
+                      {!isLastItem && !isMobile && (
+                        <motion.div
+                          initial={{ scaleX: 0, transformOrigin: 'left' }}
+                          animate={{ scaleX: 1 }}
+                          transition={{
+                            duration: 0.6,
+                            ease: "easeOut",
+                            delay: 0.65 + (index * 0.1)
+                          }}
+                          style={{
+                            height: '1px',
+                            background: 'var(--border)',
+                            width: '100%',
+                            position: 'relative',
+                            zIndex: 0
+                          }}
+                        />
+                      )}
+                    </React.Fragment>
                   );
                 })}
               </div>
