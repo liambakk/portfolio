@@ -494,6 +494,7 @@ body {
 .project-section {
   width: 100%;
   position: relative;
+  padding-top: 80px; /* Push content down to avoid border overlap */
 }
 
 /* Project page specific title */
@@ -501,11 +502,18 @@ body {
   font-size: 40px;
   font-weight: 400;
   margin-bottom: 12px;
-  margin-top: -8px;
+  margin-top: -88px; /* Compensate for parent padding-top */
   letter-spacing: -1.5px;
   padding-left: 620px;
   line-height: 1;
   padding-bottom: 5px;
+}
+
+/* Title and border wrapper */
+.project-title-border-wrapper {
+  position: relative;
+  height: 104px; /* Height to accommodate title + border frame (52px top + 52px content) */
+  margin-bottom: 10px; /* Standard gap - positioning now handled by parent padding */
 }
 
 /* Project Title Border - now handled by BorderSystem component */
@@ -525,8 +533,9 @@ body {
   position: relative;
   width: calc(100% + 80px);
   margin-left: -70px;
-  margin-top: 620px;
+  margin-top: 40px; /* Reduced since image is now relative positioned */
   margin-right: 0;
+  padding-bottom: 50px; /* Add padding to ensure content doesn't touch bottom border */
 }
 
 /* Individual bordered sections - borders now handled by ProjectBorderFrame */
@@ -562,7 +571,8 @@ body {
 /* Override max-width for sections with images */
 .section-content:has(.relay-images-container),
 .section-content:has(.relay-logo-container),
-.section-content:has(.role-image-container) {
+.section-content:has(.role-image-container),
+.section-content:has(img) {
   max-width: none !important;
 }
 
@@ -693,15 +703,16 @@ body {
 
 /* Project Image Container */
 .project-image-container {
-  position: absolute;
-  left: 50px;
-  top: 130px;
+  position: relative;
+  margin-left: 50px;
+  margin-top: 20px; /* Spacing now handled by parent padding */
   z-index: 15;
 }
 
 .project-image-container img {
   border-radius: 0px;
-  width: 1200px;
+  width: 100%;
+  max-width: 780px;
   height: auto;
 }
 
@@ -773,6 +784,16 @@ body {
   .project-page-title {
     padding-left: clamp(110px, 32vw, 420px);
     font-size: clamp(24px, 3.5vw, 36px);
+    margin-top: -80px; /* Adjust for tablet */
+  }
+  
+  .project-section {
+    padding-top: 60px; /* Less padding on tablet */
+  }
+  
+  .project-title-border-wrapper {
+    height: auto; /* Auto height on tablet */
+    margin-bottom: 10px;
   }
   
   .project-sections-container {
@@ -784,8 +805,12 @@ body {
   }
   
   .project-image-container {
-    width: clamp(280px, 75vw, 900px);
-    left: clamp(10px, 3vw, 40px);
+    margin-left: clamp(10px, 3vw, 40px);
+    margin-top: 20px; /* Consistent spacing */
+  }
+  
+  .project-image-container img {
+    max-width: clamp(280px, 75vw, 900px);
   }
   
   .project-right-sidebar-fixed {
@@ -815,11 +840,20 @@ body {
     padding-left: 20px;
     font-size: clamp(20px, 5vw, 28px);
     text-align: left;
-    margin-top: 3px;
+    margin-top: -40px; /* Less negative margin on mobile */
+  }
+  
+  .project-section {
+    padding-top: 40px; /* Minimal padding on mobile */
   }
 
   .project-page-title svg {
     margin-top: -2px !important;
+  }
+  
+  .project-title-border-wrapper {
+    height: auto; /* Auto height on mobile */
+    margin-bottom: 10px;
   }
   
   .project-main-area {
@@ -928,8 +962,6 @@ body {
     position: static;
     width: calc(100% - 40px);
     margin: 20px;
-    left: 0;
-    top: 0;
   }
   
   .project-right-sidebar-fixed {
@@ -996,7 +1028,12 @@ body {
   }
   
   .project-image-container {
-    width: clamp(900px, 70vw, 1400px);
+    margin-left: 50px;
+    margin-top: 20px; /* Consistent spacing */
+  }
+  
+  .project-image-container img {
+    max-width: clamp(900px, 70vw, 1400px);
   }
 }
 

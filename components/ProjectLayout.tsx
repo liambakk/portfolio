@@ -464,18 +464,20 @@ const ProjectLayout = ({
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
             <div className="project-section">
-              <motion.h1 
-                className="project-page-title" 
-                style={externalLink ? { display: "flex", alignItems: "center", gap: "12px" } : undefined}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-              >
-                {title}
-                {externalLink && titleIcon}
-              </motion.h1>
-              {/* Unified border frame component */}
-              <ProjectBorderFrame />
+              <div className="project-title-border-wrapper">
+                <motion.h1 
+                  className="project-page-title" 
+                  style={externalLink ? { display: "flex", alignItems: "center", gap: "12px" } : undefined}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                >
+                  {title}
+                  {externalLink && titleIcon}
+                </motion.h1>
+                {/* Unified border frame component */}
+                <ProjectBorderFrame />
+              </div>
               {previewImage && (
                 <motion.div 
                   className="project-image-container"

@@ -62,7 +62,10 @@ export default function PoapGlobalProject() {
           { description: "Implemented responsive design for mobile claiming" },
           { description: "Established visual language for Web3 interactions" }
         ],
-        image: "/poapdesign.png"
+        image: "/poapdesign.png",
+        customContent: (
+          <div style={{ minHeight: "200px" }} />
+        )
       }
     ]
   };

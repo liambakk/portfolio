@@ -155,6 +155,25 @@ const GridLayout = () => {
         />
       )}
 
+      {/* Extension of title border to viewport edge - only on about page */}
+      {!isMobile && activeTab === "about" && (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'right' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+          style={{
+            position: 'absolute',
+            top: '152px',
+            left: '0px',
+            width: '30px',
+            height: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
 
       {/* Top Bar */}
       <div className="top-bar">
@@ -619,14 +638,22 @@ const GridLayout = () => {
             >
               About
             </motion.h1>
+            
             <div className="about-content">
               <div
-                className="about-content-box"
+                className="about-content-wrapper"
                 style={!isMobile ? {
-                  marginLeft: '20px',
-                  marginRight: '-1px',
-                  position: 'relative'
+                  position: 'relative',
+                  width: '100%'
                 } : {}}
+              >
+                <div
+                  className="about-content-box"
+                  style={!isMobile ? {
+                    marginLeft: '20px',
+                    marginRight: '-1px',
+                    position: 'relative'
+                  } : {}}
               >
                 {/* Animated left border */}
                 {!isMobile && (hasInitialLoaded ? (
@@ -730,6 +757,141 @@ const GridLayout = () => {
                   />
                 )}
               </div>
+              
+              {/* Extended border container for profile image - only on about page */}
+              {!isMobile && (
+                <>
+                  {/* Vertical border extending down from content box */}
+                  {hasInitialLoaded ? (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: '20px',
+                        top: 'calc(100%)',
+                        height: '300px',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  ) : (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.0 }}
+                      style={{
+                        position: 'absolute',
+                        left: '20px',
+                        top: 'calc(100%)',
+                        height: '300px',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  )}
+                  
+                  {/* Horizontal border going left */}
+                  {hasInitialLoaded ? (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: '-50vw',
+                        top: 'calc(100% + 300px)',
+                        right: 'calc(100% - 20px)',
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  ) : (
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'right' }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.1 }}
+                      style={{
+                        position: 'absolute',
+                        left: '-50vw',
+                        top: 'calc(100% + 300px)',
+                        right: 'calc(100% - 20px)',
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  )}
+                  
+                  {/* Vertical border going up */}
+                  {hasInitialLoaded ? (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: '-50vw',
+                        top: '-280px',
+                        height: 'calc(100% + 580px)',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  ) : (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'bottom' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
+                      style={{
+                        position: 'absolute',
+                        left: '-50vw',
+                        top: '-280px',
+                        height: 'calc(100% + 580px)',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  )}
+                  
+                  {/* Profile image container */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 1.3 }}
+                    style={{
+                      position: 'absolute',
+                      left: 'calc(-50vw + 1px)',
+                      top: '-279px',
+                      right: '19px',
+                      height: 'calc(100% + 579px)',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'flex-start',
+                      overflow: 'hidden',
+                      padding: '40px'
+                    }}
+                  >
+                    <div style={{ 
+                      position: 'relative', 
+                      width: '280px', 
+                      height: '380px',
+                      marginBottom: '80px',
+                      marginLeft: '300px'
+                    }}>
+                      <Image
+                        src="/liamlook.jpg"
+                        alt="Liam Bakker"
+                        fill
+                        sizes="280px"
+                        quality={90}
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'center'
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </div>
             </div>
           </div>
         )}

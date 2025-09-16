@@ -53,7 +53,6 @@ export default function NeuraProject() {
         description: "The extension leverages advanced natural language processing to provide intelligent assistance across various web activities.",
         tasks: [
           { description: "One-click page summarization with key point extraction" },
-          { description: "Smart text selection with contextual AI actions" },
           { description: "Automated form filling using intelligent data recognition" },
           { description: "Real-time language translation with context awareness" },
           { description: "Custom workflow automation with visual scripting" },
