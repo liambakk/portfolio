@@ -56,7 +56,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
           top: "610px", // Positioned at 610px
           left: "1px", // Start after the vertical border to prevent overlap
           right: "276px",
-          height: "0.5px",
+          height: "1px",
           backgroundColor: "var(--border)",
           zIndex: 2
         }}

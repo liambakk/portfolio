@@ -112,12 +112,110 @@ const ProjectLayout = ({
             }
           ]}
         >
-          <div className="copyright">© 2025</div>
+          <div className="copyright" style={{ position: 'relative' }}>
+            © 2025
+            {/* Copyright left vertical border */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  bottom: 0,
+                  top: 24,
+                  width: '1px',
+                  background: 'var(--border)'
+                }}
+              />
+            )}
+            {/* Copyright bottom horizontal border */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: '1px',
+                  background: 'var(--border)'
+                }}
+              />
+            )}
+          </div>
           
           <div
             className="nav-tabs-right"
             onMouseLeave={handleTabLeave}
+            style={{ position: 'relative' }}
           >
+            {/* White bar at top of tabs */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '8px',
+                  background: '#ffffff'
+                }}
+              />
+            )}
+            {/* Left border of tab section */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            )}
+            {/* Bottom border of tabs */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            )}
+            {/* Tab divider (between Overview and Back to Work) */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            )}
+            {/* Right border of tab section */}
+            {!isTouchDevice && (
+              <div
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  top: 32,
+                  bottom: 0,
+                  width: '1px',
+                  background: 'var(--border)',
+                  zIndex: 2
+                }}
+              />
+            )}
             <div
               className="tab-fill"
               style={{

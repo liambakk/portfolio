@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter, FaGithub } from "react-icons/fa6";
+import Image from "next/image";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 
@@ -14,6 +15,7 @@ const GridLayout = () => {
   const [prevHoveredIndex, setPrevHoveredIndex] = useState<number | null>(null);
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
@@ -21,6 +23,14 @@ const GridLayout = () => {
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const cases = [
+    { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay", width: 1920, height: 1080 },
+    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png", slug: "neura", width: 1920, height: 1080 },
+    { id: 3, title: "Poap Global", preview: "/previews/poap.png", slug: "poap-global", width: 1920, height: 1080 },
+    { id: 4, title: "Heuristic", preview: "/previews/heuristic.png", slug: "essai", width: 1920, height: 1080 },
+  ];
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1025);
@@ -33,18 +43,22 @@ const GridLayout = () => {
       setHasInitialLoaded(true);
     }, 1000);
 
+    // Preload first 2 images for faster hover response
+    if (!isMobile) {
+      cases.slice(0, 2).forEach(caseItem => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = caseItem.preview;
+        document.head.appendChild(link);
+      });
+    }
+
     return () => {
       window.removeEventListener('resize', checkMobile);
       clearTimeout(timer);
     };
   }, []);
-
-  const cases = [
-    { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay" },
-    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png", slug: "neura" },
-    { id: 3, title: "Poap Global", preview: "/previews/poap.png", slug: "poap-global" },
-    { id: 4, title: "Heuristic", preview: "/previews/heuristic.png", slug: "essai" },
-  ];
 
   const handleProjectClick = (slug: string) => {
     router.push(`/projects/${slug}`);
@@ -68,7 +82,7 @@ const GridLayout = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           style={{
             position: 'absolute',
-            top: '152px',
+            top: '80px',
             left: '30px',
             right: '30px',
             height: '1px',
@@ -87,10 +101,10 @@ const GridLayout = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           style={{
             position: 'absolute',
-            top: '152px',
+            top: '80px',
             right: '30px',
             width: '1px',
-            height: '324px',
+            height: '396px',
             background: 'var(--border)',
             zIndex: 10,
             pointerEvents: 'none'
@@ -106,8 +120,27 @@ const GridLayout = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
           style={{
             position: 'absolute',
-            top: 'calc(152px + 324px)',
+            top: 'calc(80px + 396px)',
             left: 'calc(50% + 40px)',
+            right: '30px',
+            height: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
+      {/* Horizontal border under logo and section title */}
+      {!isMobile && (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'left' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          style={{
+            position: 'absolute',
+            top: '152px',
+            left: '30px',
             right: '30px',
             height: '1px',
             background: 'var(--border)',
@@ -133,29 +166,13 @@ const GridLayout = () => {
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
               animate={{ scaleY: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
               style={{
                 position: 'absolute',
                 left: 0,
                 bottom: 0,
                 top: 24,
                 width: '1px',
-                background: 'var(--border)'
-              }}
-            />
-          )}
-          {/* Copyright bottom horizontal border */}
-          {!isMobile && (
-            <motion.div
-              initial={{ scaleX: 0, transformOrigin: 'left' }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-              style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: '1px',
                 background: 'var(--border)'
               }}
             />
@@ -195,23 +212,6 @@ const GridLayout = () => {
                 top: 32,
                 bottom: 0,
                 width: '1px',
-                background: 'var(--border)',
-                zIndex: 2
-              }}
-            />
-          )}
-          {/* Bottom border of tabs */}
-          {!isMobile && (
-            <motion.div
-              initial={{ scaleX: 0, transformOrigin: 'left' }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
-              style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: '1px',
                 background: 'var(--border)',
                 zIndex: 2
               }}
@@ -370,18 +370,25 @@ const GridLayout = () => {
             maxWidth: '600px',
             zIndex: 20,
             pointerEvents: 'none',
-            animation: 'fadeIn 0.3s ease-out'
+            opacity: imageLoaded[previewImage] ? 1 : 0,
+            transition: 'opacity 0.3s ease-out'
           }}
         >
-          <img
-            src={previewImage}
-            alt="Project preview"
-            style={{
-              width: '100%',
-              height: 'auto',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
-            }}
-          />
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9' }}>
+            <Image
+              src={previewImage}
+              alt="Project preview"
+              fill
+              sizes="(max-width: 768px) 100vw, 600px"
+              quality={85}
+              priority={cases.findIndex(c => c.preview === previewImage) < 2}
+              onLoad={() => setImageLoaded(prev => ({ ...prev, [previewImage]: true }))}
+              style={{
+                objectFit: 'cover',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+              }}
+            />
+          </div>
         </div>
       )}
 
@@ -511,6 +518,11 @@ const GridLayout = () => {
                           setPrevHoveredIndex(hoveredIndex);
                           setHoveredIndex(index);
                           setPreviewImage(caseItem.preview);
+                          // Preload image if not already loaded
+                          if (!imageLoaded[caseItem.preview]) {
+                            const img = new window.Image();
+                            img.src = caseItem.preview;
+                          }
                         }}
                         onClick={() => handleProjectClick(caseItem.slug)}
                         style={{
@@ -901,7 +913,7 @@ const GridLayout = () => {
           <motion.div
             initial={{ scaleX: 0, transformOrigin: 'left' }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
             style={{
               position: 'absolute',
               bottom: 0,

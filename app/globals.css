@@ -527,23 +527,15 @@ body {
 
 /* Add borders to sections on desktop only */
 @media screen and (min-width: 1025px) {
-  .project-section-bordered:not(:first-child)::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 1px; /* Start after the vertical border to prevent overlap */
-    right: -50px;
-    height: 0.5px;
-    background-color: var(--border);
-  }
+  /* Removed top border to prevent double lines between sections */
 
   .project-section-bordered::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 1px; /* Start after the vertical border to prevent overlap */
-    right: -50px;
-    height: 0.5px;
+    right: 276px;
+    height: 1px;
     background-color: var(--border);
   }
 
