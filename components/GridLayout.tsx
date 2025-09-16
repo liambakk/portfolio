@@ -155,15 +155,34 @@ const GridLayout = () => {
         />
       )}
 
-      {/* Extension of title border to viewport edge - only on about page */}
-      {!isMobile && activeTab === "about" && (
+      {/* Vertical border at left edge of horizontal border */}
+      {!isMobile && (
         <motion.div
-          initial={{ scaleX: 0, transformOrigin: 'right' }}
-          animate={{ scaleX: 1 }}
+          initial={{ scaleY: 0, transformOrigin: 'top' }}
+          animate={{ scaleY: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
           style={{
             position: 'absolute',
             top: '152px',
+            left: '30px',
+            height: activeTab === 'about' ? 'calc(100vh - 240px)' : '324px',
+            width: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
+      {/* Horizontal connector at bottom for about page */}
+      {!isMobile && activeTab === 'about' && (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'left' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+          style={{
+            position: 'absolute',
+            bottom: '88px',
             left: '0px',
             width: '30px',
             height: '1px',
