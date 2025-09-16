@@ -226,17 +226,6 @@ body {
   display: flex;
   align-items: flex-end;
   position: relative;
-  border-bottom: 1px solid var(--border);
-}
-
-.copyright::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 48px;
-  width: 1px;
-  background: var(--border);
 }
 
 .nav-tabs-right {
@@ -251,22 +240,11 @@ body {
   overflow: hidden;
 }
 
-.nav-tabs-right::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background: #ffffff;
-}
 
 .tab {
   flex: 1;
   padding: 12px 16px;
   background: transparent;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
   color: var(--foreground);
   font-size: 13px;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -278,14 +256,6 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
-}
-
-.nav-tabs-right .tab:first-child {
-  border-left: 1px solid var(--border);
-}
-
-.nav-tabs-right .tab:last-child {
-  border-right: 1px solid var(--border);
 }
 
 /* Sliding fill for tabs - 3 tabs */

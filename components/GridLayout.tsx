@@ -113,8 +113,41 @@ const GridLayout = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          style={{ position: 'relative' }}
         >
           © 2025
+          {/* Copyright left vertical border */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleY: 0, transformOrigin: 'top' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+              style={{
+                position: 'absolute',
+                left: 0,
+                bottom: 0,
+                top: 24,
+                width: '1px',
+                background: 'var(--border)'
+              }}
+            />
+          )}
+          {/* Copyright bottom horizontal border */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: '1px',
+                background: 'var(--border)'
+              }}
+            />
+          )}
         </motion.div>
         
         <motion.div
@@ -123,7 +156,109 @@ const GridLayout = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          style={{ position: 'relative' }}
         >
+          {/* White bar at top of tabs */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '8px',
+                background: '#ffffff'
+              }}
+            />
+          )}
+          {/* Left border of tab section */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleY: 0, transformOrigin: 'top' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 32,
+                bottom: 0,
+                width: '1px',
+                background: 'var(--border)',
+                zIndex: 2
+              }}
+            />
+          )}
+          {/* Bottom border of tabs */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: '1px',
+                background: 'var(--border)',
+                zIndex: 2
+              }}
+            />
+          )}
+          {/* Tab divider 1 (between Work and About) */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleY: 0, transformOrigin: 'top' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.35 }}
+              style={{
+                position: 'absolute',
+                left: '33.333%',
+                top: 32,
+                bottom: 0,
+                width: '1px',
+                background: 'var(--border)',
+                zIndex: 2
+              }}
+            />
+          )}
+          {/* Tab divider 2 (between About and Contact) */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleY: 0, transformOrigin: 'top' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+              style={{
+                position: 'absolute',
+                left: '66.666%',
+                top: 32,
+                bottom: 0,
+                width: '1px',
+                background: 'var(--border)',
+                zIndex: 2
+              }}
+            />
+          )}
+          {/* Right border of tab section */}
+          {!isMobile && (
+            <motion.div
+              initial={{ scaleY: 0, transformOrigin: 'top' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.45 }}
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 32,
+                bottom: 0,
+                width: '1px',
+                background: 'var(--border)',
+                zIndex: 2
+              }}
+            />
+          )}
           <div
             className="tab-fill"
             style={{
