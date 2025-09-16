@@ -618,31 +618,26 @@ const ProjectLayout = ({
                   {role.images && (
                     <div className="relay-images-container role-image-container" style={{
                       display: "flex",
-                      gap: "15px",
+                      gap: "20px",
                       padding: "20px 0",
                       justifyContent: "center",
                       alignItems: "center"
                     }}>
                       {role.images.map((img, imgIndex) => (
-                        <div key={imgIndex} style={{ 
-                          width: '200px',
-                          flexShrink: 0
-                        }}>
-                          <OptimizedImage
+                        <OptimizedImage
+                          key={imgIndex}
                             src={img}
                             alt={`${role.title} image ${imgIndex + 1}`}
-                            width={200}
-                            height={400}
+                            width={450}
+                            height={300}
                             quality={85}
-                            sizes="200px"
+                            sizes="(max-width: 768px) 100vw, 450px"
                             priority={index === 0}
                             style={{
                               width: '100%',
-                              height: 'auto',
-                              display: 'block'
+                              height: 'auto'
                             }}
                           />
-                        </div>
                       ))}
                     </div>
                   )}
