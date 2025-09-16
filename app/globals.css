@@ -247,7 +247,8 @@ body {
   background: transparent;
   color: var(--foreground);
   font-size: 13px;
-  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.15s;
   font-weight: 400;
   text-align: left;
   display: flex;
@@ -287,10 +288,12 @@ body {
 /* Tab text colors based on where the fill is */
 .tab.has-fill {
   color: #000000;
+  transition-delay: 0.15s;
 }
 
 .tab:not(.has-fill) {
   color: #ffffff;
+  transition-delay: 0s;
 }
 
 /* Left Sidebar - styles moved to GridLayout component */
@@ -470,17 +473,6 @@ body {
 .bottom-bar {
   grid-area: bottom-bar;
   position: relative;
-}
-
-/* White rectangle in bottom right corner */
-.bottom-bar::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 30px;
-  width: calc(50% - 30px);
-  height: 8px;
-  background: #ffffff;
 }
 
 /* Name above rectangle */

@@ -15,6 +15,7 @@ const GridLayout = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -110,9 +111,9 @@ const GridLayout = () => {
       <div className="top-bar">
         <motion.div
           className="copyright"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
           style={{ position: 'relative' }}
         >
           © 2025
@@ -153,9 +154,6 @@ const GridLayout = () => {
         <motion.div
           className="nav-tabs-right"
           onMouseLeave={() => setHoveredTab(null)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           style={{ position: 'relative' }}
         >
           {/* White bar at top of tabs */}
@@ -259,44 +257,70 @@ const GridLayout = () => {
               }}
             />
           )}
-          <div
+          <motion.div
             className="tab-fill"
+            initial={{ scaleY: 0, x: "0%" }}
+            animate={{
+              scaleY: hoveredTab !== null || activeTab ? 1 : 0,
+              x: (hoveredTab || activeTab) === "work" ? "0%" :
+                 (hoveredTab || activeTab) === "about" ? "100%" :
+                 "200%"
+            }}
+            transition={{
+              scaleY: {
+                duration: tabFillAnimated ? 0 : 0.8,
+                ease: [0.25, 0.1, 0.25, 1],
+                delay: tabFillAnimated ? 0 : 0.7
+              },
+              x: {
+                duration: 0.3,
+                ease: "easeOut",
+                delay: 0
+              }
+            }}
+            onAnimationComplete={() => {
+              if (!tabFillAnimated) setTabFillAnimated(true);
+            }}
             style={{
-              transform: `translateX(${
-                (hoveredTab || activeTab) === "work" ? 0 :
-                (hoveredTab || activeTab) === "about" ? 100 :
-                200
-              }%)`,
-              opacity: hoveredTab !== null || activeTab ? 1 : 0
+              transformOrigin: 'bottom'
             }}
           />
-          <button
+          <motion.button
             className={`tab ${activeTab === "work" ? "active" : ""} ${
               (hoveredTab === "work" || (!hoveredTab && activeTab === "work")) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("work")}
             onMouseEnter={() => setHoveredTab("work")}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.55 }}
           >
             Work
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className={`tab ${activeTab === "about" ? "active" : ""} ${
               (hoveredTab === "about" || (!hoveredTab && activeTab === "about")) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("about")}
             onMouseEnter={() => setHoveredTab("about")}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
           >
             About
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className={`tab ${activeTab === "contact" ? "active" : ""} ${
               (hoveredTab === "contact" || (!hoveredTab && activeTab === "contact")) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("contact")}
             onMouseEnter={() => setHoveredTab("contact")}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.65 }}
           >
             Contact
-          </button>
+          </motion.button>
         </motion.div>
       </div>
 
@@ -410,21 +434,32 @@ const GridLayout = () => {
                     }}
                   />
                 )}
-                {hoveredIndex !== null && (
-                  <div 
-                    className="cases-fill"
-                    ref={fillRef}
-                    style={{
-                      transform: `translateY(${
-                        hoveredIndex === 0 ? -1 : 
-                        hoveredIndex === 1 ? 79 :
-                        hoveredIndex === 2 ? 160 :
-                        hoveredIndex === 3 ? 241 :
-                        hoveredIndex * 74 + 5
-                      }px)`
-                    }}
-                  />
-                )}
+                <motion.div
+                  className="cases-fill"
+                  ref={fillRef}
+                  animate={{
+                    scaleY: hoveredIndex !== null ? 1 : 0,
+                    y: hoveredIndex === null ? -1 :
+                       hoveredIndex === 0 ? -1 :
+                       hoveredIndex === 1 ? 79 :
+                       hoveredIndex === 2 ? 160 :
+                       hoveredIndex === 3 ? 241 :
+                       hoveredIndex * 74 + 5
+                  }}
+                  transition={{
+                    y: {
+                      duration: 0,
+                      ease: "easeOut"
+                    },
+                    scaleY: {
+                      duration: 0,
+                      ease: "easeOut"
+                    }
+                  }}
+                  style={{
+                    transformOrigin: 'top'
+                  }}
+                />
                 {cases.map((caseItem, index) => {
                   const isLastItem = index === cases.length - 1;
                   return (
@@ -471,6 +506,25 @@ const GridLayout = () => {
                             background: 'var(--border)',
                             width: '100%',
                             position: 'relative',
+                            zIndex: 0
+                          }}
+                        />
+                      )}
+                      {/* Special border for last item that extends to connect with vertical line */}
+                      {isLastItem && !isMobile && (
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: 'calc(100% + 19px)' }}
+                          transition={{
+                            duration: 0.6,
+                            ease: "easeOut",
+                            delay: 0.65 + (index * 0.1)
+                          }}
+                          style={{
+                            height: '1px',
+                            background: 'var(--border)',
+                            position: 'relative',
+                            left: '-19px',
                             zIndex: 0
                           }}
                         />
@@ -683,6 +737,22 @@ const GridLayout = () => {
 
       {/* Bottom Bar */}
       <div className="bottom-bar">
+        {/* White rectangle in bottom right corner */}
+        {!isMobile && (
+          <motion.div
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 30,
+              width: 'calc(50% - 30px)',
+              height: '8px',
+              background: '#ffffff'
+            }}
+          />
+        )}
         <motion.span
           className="bottom-name"
           initial={{ opacity: 0, y: 20 }}
