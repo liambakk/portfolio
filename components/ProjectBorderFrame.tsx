@@ -41,7 +41,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
       }}
       aria-hidden="true"
     >
-      {/* Left border */}
+      {/* PROJECT FRAME LEFT BORDER: Left vertical border of main content frame */}
       {hasInitialLoaded ? (
         <div style={{
           position: "absolute",
@@ -67,7 +67,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         />
       )}
       
-      {/* Top border */}
+      {/* PROJECT FRAME TOP BORDER: Top horizontal border of main content frame */}
       {hasInitialLoaded ? (
         <div style={{
           position: "absolute",
@@ -93,7 +93,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         />
       )}
       
-      {/* Right border */}
+      {/* PROJECT FRAME RIGHT BORDER: Right vertical border of main content frame */}
       {hasInitialLoaded ? (
         <div style={{
           position: "absolute",
@@ -119,7 +119,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         />
       )}
       
-      {/* Bottom border */}
+      {/* PROJECT FRAME BOTTOM BORDER: Bottom horizontal border of main content frame */}
       {hasInitialLoaded ? (
         <div style={{
           position: "absolute",
@@ -145,7 +145,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         />
       )}
       
-      {/* Inner vertical line */}
+      {/* PROJECT FRAME INNER DIVIDER: Vertical separator between content and section headers */}
       {hasInitialLoaded ? (
         <div
           className="border-inner-vertical"

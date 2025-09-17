@@ -206,7 +206,7 @@ const ProjectLayout = ({
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
           >
             © 2025
-            {/* Copyright left vertical border */}
+            {/* PROJECT COPYRIGHT BORDER: Left vertical border of copyright text */}
             {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
@@ -240,7 +240,7 @@ const ProjectLayout = ({
             onMouseLeave={handleTabLeave}
             style={{ position: 'relative' }}
           >
-            {/* White bar at top of tabs */}
+            {/* PROJECT TAB TOP BAR: White horizontal accent bar above tab section */}
             {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
@@ -267,7 +267,7 @@ const ProjectLayout = ({
                 }}
               />
             ))}
-            {/* Left border of tab section */}
+            {/* PROJECT TAB BORDER LEFT: Left vertical border of tab navigation section */}
             {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
@@ -296,7 +296,7 @@ const ProjectLayout = ({
                 }}
               />
             ))}
-            {/* Tab divider (between Overview and Back to Work) */}
+            {/* PROJECT TAB DIVIDER: Vertical separator between Overview and Back to Work tabs */}
             {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
@@ -325,7 +325,7 @@ const ProjectLayout = ({
                 }}
               />
             ))}
-            {/* Right border of tab section */}
+            {/* PROJECT TAB BORDER RIGHT: Right vertical border of tab navigation section */}
             {!isTouchDevice && (hasInitialLoaded ? (
               <div
                 style={{
@@ -417,7 +417,7 @@ const ProjectLayout = ({
           </div>
         </div>
 
-        {/* Top horizontal border */}
+        {/* PROJECT HEADER BORDER: Main horizontal separator below header/tabs area */}
         {!isTouchDevice && (hasInitialLoaded ? (
           <div
             style={{
@@ -475,7 +475,7 @@ const ProjectLayout = ({
                   {title}
                   {externalLink && titleIcon}
                 </motion.h1>
-                {/* Unified border frame component */}
+                {/* PROJECT CONTENT FRAME: Unified border system wrapping all project sections */}
                 <ProjectBorderFrame />
               </div>
               {previewImage && (
@@ -517,7 +517,7 @@ const ProjectLayout = ({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
                 >
-                  Overview
+                  <span className="section-label">01.</span> Overview
                 </motion.div>
                 <motion.div 
                   className="section-content"
@@ -542,7 +542,7 @@ const ProjectLayout = ({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
               >
-                Team
+                <span className="section-label">02.</span> Team
               </motion.div>
               <motion.div 
                 className="section-content"
@@ -567,7 +567,7 @@ const ProjectLayout = ({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
               >
-                Goals
+                <span className="section-label">03.</span> Goals
               </motion.div>
               <motion.div 
                 className="section-content"
@@ -607,7 +607,7 @@ const ProjectLayout = ({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
                 >
-                  {role.title}
+                  <span className="section-label">{String(index + 4).padStart(2, '0')}.</span> {role.title}
                 </motion.div>
                 <motion.div 
                   className="section-content"

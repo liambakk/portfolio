@@ -60,10 +60,14 @@ select {
   .tab-fill {
     max-width: 50% !important; /* Only allow movement between first 2 tabs */
   }
+}
 
-  /* Prevent the "Back to Work" button from getting the fill */
-  .tab:last-child.has-fill {
-    color: #ffffff !important; /* Keep white text */
+/* Mobile-specific tab styling for active state */
+@media screen and (max-width: 1024px) {
+  /* Style active Contact tab on mobile since fill doesn't reach it */
+  .tab.active {
+    background: #ffffff;
+    color: #000000 !important;
   }
 }
 
@@ -90,7 +94,7 @@ select {
 
 html, body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -116,7 +120,7 @@ body {
 /* Grid Container */
 .grid-container {
   display: grid;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   grid-template-columns: 100px 1fr 180px;
   grid-template-rows: 80px 1fr 80px;
@@ -133,6 +137,7 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  overflow-x: visible !important; /* Allow horizontal overflow for border extensions */
   background: var(--background);
   position: relative;
 }
@@ -142,7 +147,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow-y: auto;
-  overflow-x: visible;
+  overflow-x: visible !important; /* Ensure horizontal overflow is visible */
 }
 
 .project-top-bar {
@@ -174,6 +179,7 @@ body {
   flex: 1;
   padding: 24px 40px 30px 0;
   position: relative;
+  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 .project-right-sidebar-fixed {
@@ -299,12 +305,12 @@ body {
 
 /* Tab text colors based on where the fill is */
 .tab.has-fill {
-  color: #000000;
+  color: #000000 !important;
   transition-delay: 0.15s;
 }
 
 .tab:not(.has-fill) {
-  color: #ffffff;
+  color: #ffffff !important;
   transition-delay: 0s;
 }
 
@@ -326,8 +332,6 @@ body {
 .main-content {
   grid-area: main;
   padding: 24px 40px 30px 0;
-  overflow-y: auto;
-  overflow-x: hidden;
   position: relative;
   z-index: 0;
 }
@@ -337,6 +341,7 @@ body {
   position: relative;
   width: 100%;
   min-height: 100%;
+  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 
@@ -536,6 +541,7 @@ body {
   margin-top: 40px; /* Reduced since image is now relative positioned */
   margin-right: 0;
   padding-bottom: 50px; /* Add padding to ensure content doesn't touch bottom border */
+  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 /* Individual bordered sections - borders now handled by ProjectBorderFrame */
@@ -544,6 +550,35 @@ body {
   grid-template-columns: 240px 1fr;
   min-height: 120px;
   position: relative;
+  border-top: 1px solid var(--border);
+  overflow: visible; /* Allow pseudo-elements to extend outside */
+  z-index: 1; /* Ensure proper stacking context */
+  background: rgba(0, 255, 0, 0.1); /* Temporary green background to see section bounds */
+}
+
+/* Remove top border from first section to avoid double border with frame */
+.project-section-bordered:first-child {
+  border-top: none;
+}
+
+/* Extend section borders to meet the inner divider on desktop */
+@media screen and (min-width: 1025px) {
+  .project-section-bordered::after {
+    content: '';
+    position: absolute;
+    top: -1px; /* Align with the top border */
+    left: 100%; /* Start from the right edge of section */
+    width: 236px; /* Exact distance to inner divider */
+    height: 2px; /* Temporarily thicker for visibility */
+    background: #ff0000; /* Temporary red color for debugging */
+    z-index: 1000; /* Very high z-index to ensure visibility */
+    pointer-events: none; /* Don't interfere with interactions */
+  }
+  
+  /* Remove the extension from the first child since it has no top border */
+  .project-section-bordered:first-child::after {
+    display: none;
+  }
 }
 
 /* Borders now handled by ProjectBorderFrame component */
@@ -557,6 +592,12 @@ body {
   background: var(--background);
   display: flex;
   align-items: flex-start;
+}
+
+.section-label {
+  color: var(--muted);
+  margin-right: 8px;
+  font-weight: 400;
 }
 
 /* Section content - right column */
@@ -1006,7 +1047,7 @@ body {
   
   /* Project top bar mobile adjustments */
   .project-top-bar {
-    height: 60px; /* Match main page mobile header height */
+    height: 70px; /* Increased mobile header height */
     padding: 0 10px;
   }
   
@@ -1041,7 +1082,7 @@ body {
 @media screen and (max-width: 1024px) {
   .grid-container {
     grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr auto;
+    grid-template-rows: 70px 1fr auto;
     grid-template-areas:
       "top-bar"
       "main"
@@ -1095,9 +1136,8 @@ body {
   
   .main-content {
     padding: 20px;
-    overflow-y: visible;
     flex: 1;
-    min-height: calc(100vh - 60px - 200px); /* Adjust for header and footer */
+    min-height: calc(100vh - 70px - 200px); /* Adjust for header and footer */
   }
   
   .section-title {

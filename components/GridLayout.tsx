@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import Image from "next/image";
@@ -79,7 +79,7 @@ const GridLayout = () => {
     <div className="grid-container">
       <CustomCursor />
 
-      {/* Top horizontal border */}
+      {/* BORDER 1: Top horizontal border - Header bottom border */}
       {!isMobile && (
         <motion.div
           initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -98,45 +98,56 @@ const GridLayout = () => {
         />
       )}
 
-      {/* Vertical border connecting top to bottom at right edge */}
-      {!isMobile && (
+      {/* WORK BORDER 1: Unified L-shaped border - vertical right edge and horizontal bottom (work section only) */}
+      {!isMobile && activeTab === 'work' && (
         <motion.div
-          initial={{ scaleY: 0, transformOrigin: 'top' }}
-          animate={{ scaleY: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           style={{
             position: 'absolute',
             top: '152px',
             right: '30px',
             width: '1px',
-            height: '324px',
-            background: 'var(--border)',
+            height: '403px',
+            background: 'transparent',
             zIndex: 10,
             pointerEvents: 'none'
           }}
-        />
+        >
+          {/* Vertical segment */}
+          <motion.div
+            initial={{ scaleY: 0, transformOrigin: 'top' }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '1px',
+              height: '100%',
+              background: 'var(--border)'
+            }}
+          />
+          {/* Horizontal segment extending left from bottom of vertical */}
+          <motion.div
+            initial={{ scaleX: 0, transformOrigin: 'right' }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              width: 'calc(100vw - 905px)',
+              height: '1px',
+              background: 'var(--border)'
+            }}
+          />
+        </motion.div>
       )}
 
-      {/* Horizontal border connecting bottom of vertical lines */}
-      {!isMobile && (
-        <motion.div
-          initial={{ scaleX: 0, transformOrigin: 'right' }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-          style={{
-            position: 'absolute',
-            top: 'calc(152px + 324px)',
-            left: 'calc(50% + 40px)',
-            right: '30px',
-            height: '1px',
-            background: 'var(--border)',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }}
-        />
-      )}
 
-      {/* Horizontal border under logo and section title */}
+      {/* BORDER 2: Horizontal border under logo/section title - Main content top separator */}
       {!isMobile && (
         <motion.div
           initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -155,18 +166,19 @@ const GridLayout = () => {
         />
       )}
 
-      {/* Vertical border at left edge of horizontal border */}
-      {!isMobile && (
+
+      {/* ABOUT/CONTACT BORDER 2: Right vertical border - social links separator (about/contact sections) */}
+      {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
         <motion.div
           initial={{ scaleY: 0, transformOrigin: 'top' }}
           animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           style={{
             position: 'absolute',
             top: '152px',
-            left: '30px',
-            height: activeTab === 'about' ? 'calc(100vh - 240px)' : '324px',
+            right: '30px',
             width: '1px',
+            height: '324px',
             background: 'var(--border)',
             zIndex: 10,
             pointerEvents: 'none'
@@ -174,24 +186,6 @@ const GridLayout = () => {
         />
       )}
 
-      {/* Horizontal connector at bottom for about page */}
-      {!isMobile && activeTab === 'about' && (
-        <motion.div
-          initial={{ scaleX: 0, transformOrigin: 'left' }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
-          style={{
-            position: 'absolute',
-            bottom: '88px',
-            left: '0px',
-            width: '30px',
-            height: '1px',
-            background: 'var(--border)',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }}
-        />
-      )}
 
 
       {/* Top Bar */}
@@ -341,7 +335,7 @@ const GridLayout = () => {
           />
           <motion.button
             className={`tab ${activeTab === "work" ? "active" : ""} ${
-              (hoveredTab === "work" || (!hoveredTab && activeTab === "work")) ? "has-fill" : ""
+              (hoveredTab === "work" || (!hoveredTab && activeTab === "work" && tabFillAnimated)) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("work")}
             onMouseEnter={() => setHoveredTab("work")}
@@ -353,7 +347,7 @@ const GridLayout = () => {
           </motion.button>
           <motion.button
             className={`tab ${activeTab === "about" ? "active" : ""} ${
-              (hoveredTab === "about" || (!hoveredTab && activeTab === "about")) ? "has-fill" : ""
+              (hoveredTab === "about" || (!hoveredTab && activeTab === "about" && tabFillAnimated)) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("about")}
             onMouseEnter={() => setHoveredTab("about")}
@@ -365,7 +359,7 @@ const GridLayout = () => {
           </motion.button>
           <motion.button
             className={`tab ${activeTab === "contact" ? "active" : ""} ${
-              (hoveredTab === "contact" || (!hoveredTab && activeTab === "contact")) ? "has-fill" : ""
+              (hoveredTab === "contact" || (!hoveredTab && activeTab === "contact" && tabFillAnimated)) ? "has-fill" : ""
             }`}
             onClick={() => setActiveTab("contact")}
             onMouseEnter={() => setHoveredTab("contact")}
@@ -447,7 +441,7 @@ const GridLayout = () => {
             >
               Work
             </motion.h1>
-            <div className="cases-list" ref={casesListRef}>
+            <div className="cases-list" ref={casesListRef} style={{ position: 'relative' }}>
               <div
                 className="cases-inner"
                 onMouseLeave={() => {
@@ -462,36 +456,7 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* Animated left border */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                {/* Animated right border */}
+                {/* CASES LIST RIGHT BORDER: Right vertical border of cases list */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -501,7 +466,8 @@ const GridLayout = () => {
                       bottom: 0,
                       width: '1px',
                       background: 'var(--border)',
-                      zIndex: 0
+                      zIndex: 0,
+                      height: '99.5%',
                     }}
                   />
                 ) : (
@@ -531,6 +497,7 @@ const GridLayout = () => {
                        hoveredIndex === 1 ? 79 :
                        hoveredIndex === 2 ? 160 :
                        hoveredIndex === 3 ? 241 :
+                       hoveredIndex === 4 ? 322 :
                        hoveredIndex * 74 + 5
                   }}
                   transition={{
@@ -581,7 +548,7 @@ const GridLayout = () => {
                       >
                         {caseItem.title}
                       </motion.div>
-                      {/* Animated horizontal border after each item except the last */}
+                      {/* CASE ITEM DIVIDER: Horizontal separator between case items */}
                       {!isLastItem && (hasInitialLoaded ? (
                         <div
                           style={{
@@ -614,35 +581,110 @@ const GridLayout = () => {
                     </React.Fragment>
                   );
                 })}
-                {/* Animated bottom border for the entire container */}
+                
+                {/* MORE BUTTON TOP BORDER: Horizontal border above More button */}
                 {hasInitialLoaded ? (
                   <div
                     style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      width: '100%',
                       height: '1px',
                       background: 'var(--border)',
+                      width: '100%',
+                      position: 'relative',
                       zIndex: 0
                     }}
                   />
                 ) : (
                   <motion.div
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.95 }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 1.05
+                    }}
                     style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
                       height: '1px',
                       background: 'var(--border)',
-                      zIndex: 0
+                      width: '100%',
+                      position: 'relative',
+                      zIndex: 0,
+                      transformOrigin: '0% 50%'
                     }}
                   />
                 )}
+                
+                {/* More button */}
+                <motion.div
+                  className="case-item"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                    delay: 1.0
+                  }}
+                  onMouseEnter={() => {
+                    setPrevHoveredIndex(hoveredIndex);
+                    setHoveredIndex(cases.length);
+                    setPreviewImage(null);
+                  }}
+                  onClick={() => {
+                    window.open('https://drive.google.com/file/d/1xlb2JgP_P0qrBXVIl0h_QMbs3M3pu-Kv/view?usp=sharing', '_blank');
+                  }}
+                  style={{
+                    padding: '24px 20px',
+                    fontSize: '20px',
+                    fontWeight: 400,
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 1,
+                    color: hoveredIndex === cases.length ? '#000000' : 'inherit',
+                    transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  More
+                </motion.div>
+                {/* Note: Bottom border removed - horizontal border now forms bottom of More button */}
+                
+                {/* WORK CONTENT L-SHAPED BORDER: Combined left vertical and bottom horizontal borders */}
+                {!isMobile && activeTab === 'work' && (
+                  <>
+                    {hasInitialLoaded ? (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '99.5%',
+                          pointerEvents: 'none',
+                          zIndex: 0,
+                          background: 'var(--border)'
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'top' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '99.5%',
+                          background: 'var(--border)',
+                          pointerEvents: 'none',
+                          zIndex: 0
+                        }}
+                      />
+                    )}
+                    
+                  </>
+                )}
               </div>
+              
             </div>
           </div>
         )}
@@ -674,41 +716,12 @@ const GridLayout = () => {
                     position: 'relative'
                   } : {}}
               >
-                {/* Animated left border */}
+                {/* ABOUT SECTION BORDER 2: Right border of about content box */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
                       position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                {/* Animated right border */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
+                      top: 10,
                       right: 0,
                       bottom: 0,
                       width: '1px',
@@ -747,127 +760,172 @@ const GridLayout = () => {
                 >
                   Currently working as a Design System Expert, creating scalable and consistent design solutions.
                 </motion.p>
-                {/* Animated bottom border for about content */}
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      width: '100%',
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                )}
               </div>
               
               {/* Extended border container for profile image - only on about page */}
               {!isMobile && (
                 <>
-                  {/* Vertical border extending down from content box */}
-                  {hasInitialLoaded ? (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '20px',
-                        top: 'calc(100%)',
-                        height: '300px',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  ) : (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.0 }}
-                      style={{
-                        position: 'absolute',
-                        left: '20px',
-                        top: 'calc(100%)',
-                        height: '300px',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  )}
-                  
-                  {/* Horizontal border going left */}
-                  {hasInitialLoaded ? (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '-50vw',
-                        top: 'calc(100% + 300px)',
-                        right: 'calc(100% - 20px)',
-                        height: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  ) : (
-                    <motion.div
-                      initial={{ scaleX: 0, transformOrigin: 'right' }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.1 }}
-                      style={{
-                        position: 'absolute',
-                        left: '-50vw',
-                        top: 'calc(100% + 300px)',
-                        right: 'calc(100% - 20px)',
-                        height: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  )}
-                  
-                  {/* Vertical border going up */}
+                  {/* ABOUT SECTION BORDER 1: Extended U-shaped border - merged header vertical, content left border, horizontal extension, and left viewport edge vertical */}
                   {hasInitialLoaded ? (
                     <div
                       style={{
                         position: 'absolute',
                         left: '-50vw',
                         top: '-280px',
+                        width: 'calc(50vw + 20px)',
                         height: 'calc(100% + 580px)',
-                        width: '1px',
-                        background: 'var(--border)',
+                        pointerEvents: 'none',
                         zIndex: 0
                       }}
-                    />
+                    >
+                      {/* Right vertical segment - content left border */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          top: '280px',
+                          width: '1px',
+                          height: 'calc(100% - 280px)',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Horizontal bottom segment */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          bottom: '0',
+                          right: '0',
+                          height: '1px',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Left vertical segment - viewport edge */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '100%',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Header vertical segment - connects header to content */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          right: 'calc(0px - 30px + 50vw)',
+                          top: 'calc(280px + 100vh - 673px)',
+                          width: '1px',
+                          height: 'calc(100vh - 725px)',
+                          background: 'var(--border)',
+                          zIndex: 10
+                        }}
+                      />
+                      {/* Horizontal extension to social area - only for about section */}
+                      {activeTab === 'about' && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 'calc(100% - 1px)',
+                            bottom: '0',
+                            width: 'calc(100vw - 50vw - 50px)',
+                            height: '1px',
+                            background: 'var(--border)',
+                            zIndex: 10
+                          }}
+                        />
+                      )}
+                    </div>
                   ) : (
                     <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'bottom' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
                       style={{
                         position: 'absolute',
                         left: '-50vw',
                         top: '-280px',
+                        width: 'calc(50vw + 20px)',
                         height: 'calc(100% + 580px)',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
+                        pointerEvents: 'none',
+                        zIndex: 0,
+                        overflow: 'hidden'
                       }}
-                    />
+                    >
+                      {/* Animated right vertical segment - content left border */}
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'top' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          top: '280px',
+                          width: '1px',
+                          height: 'calc(100% - 280px)',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Animated horizontal bottom segment */}
+                      <motion.div
+                        initial={{ scaleX: 0, transformOrigin: 'right' }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          bottom: '0',
+                          right: '0',
+                          height: '1px',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Animated left vertical segment - viewport edge */}
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'bottom' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '100%',
+                          background: 'var(--border)'
+                        }}
+                      />
+                      {/* Animated header vertical segment - connects header to content */}
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'top' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                        style={{
+                          position: 'absolute',
+                          right: 'calc(0px - 30px + 50vw)',
+                          top: 'calc(280px + 100vh - 673px)',
+                          width: '1px',
+                          height: 'calc(100vh - 725px)',
+                          background: 'var(--border)',
+                          zIndex: 10
+                        }}
+                      />
+                      {/* Animated horizontal extension to social area - only for about section */}
+                      {activeTab === 'about' && (
+                        <motion.div
+                          initial={{ scaleX: 0, transformOrigin: 'left' }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+                          style={{
+                            position: 'absolute',
+                            left: 'calc(100% - 1px)',
+                            bottom: '0',
+                            width: 'calc(100vw - 50vw - 50px)',
+                            height: '1px',
+                            background: 'var(--border)',
+                            zIndex: 10
+                          }}
+                        />
+                      )}
+                    </motion.div>
                   )}
                   
                   {/* Profile image container */}
@@ -934,7 +992,7 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* Animated left border */}
+                {/* CONTACT LEFT BORDER: Left vertical border of contact content box */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -963,7 +1021,7 @@ const GridLayout = () => {
                     }}
                   />
                 ))}
-                {/* Animated right border */}
+                {/* CONTACT RIGHT BORDER: Right vertical border of contact content box */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -1007,7 +1065,7 @@ const GridLayout = () => {
                 >
                   Based in Your City
                 </motion.p>
-                {/* Animated bottom border for contact content */}
+                {/* CONTACT BOTTOM BORDER: Bottom horizontal border of contact content box */}
                 {hasInitialLoaded ? (
                   <div
                     style={{
@@ -1040,6 +1098,25 @@ const GridLayout = () => {
           </div>
         )}
       </div>
+
+      {/* CONTACT HORIZONTAL BORDER: Horizontal border extending to social area - only for contact section */}
+      {!isMobile && activeTab === 'contact' && (
+        <motion.div
+          initial={{ scaleX: 0, transformOrigin: 'left' }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          style={{
+            position: 'absolute',
+            top: 'calc(152px + 324px)',
+            left: '50px',
+            right: '30px',
+            height: '1px',
+            background: 'var(--border)',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
 
       {/* Right Sidebar - Social Links */}
       {!isMobile && (
@@ -1086,30 +1163,49 @@ const GridLayout = () => {
 
       {/* Bottom Bar */}
       <div className="bottom-bar">
-        {/* White rectangle in bottom right corner */}
-        {!isMobile && (
-          <motion.div
-            initial={{ scaleX: 0, transformOrigin: 'left' }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 30,
-              width: 'calc(50% - 30px)',
-              height: '8px',
-              background: '#ffffff'
-            }}
-          />
-        )}
-        <motion.span
-          className="bottom-name"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-        >
-          Liam Bakker
-        </motion.span>
+        {/* BOTTOM BAR WHITE ACCENT: White horizontal bar in bottom right corner - only on work and contact */}
+        <AnimatePresence>
+          {!isMobile && (activeTab === 'work' || activeTab === 'contact') && (
+            <motion.div
+              key="white-accent"
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              exit={{ scaleX: 0, transformOrigin: 'right' }}
+              transition={{
+                duration: 0.7,
+                ease: "easeOut",
+                delay: hasInitialLoaded ? 0 : 0.35
+              }}
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 30,
+                width: 'calc(50% - 30px)',
+                height: '8px',
+                background: '#ffffff'
+              }}
+            />
+          )}
+        </AnimatePresence>
+        {/* Liam Bakker text - only on work and contact */}
+        <AnimatePresence>
+          {(activeTab === 'work' || activeTab === 'contact') && (
+            <motion.span
+              key="liam-text"
+              className="bottom-name"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: hasInitialLoaded ? 0 : 0.8
+              }}
+            >
+              Liam Bakker
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Mobile Footer - only visible on mobile */}
