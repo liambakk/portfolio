@@ -48,28 +48,20 @@ select {
     cursor: pointer !important;
   }
 
-  /* Disable tab fill sliding to third position on touch devices */
+  /* Allow tab fill to reach all positions on mobile */
   .tab-fill {
-    max-width: 66.666% !important; /* Limit to 2 positions max */
+    max-width: 100% !important; /* Allow fill to reach all 3 tabs */
   }
 }
 
-/* Additional protection for touch devices using hover media query */
+/* Allow tab fill animation on touch devices */
 @media (hover: none) and (pointer: coarse) {
-  /* Completely disable hover effects on touch devices */
   .tab-fill {
-    max-width: 50% !important; /* Only allow movement between first 2 tabs */
+    max-width: 100% !important; /* Allow fill to reach all 3 tabs on touch devices */
   }
 }
 
-/* Mobile-specific tab styling for active state */
-@media screen and (max-width: 1024px) {
-  /* Style active Contact tab on mobile since fill doesn't reach it */
-  .tab.active {
-    background: #ffffff;
-    color: #000000 !important;
-  }
-}
+/* Mobile-specific tab styling for active state - removed to allow fill animation */
 
 /* Hide scrollbar on mobile while maintaining scroll functionality */
 @media screen and (max-width: 1024px) {
@@ -182,7 +174,7 @@ body {
 
 .project-right-sidebar-fixed {
   position: absolute;
-  right: 130px;
+  right: 180px; /* Moved further left from 130px */
   top: 145px; /* Precisely aligned with title bottom border */
   width: 180px;
   display: flex;
@@ -196,6 +188,7 @@ body {
 /* Sticky state - applied when scrolling down */
 .project-right-sidebar-sticky {
   position: fixed !important;
+  right: 180px !important; /* Maintain same horizontal position when sticky */
   top: 20px !important; /* Small gap from top when sticky */
 }
 
@@ -611,6 +604,12 @@ body {
 
 /* Desktop styles for Relay images - move right on desktop */
 @media screen and (min-width: 1025px) {
+  /* Fixed position for project sidebar on all desktop sizes */
+  .project-right-sidebar-fixed {
+    right: 180px !important; /* Override any responsive values */
+    width: 180px !important; /* Fixed width */
+  }
+  
   .relay-images-container {
     padding-left: 100px !important;
     margin-left: 0 !important;
@@ -1023,9 +1022,15 @@ body {
     display: none;
   }
   
-  /* Project top bar mobile adjustments */
+  /* Project top bar mobile adjustments - match main page */
   .project-top-bar {
-    height: 70px; /* Increased mobile header height */
+    height: 70px;
+    padding: 0 10px;
+  }
+  
+  /* Main page top bar mobile adjustments */
+  .top-bar {
+    height: 70px;
     padding: 0 10px;
   }
   
@@ -1076,7 +1081,7 @@ body {
   }
   
   .top-bar {
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
   }
   
   .copyright {
@@ -1143,6 +1148,7 @@ body {
   .case-item {
     padding: 20px 0;
     font-size: 18px;
+    color: #ffffff !important;
   }
   
   .cases-fill {
