@@ -195,7 +195,7 @@ body {
 /* Grid/Home page social sidebar - aligned with cases-inner right border */
 .grid-right-sidebar-fixed {
   position: fixed;
-  left: calc(50% + 40px + 34.5%); /* Fine-tuned position */
+  left: calc(50% + 40px + 28%); /* Moved further left */
   top: 140px; /* Aligned with content area */
   display: flex;
   align-items: flex-start;

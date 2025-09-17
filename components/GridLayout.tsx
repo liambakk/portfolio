@@ -146,9 +146,10 @@ const GridLayout = () => {
               position: 'absolute',
               top: 0,
               right: 0,
-              width: '1px',
+              width: '3px',
               height: '100%',
-              background: 'var(--border)'
+              background: '#ff6b35',
+              boxShadow: '0 0 8px rgba(255, 107, 53, 0.5)'
             }}
           />
           {/* WORK SECTION HORIZONTAL EXTENSION: Bottom border extending left from vertical
@@ -164,8 +165,9 @@ const GridLayout = () => {
               bottom: 0,
               right: 0,
               width: 'calc(100vw - 905px)',
-              height: '1px',
-              background: 'var(--border)'
+              height: '3px',
+              background: '#ff6b35',
+              boxShadow: '0 0 8px rgba(255, 107, 53, 0.5)'
             }}
           />
         </motion.div>
@@ -1252,55 +1254,47 @@ const GridLayout = () => {
       {/* Bottom Bar */}
       <div className="bottom-bar">
         {/* BOTTOM BAR WHITE ACCENT: Decorative white bar in footer area
-            - Only visible on WORK and CONTACT sections (not on ABOUT)
+            - Now visible on ALL sections (including ABOUT)
             - Positioned in bottom right area of viewport
             - Width spans half viewport minus margin (calc(50% - 30px))
             - Height: 8px for visual prominence
             - White background for contrast and visual weight
-            - Animated left-to-right on enter, right-to-left on exit
+            - No exit animation - stays persistent across all sections
             - Different delay timing for initial vs subsequent loads */}
-        <AnimatePresence>
-          {!isMobile && (activeTab === 'work' || activeTab === 'contact') && (
-            <motion.div
-              key="white-accent"
-              initial={{ scaleX: 0, transformOrigin: 'left' }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0, transformOrigin: 'right' }}
-              transition={{
-                duration: 0.7,
-                ease: "easeOut",
-                delay: hasInitialLoaded ? 0 : 0.35
-              }}
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 30,
-                width: 'calc(50% - 30px)',
-                height: '8px',
-                background: '#ffffff'
-              }}
-            />
-          )}
-        </AnimatePresence>
-        {/* Liam Bakker text - only on work and contact */}
-        <AnimatePresence>
-          {(activeTab === 'work' || activeTab === 'contact') && (
-            <motion.span
-              key="liam-text"
-              className="bottom-name"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{
-                duration: 0.8,
-                ease: "easeOut",
-                delay: hasInitialLoaded ? 0 : 0.8
-              }}
-            >
-              Liam Bakker
-            </motion.span>
-          )}
-        </AnimatePresence>
+        {!isMobile && (
+          <motion.div
+            key="white-accent"
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
+            transition={{
+              duration: 0.7,
+              ease: "easeOut",
+              delay: hasInitialLoaded ? 0 : 0.35
+            }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 30,
+              width: 'calc(50% - 30px)',
+              height: '8px',
+              background: '#ffffff'
+            }}
+          />
+        )}
+        {/* Liam Bakker text - now visible on all sections */}
+        <motion.span
+          key="liam-text"
+          className="bottom-name"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+            delay: hasInitialLoaded ? 0 : 0.8
+          }}
+        >
+          Liam Bakker
+        </motion.span>
       </div>
 
       {/* Mobile Footer - only visible on mobile */}
