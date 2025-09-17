@@ -39,10 +39,22 @@ const GridLayout = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Mark initial load as complete after animations finish
-    const timer = setTimeout(() => {
+    // Check if initial animations have already played
+    const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
+    
+    if (hasPlayedInitialAnimations) {
       setHasInitialLoaded(true);
-    }, 1000);
+    } else {
+      // Mark initial load as complete after animations finish
+      const timer = setTimeout(() => {
+        setHasInitialLoaded(true);
+        sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
+      }, 1000);
+      
+      return () => {
+        clearTimeout(timer);
+      };
+    }
 
     // Preload first 2 images for faster hover response
     if (!isMobile) {
@@ -57,7 +69,6 @@ const GridLayout = () => {
 
     return () => {
       window.removeEventListener('resize', checkMobile);
-      clearTimeout(timer);
     };
   }, []);
 
@@ -455,20 +466,7 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0,
-                      height: '99.5%',
-                    }}
-                  />
-                ) : (
+                {!isMobile && (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -483,7 +481,7 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                ))}
+                )}
                 <motion.div
                   className="cases-fill"
                   ref={fillRef}
@@ -546,17 +544,7 @@ const GridLayout = () => {
                       >
                         {caseItem.title}
                       </motion.div>
-                      {!isLastItem && (hasInitialLoaded ? (
-                        <div
-                          style={{
-                            height: '1px',
-                            background: 'var(--border)',
-                            width: '100%',
-                            position: 'relative',
-                            zIndex: 0
-                          }}
-                        />
-                      ) : (
+                      {!isLastItem && (
                         <motion.div
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
@@ -574,40 +562,28 @@ const GridLayout = () => {
                             transformOrigin: '0% 50%'
                           }}
                         />
-                      ))}
+                      )}
                     </React.Fragment>
                   );
                 })}
                 
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      height: '1px',
-                      background: 'var(--border)',
-                      width: '100%',
-                      position: 'relative',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: "easeOut",
-                      delay: 1.05
-                    }}
-                    style={{
-                      height: '1px',
-                      background: 'var(--border)',
-                      width: '100%',
-                      position: 'relative',
-                      zIndex: 0,
-                      transformOrigin: '0% 50%'
-                    }}
-                  />
-                )}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                    delay: 1.05
+                  }}
+                  style={{
+                    height: '1px',
+                    background: 'var(--border)',
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 0,
+                    transformOrigin: '0% 50%'
+                  }}
+                />
                 
                 {/* More button */}
                 <motion.div
@@ -644,36 +620,21 @@ const GridLayout = () => {
                 
                 {!isMobile && activeTab === 'work' && (
                   <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: '99.5%',
-                          pointerEvents: 'none',
-                          zIndex: 0,
-                          background: 'var(--border)'
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: '99.5%',
-                          background: 'var(--border)',
-                          pointerEvents: 'none',
-                          zIndex: 0
-                        }}
-                      />
-                    )}
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                      style={{
+                        position: 'absolute',
+                        left: '0',
+                        top: '0',
+                        width: '1px',
+                        height: '99.5%',
+                        background: 'var(--border)',
+                        pointerEvents: 'none',
+                        zIndex: 0
+                      }}
+                    />
                     
                   </>
                 )}

@@ -21,11 +21,19 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHasInitialLoaded(true);
-    }, 1000);
+    // Check if initial animations have already played
+    const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
     
-    return () => clearTimeout(timer);
+    if (hasPlayedInitialAnimations) {
+      setHasInitialLoaded(true);
+    } else {
+      const timer = setTimeout(() => {
+        setHasInitialLoaded(true);
+        sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (

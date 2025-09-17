@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
@@ -31,6 +31,7 @@ const ProjectLayout = ({
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
+  const [socialIsSticky, setSocialIsSticky] = useState(false);
   // Initialize touch device detection properly
   const [isTouchDevice, setIsTouchDevice] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -39,6 +40,7 @@ const ProjectLayout = ({
     return false;
   });
   const router = useRouter();
+  const socialRef = useRef<HTMLDivElement>(null);
 
   const socialLinks = [
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
@@ -58,10 +60,19 @@ const ProjectLayout = ({
     checkTouchDevice();
     window.addEventListener('resize', checkTouchDevice);
     
-    // Mark initial load as complete after animations finish
-    const timer = setTimeout(() => {
+    // Check if initial animations have already played
+    const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
+    
+    let timer: NodeJS.Timeout;
+    if (hasPlayedInitialAnimations) {
       setHasInitialLoaded(true);
-    }, 1000);
+    } else {
+      // Mark initial load as complete after animations finish
+      timer = setTimeout(() => {
+        setHasInitialLoaded(true);
+        sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
+      }, 1000);
+    }
 
     // Preload priority images
     if (previewImage && !isTouchDevice) {
@@ -102,9 +113,39 @@ const ProjectLayout = ({
       }
     });
 
+    // Scroll detection for sticky social buttons
+    let scrollTimeout: NodeJS.Timeout;
+    const handleScroll = () => {
+      // Clear the timeout to debounce the scroll handler
+      clearTimeout(scrollTimeout);
+      
+      scrollTimeout = setTimeout(() => {
+        // Only handle sticky behavior on desktop
+        if (!isTouchDevice && window.innerWidth > 1024 && socialRef.current) {
+          const rect = socialRef.current.getBoundingClientRect();
+          // Make social buttons sticky when they're about to scroll out of viewport
+          // Stick when top edge is 20px or less from viewport top
+          setSocialIsSticky(rect.top <= 20);
+        }
+      }, 10); // Small debounce for performance
+    };
+
+    // Add scroll listener only on desktop
+    // Need to listen to the scrollable container, not window
+    const scrollableElement = document.querySelector('.project-scrollable-content');
+    if (!isTouchDevice && window.innerWidth > 1024 && scrollableElement) {
+      scrollableElement.addEventListener('scroll', handleScroll);
+      // Check initial scroll position
+      handleScroll();
+    }
+
     return () => {
       window.removeEventListener('resize', checkTouchDevice);
+      if (scrollableElement) {
+        scrollableElement.removeEventListener('scroll', handleScroll);
+      }
       clearTimeout(timer);
+      clearTimeout(scrollTimeout);
     };
   }, [previewImage, roleProcess, isTouchDevice]);
 
@@ -135,7 +176,7 @@ const ProjectLayout = ({
         <CustomCursor />
         
         {/* Fixed Social Links - Outside scrollable area */}
-        <div className="project-right-sidebar-fixed">
+        <div ref={socialRef} className={`project-right-sidebar-fixed ${socialIsSticky ? 'project-right-sidebar-sticky' : ''}`}>
           <div className="social-links">
             {socialLinks.map((social, index) => (
               <motion.a

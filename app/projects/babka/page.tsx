@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter, FaGithub } from "react-icons/fa6";
@@ -11,7 +11,9 @@ import Image from "next/image";
 export default function BabkaProject() {
   const [activeTab, setActiveTab] = useState("overview");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+  const [socialIsSticky, setSocialIsSticky] = useState(false);
   const router = useRouter();
+  const socialRef = useRef<HTMLDivElement>(null);
 
   const title = "Babka";
   const previewImage = undefined; // No preview image provided
@@ -56,6 +58,41 @@ export default function BabkaProject() {
     { icon: FaXTwitter, href: "https://x.com", label: "X" },
   ];
 
+  useEffect(() => {
+    // Scroll detection for sticky social buttons
+    let scrollTimeout: NodeJS.Timeout;
+    const handleScroll = () => {
+      // Clear the timeout to debounce the scroll handler
+      clearTimeout(scrollTimeout);
+      
+      scrollTimeout = setTimeout(() => {
+        // Only handle sticky behavior on desktop
+        if (window.innerWidth > 1024 && socialRef.current) {
+          const rect = socialRef.current.getBoundingClientRect();
+          // Make social buttons sticky when they're about to scroll out of viewport
+          // Stick when top edge is 20px or less from viewport top
+          setSocialIsSticky(rect.top <= 20);
+        }
+      }, 10); // Small debounce for performance
+    };
+
+    // Add scroll listener only on desktop
+    // Need to listen to the scrollable container, not window
+    const scrollableElement = document.querySelector('.project-scrollable-content');
+    if (window.innerWidth > 1024 && scrollableElement) {
+      scrollableElement.addEventListener('scroll', handleScroll);
+      // Check initial scroll position
+      handleScroll();
+    }
+
+    return () => {
+      if (scrollableElement) {
+        scrollableElement.removeEventListener('scroll', handleScroll);
+      }
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
   const handleBackToWork = () => {
     router.push("/");
   };
@@ -65,7 +102,7 @@ export default function BabkaProject() {
         <CustomCursor />
         
         {/* Fixed Social Links - Outside scrollable area */}
-        <div className="project-right-sidebar-fixed">
+        <div ref={socialRef} className={`project-right-sidebar-fixed ${socialIsSticky ? 'project-right-sidebar-sticky' : ''}`}>
         <div className="social-links">
           {socialLinks.map((social) => (
             <a

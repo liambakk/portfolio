@@ -54,7 +54,9 @@ export default function RelayProject() {
           { description: "Integrated location-based services for real-time proximity" },
           { description: "Built messaging system with safety features" },
           { description: "Created user verification and trust systems" },
-          { description: "Implemented workout tracking and progress sharing" }
+          { description: "Implemented workout tracking and progress sharing" },
+          { description: "Designed and developed the entire frontend and backend of the application" },
+          { description: "Integrated backned and frontend to create a production-ready build" }
         ]
       }
     ]

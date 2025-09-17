@@ -181,7 +181,7 @@ body {
 }
 
 .project-right-sidebar-fixed {
-  position: fixed;
+  position: absolute;
   right: 130px;
   top: 145px; /* Precisely aligned with title bottom border */
   width: 180px;
@@ -190,6 +190,13 @@ body {
   padding-left: 0;
   justify-content: flex-start;
   z-index: 100;
+  /* No transition on position - can't animate between absolute and fixed */
+}
+
+/* Sticky state - applied when scrolling down */
+.project-right-sidebar-sticky {
+  position: fixed !important;
+  top: 20px !important; /* Small gap from top when sticky */
 }
 
 /* Grid/Home page social sidebar - aligned with cases-inner right border */
