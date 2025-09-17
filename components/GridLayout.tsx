@@ -9,6 +9,8 @@ import Image from "next/image";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import { useNavigation } from "./ClientWrapper";
+import About from "./About";
+import Contact from "./Contact";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
@@ -160,19 +162,52 @@ const GridLayout = () => {
               - Extends vertically down from content separator
               - Animated top-to-bottom on work tab activation
               - Creates right boundary for case studies list */}
-          <motion.div
-            initial={{ scaleY: 0, transformOrigin: 'top' }}
-            animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0 }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '1px',
-              height: '100%',
-              background: '#ffffff'
-            }}
-          />
+          <>
+            {hasInitialLoaded ? (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '1px',
+                  height: '100%',
+                  background: '#ffffff'
+                }}
+              />
+            ) : (
+              <motion.div
+                initial={{ scaleY: 0, transformOrigin: 'top' }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '1px',
+                  height: '100%',
+                  background: '#ffffff'
+                }}
+              />
+            )}
+            {/* Debug label for WORK SECTION VERTICAL BORDER */}
+            <div
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'red',
+                fontSize: '12px',
+                fontWeight: 'bold',
+                background: 'white',
+                padding: '2px 4px',
+                zIndex: 20,
+                whiteSpace: 'nowrap'
+              }}
+            >
+              WORK VERTICAL RIGHT
+            </div>
+          </>
         </motion.div>
       )}
 
@@ -209,21 +244,41 @@ const GridLayout = () => {
           - Creates visual boundary between main content and social sidebar
           - Animated top-to-bottom on section change (0.4s delay) */}
       {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
-        <motion.div
-          initial={{ scaleY: 0, transformOrigin: 'top' }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-          style={{
-            position: 'absolute',
-            top: '152px',
-            right: '30px',
-            width: '1px',
-            height: '324px',
-            background: 'var(--border)',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }}
-        />
+        <>
+          <motion.div
+            initial={{ scaleY: 0, transformOrigin: 'top' }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            style={{
+              position: 'absolute',
+              top: '152px',
+              right: '30px',
+              width: '1px',
+              height: '324px',
+              background: 'var(--border)',
+              zIndex: 10,
+              pointerEvents: 'none'
+            }}
+          />
+          {/* Debug label for ABOUT/CONTACT RIGHT BORDER */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 'calc(152px + 162px)',
+              right: '40px',
+              transform: 'translateY(-50%)',
+              color: 'red',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              background: 'white',
+              padding: '2px 4px',
+              zIndex: 20,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {activeTab.toUpperCase()} RIGHT BORDER
+          </div>
+        </>
       )}
 
 
@@ -549,7 +604,19 @@ const GridLayout = () => {
                     - Positioned at right edge of cases container (right: 0)
                     - Animated top-to-bottom with 0.55s delay
                     - Only visible in WORK section */}
-                {!isMobile && (
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -564,7 +631,7 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                )}
+                ))}
                 <motion.div
                   className="cases-fill"
                   ref={fillRef}
@@ -632,7 +699,17 @@ const GridLayout = () => {
                           - Full width (100%) horizontal line
                           - Animated left-to-right with staggered delay (0.65s + index * 0.1s)
                           - Not rendered after the last item */}
-                      {!isLastItem && (
+                      {!isLastItem && (hasInitialLoaded ? (
+                        <div
+                          style={{
+                            height: '1px',
+                            background: 'var(--border)',
+                            width: '100%',
+                            position: 'relative',
+                            zIndex: 0
+                          }}
+                        />
+                      ) : (
                         <motion.div
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
@@ -650,7 +727,7 @@ const GridLayout = () => {
                             transformOrigin: '0% 50%'
                           }}
                         />
-                      )}
+                      ))}
                     </React.Fragment>
                   );
                 })}
@@ -660,23 +737,35 @@ const GridLayout = () => {
                     - Full width (100%) horizontal separator
                     - Animated left-to-right on initial load (1.05s delay)
                     - Creates visual separation between case studies and additional content */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{
-                    duration: 0.6,
-                    ease: "easeOut",
-                    delay: 1.05
-                  }}
-                  style={{
-                    height: '1px',
-                    background: 'var(--border)',
-                    width: '100%',
-                    position: 'relative',
-                    zIndex: 0,
-                    transformOrigin: '0% 50%'
-                  }}
-                />
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      height: '1px',
+                      background: 'var(--border)',
+                      width: '100%',
+                      position: 'relative',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 1.05
+                    }}
+                    style={{
+                      height: '1px',
+                      background: 'var(--border)',
+                      width: '100%',
+                      position: 'relative',
+                      zIndex: 0,
+                      transformOrigin: '0% 50%'
+                    }}
+                  />
+                )}
                 
                 {/* More button */}
                 <motion.div
@@ -716,25 +805,39 @@ const GridLayout = () => {
                     - Positioned absolutely to span from cases-inner left edge to viewport right edge (30px margin)
                     - Animated left-to-right on initial load (1.1s delay, after More button)
                     - Only visible in WORK section */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{
-                    duration: 0.6,
-                    ease: "easeOut",
-                    delay: 1.1
-                  }}
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: '0', // Start from the left case border position
-                    width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
-                    height: '1px',
-                    background: 'var(--border)',
-                    zIndex: 0,
-                    transformOrigin: '0% 50%'
-                  }}
-                />
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: '0', // Start from the left case border position
+                      width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 1.1
+                    }}
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: '0', // Start from the left case border position
+                      width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0,
+                      transformOrigin: '0% 50%'
+                    }}
+                  />
+                )}
                 
                 {/* DEBUG MARKER: Work section vertical border intersection with horizontal line */}
                 <div
@@ -770,22 +873,36 @@ const GridLayout = () => {
                     - Only visible in WORK section */}
                 {!isMobile && activeTab === 'work' && (
                   <>
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                      style={{
-                        position: 'absolute',
-                        left: '0',
-                        top: '0',
-                        width: '1px',
-                        height: '99.5%',
-                        background: 'var(--border)',
-                        pointerEvents: 'none',
-                        zIndex: 0
-                      }}
-                    />
-                    
+                    {hasInitialLoaded ? (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '99.5%',
+                          background: 'var(--border)',
+                          pointerEvents: 'none',
+                          zIndex: 0
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'top' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                        style={{
+                          position: 'absolute',
+                          left: '0',
+                          top: '0',
+                          width: '1px',
+                          height: '99.5%',
+                          background: 'var(--border)',
+                          pointerEvents: 'none',
+                          zIndex: 0
+                        }}
+                      />
+                    )}
                   </>
                 )}
               </div>
@@ -794,397 +911,9 @@ const GridLayout = () => {
           </div>
         )}
 
-        {activeTab === "about" && (
-          <div className="about-section">
-            <motion.h1
-              className="section-title"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-            >
-              About
-            </motion.h1>
-            
-            <div className="about-content">
-              <div
-                className="about-content-wrapper"
-                style={!isMobile ? {
-                  position: 'relative',
-                  width: '100%'
-                } : {}}
-              >
-                <div
-                  className="about-content-box"
-                  style={!isMobile ? {
-                    marginLeft: '20px',
-                    marginRight: '-1px',
-                    position: 'relative'
-                  } : {}}
-              >
-                {/* ABOUT CONTENT LEFT BORDER: Left boundary of about text content
-                    - Positioned at left edge of content box (left: 0)
-                    - Extends full height of content area (top: 0 to bottom: 0)
-                    - Creates left edge of the about text container
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay) */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                {/* ABOUT CONTENT RIGHT BORDER: Right boundary of about text content
-                    - Positioned at right edge of content box (right: 0)
-                    - Extends full height of content area (top: 0 to bottom: 0)
-                    - Creates right edge of the about text container
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.55s delay) */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
-                >
-                  Product designer with over 7 years of experience focused on developing and maintaining design systems.
-                </motion.p>
-                <motion.p
-                  className="mt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-                >
-                  Currently working as a Design System Expert, creating scalable and consistent design solutions.
-                </motion.p>
-                {/* ABOUT CONTENT BOTTOM BORDER: Bottom boundary of about text content
-                    - Positioned at bottom of content box (bottom: 0)
-                    - Spans full width of content area (width: 100%)
-                    - Creates bottom edge of the about text container
-                    - Static on subsequent loads, animated left-to-right on initial load (0.9s delay) */}
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      width: '100%',
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                )}
-              </div>
-              
-              {/* Extended border container for profile image - only on about page */}
-              {!isMobile && (
-                <>
-                  {/* ABOUT PROFILE CONNECTOR VERTICAL: Vertical line extending down from content box
-                      - Positioned 20px from left edge of content area
-                      - Extends down 300px from bottom of content box
-                      - Connects content area to profile image border structure
-                      - Static on subsequent loads, animated top-to-bottom on initial load (1.0s delay) */}
-                  {hasInitialLoaded ? (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '20px',
-                        top: 'calc(100%)',
-                        height: '300px',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  ) : (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.0 }}
-                      style={{
-                        position: 'absolute',
-                        left: '20px',
-                        top: 'calc(100%)',
-                        height: '300px',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  )}
-                  
-                  
-                  {/* ABOUT VIEWPORT LEFT BORDER: Vertical line at left viewport edge
-                      - Positioned at far left of viewport (left: -50vw)
-                      - Extends from top of about section up past header area
-                      - Creates left boundary of entire about section layout
-                      - Static on subsequent loads, animated bottom-to-top on initial load (1.2s delay) */}
-                  {hasInitialLoaded ? (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '-50vw',
-                        top: '-280px',
-                        height: 'calc(100% + 580px)',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  ) : (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'bottom' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
-                      style={{
-                        position: 'absolute',
-                        left: '-50vw',
-                        top: '-280px',
-                        height: 'calc(100% + 580px)',
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 0
-                      }}
-                    />
-                  )}
-                  
-                  {/* Profile image container */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 1.3 }}
-                    style={{
-                      position: 'absolute',
-                      left: 'calc(-50vw + 1px)',
-                      top: '-279px',
-                      right: '19px',
-                      height: 'calc(100% + 579px)',
-                      display: 'flex',
-                      alignItems: 'flex-end',
-                      justifyContent: 'flex-start',
-                      overflow: 'hidden',
-                      padding: '40px'
-                    }}
-                  >
-                    <div style={{ 
-                      position: 'relative', 
-                      width: '280px', 
-                      height: '380px',
-                      marginBottom: '80px',
-                      marginLeft: '300px'
-                    }}>
-                      <Image
-                        src="/liamlook.jpg"
-                        alt="Liam Bakker"
-                        fill
-                        sizes="280px"
-                        quality={90}
-                        style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center'
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </div>
-            </div>
-          </div>
-        )}
+        {activeTab === "about" && <About initialHasLoaded={hasInitialLoaded} />}
 
-        {activeTab === "contact" && (
-          <div className="contact-section">
-            <motion.h1
-              className="section-title"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-            >
-              Contact
-            </motion.h1>
-            <div className="contact-content">
-              <div
-                className="contact-content-box"
-                style={!isMobile ? {
-                  marginLeft: '20px',
-                  marginRight: '-1px',
-                  position: 'relative'
-                } : {}}
-              >
-                {/* CONTACT CONTENT LEFT BORDER: Left boundary of contact information box
-                    - Positioned at left edge of content box (left: 0)
-                    - Extends full height of content area (top: 0 to bottom: 0)
-                    - Creates left edge of the contact info container
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay) */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                {/* Animated right border */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
-                >
-                  hello@example.com
-                </motion.p>
-                <motion.p
-                  className="mt-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-                >
-                  Based in Your City
-                </motion.p>
-                {/* CONTACT CONTENT BOTTOM BORDER: Bottom boundary of contact information box
-                    - Positioned at bottom of content box (bottom: 0)
-                    - Spans full width of content area (width: 100%)
-                    - Creates bottom edge of the contact info container
-                    - Static on subsequent loads, animated left-to-right on initial load (0.9s delay) */}
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      width: '100%',
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+        {activeTab === "contact" && <Contact initialHasLoaded={hasInitialLoaded} />}
       </div>
 
 
