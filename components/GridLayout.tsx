@@ -98,7 +98,6 @@ const GridLayout = () => {
         />
       )}
 
-      {/* WORK BORDER 1: Unified L-shaped border - vertical right edge and horizontal bottom (work section only) */}
       {!isMobile && activeTab === 'work' && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -456,7 +455,6 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* CASES LIST RIGHT BORDER: Right vertical border of cases list */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -548,7 +546,6 @@ const GridLayout = () => {
                       >
                         {caseItem.title}
                       </motion.div>
-                      {/* CASE ITEM DIVIDER: Horizontal separator between case items */}
                       {!isLastItem && (hasInitialLoaded ? (
                         <div
                           style={{
@@ -582,7 +579,6 @@ const GridLayout = () => {
                   );
                 })}
                 
-                {/* MORE BUTTON TOP BORDER: Horizontal border above More button */}
                 {hasInitialLoaded ? (
                   <div
                     style={{
@@ -645,9 +641,7 @@ const GridLayout = () => {
                 >
                   More
                 </motion.div>
-                {/* Note: Bottom border removed - horizontal border now forms bottom of More button */}
                 
-                {/* WORK CONTENT L-SHAPED BORDER: Combined left vertical and bottom horizontal borders */}
                 {!isMobile && activeTab === 'work' && (
                   <>
                     {hasInitialLoaded ? (

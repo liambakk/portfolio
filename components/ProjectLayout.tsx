@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaLinkedin } from "react-icons/fa";
@@ -28,7 +28,6 @@ const ProjectLayout = ({
   const [activeTab, setActiveTab] = useState("overview");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
-  const [hoveredSection, setHoveredSection] = useState<number | null>(null);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
@@ -130,34 +129,6 @@ const ProjectLayout = ({
     }
   };
 
-  const handleSectionHover = (index: number) => {
-    if (isTouchDevice) return;
-    
-    setHoveredSection(index);
-    
-    // Preload images in the hovered section if not already loaded
-    const role = roleProcess[index];
-    if (role) {
-      // Preload multiple images
-      if (role.images) {
-        role.images.forEach(img => {
-          if (!imageLoaded[img]) {
-            const image = new window.Image();
-            image.src = img;
-          }
-        });
-      }
-      // Preload single images
-      if (role.bottomImage && !imageLoaded[role.bottomImage]) {
-        const image = new window.Image();
-        image.src = role.bottomImage;
-      }
-      if (role.image && !imageLoaded[role.image]) {
-        const image = new window.Image();
-        image.src = role.image;
-      }
-    }
-  };
 
   return (
     <div className="project-page-container">
@@ -505,208 +476,108 @@ const ProjectLayout = ({
             </div>
             <div className="project-sections-container">
               {/* Overview Section */}
-              <motion.div 
-                className="project-section-bordered"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
-              >
-                <motion.div 
-                  className="section-header"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
-                >
-                  <span className="section-label">01.</span> Overview
-                </motion.div>
-                <motion.div 
-                  className="section-content"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-                >
+              <div className="project-section-bordered">
+                <div className="section-header">Overview</div>
+                <div className="section-content">
                   {overview.description}
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-            {/* Team Section */}
-            <motion.div 
-              className="project-section-bordered"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
-            >
-              <motion.div 
-                className="section-header"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-              >
-                <span className="section-label">02.</span> Team
-              </motion.div>
-              <motion.div 
-                className="section-content"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
-              >
-                {team.description}
-              </motion.div>
-            </motion.div>
+              {/* Team Section */}
+              <div className="project-section-bordered">
+                <div className="section-header">Team</div>
+                <div className="section-content">
+                  {team.description}
+                </div>
+              </div>
 
-            {/* Goals Section */}
-            <motion.div 
-              className="project-section-bordered"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-            >
-              <motion.div 
-                className="section-header"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
-              >
-                <span className="section-label">03.</span> Goals
-              </motion.div>
-              <motion.div 
-                className="section-content"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 }}
-              >
-                <ul className="goals-list">
-                  {goals.items.map((goal, index) => (
-                    <motion.li 
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 + (index * 0.1) }}
-                    >
-                      {goal.text}
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            </motion.div>
+              {/* Goals Section */}
+              <div className="project-section-bordered">
+                <div className="section-header">Goals</div>
+                <div className="section-content">
+                  <ul className="goals-list">
+                    {goals.items.map((goal, index) => (
+                      <li key={index}>{goal.text}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-            {/* Role & Process Section */}
-            {roleProcess.map((role, index) => (
-              <motion.div
-                key={index}
-                className="project-section-bordered"
-                onMouseEnter={() => handleSectionHover(index)}
-                onMouseLeave={() => setHoveredSection(null)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 + (index * 0.1) }}
-              >
-                <motion.div 
-                  className="section-header"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
-                >
-                  <span className="section-label">{String(index + 4).padStart(2, '0')}.</span> {role.title}
-                </motion.div>
-                <motion.div 
-                  className="section-content"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 + (index * 0.1) }}
-                >
-                  {role.description && <p className="role-description">{role.description}</p>}
-                  {/* Handle Relay-specific images */}
-                  {role.images && (
-                    <div className="relay-images-container role-image-container" style={{
-                      display: "flex",
-                      gap: "20px",
-                      padding: "20px 0",
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}>
-                      {role.images.map((img, imgIndex) => (
-                        <OptimizedImage
-                          key={imgIndex}
-                            src={img}
-                            alt={`${role.title} image ${imgIndex + 1}`}
-                            width={450}
-                            height={300}
-                            quality={85}
-                            sizes="(max-width: 768px) 100vw, 450px"
-                            priority={index === 0}
-                            style={{
-                              width: '100%',
-                              height: 'auto'
-                            }}
-                          />
-                      ))}
-                    </div>
-                  )}
-                  {role.bottomImage && (
-                    <div className="relay-logo-container role-image-container" style={{
-                      display: "flex",
-                      padding: "20px 0",
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}>
-                      <OptimizedImage
-                        src={role.bottomImage}
-                        alt={`${role.title} logo`}
-                        width={938}
-                        height={300}
-                        quality={85}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 938px"
-                        style={{
-                          width: '100%',
-                          height: 'auto'
-                        }}
-                      />
-                    </div>
-                  )}
-                  {role.image && (
-                    <div className="relay-design-system-container" style={{
-                      display: "flex",
-                      padding: "40px 0",
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}>
-                      <OptimizedImage
-                        src={role.image}
-                        alt={`${role.title} design system`}
-                        width={1600}
-                        height={900}
-                        quality={85}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1600px"
-                        style={{
-                          width: '100%',
-                          height: 'auto'
-                        }}
-                      />
-                    </div>
-                  )}
-                  {role.customContent}
-                  {role.tasks.length > 0 && (
-                    <ul className="process-tasks">
-                      {role.tasks.map((task, taskIndex) => (
-                        <motion.li 
-                          key={taskIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 + (index * 0.1) + (taskIndex * 0.05) }}
-                        >
-                          {task.description}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  )}
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+              {/* Role & Process Section */}
+              {roleProcess.map((role, index) => (
+                <div key={index} className="project-section-bordered">
+                  <div className="section-header">{role.title}</div>
+                  <div className="section-content">
+                    <p className="role-description">{role.description}</p>
+                    {role.tasks && role.tasks.length > 0 && (
+                      <ul className="process-tasks">
+                        {role.tasks.map((task, taskIndex) => (
+                          <li key={taskIndex}>{task.description}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {role.images && role.images.length > 0 && (
+                      <div className="role-images">
+                        {role.images.map((image, imgIndex) => (
+                          <div key={imgIndex} className="role-image-container">
+                            <OptimizedImage 
+                              src={image} 
+                              alt={`${role.title} image ${imgIndex + 1}`}
+                              width={780}
+                              height={520}
+                              quality={95}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
+                              style={{
+                                width: '100%',
+                                height: 'auto'
+                              }}
+                              useOptimized={false}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {role.image && (
+                      <div className="role-image-container">
+                        <OptimizedImage 
+                          src={role.image} 
+                          alt={`${role.title} image`}
+                          width={780}
+                          height={520}
+                          quality={95}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
+                          style={{
+                            width: '100%',
+                            height: 'auto'
+                          }}
+                          useOptimized={false}
+                        />
+                      </div>
+                    )}
+                    {role.bottomImage && (
+                      <div className="role-image-container">
+                        <OptimizedImage 
+                          src={role.bottomImage} 
+                          alt={`${role.title} bottom image`}
+                          width={780}
+                          height={520}
+                          quality={95}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
+                          style={{
+                            width: '100%',
+                            height: 'auto'
+                          }}
+                          useOptimized={false}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
-
+        
           </div>
         </div>
         

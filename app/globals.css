@@ -137,7 +137,6 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  overflow-x: visible !important; /* Allow horizontal overflow for border extensions */
   background: var(--background);
   position: relative;
 }
@@ -147,7 +146,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow-y: auto;
-  overflow-x: visible !important; /* Ensure horizontal overflow is visible */
+  overflow-x: visible;
 }
 
 .project-top-bar {
@@ -179,7 +178,6 @@ body {
   flex: 1;
   padding: 24px 40px 30px 0;
   position: relative;
-  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 .project-right-sidebar-fixed {
@@ -341,7 +339,6 @@ body {
   position: relative;
   width: 100%;
   min-height: 100%;
-  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 
@@ -541,7 +538,6 @@ body {
   margin-top: 40px; /* Reduced since image is now relative positioned */
   margin-right: 0;
   padding-bottom: 50px; /* Add padding to ensure content doesn't touch bottom border */
-  overflow: visible; /* Allow pseudo-elements to extend outside */
 }
 
 /* Individual bordered sections - borders now handled by ProjectBorderFrame */
@@ -551,34 +547,11 @@ body {
   min-height: 120px;
   position: relative;
   border-top: 1px solid var(--border);
-  overflow: visible; /* Allow pseudo-elements to extend outside */
-  z-index: 1; /* Ensure proper stacking context */
-  background: rgba(0, 255, 0, 0.1); /* Temporary green background to see section bounds */
 }
 
 /* Remove top border from first section to avoid double border with frame */
 .project-section-bordered:first-child {
   border-top: none;
-}
-
-/* Extend section borders to meet the inner divider on desktop */
-@media screen and (min-width: 1025px) {
-  .project-section-bordered::after {
-    content: '';
-    position: absolute;
-    top: -1px; /* Align with the top border */
-    left: 100%; /* Start from the right edge of section */
-    width: 236px; /* Exact distance to inner divider */
-    height: 2px; /* Temporarily thicker for visibility */
-    background: #ff0000; /* Temporary red color for debugging */
-    z-index: 1000; /* Very high z-index to ensure visibility */
-    pointer-events: none; /* Don't interfere with interactions */
-  }
-  
-  /* Remove the extension from the first child since it has no top border */
-  .project-section-bordered:first-child::after {
-    display: none;
-  }
 }
 
 /* Borders now handled by ProjectBorderFrame component */
