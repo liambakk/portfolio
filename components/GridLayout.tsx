@@ -177,13 +177,252 @@ const GridLayout = () => {
       )}
 
 
-      {/* CONTENT SEPARATOR BORDER: Horizontal border separating section titles from main content
-          - Spans full width between margins, positioned 152px from top
-          - Appears below section titles (Work/About/Contact)
-          - Creates visual separation between header area and content area
-          - Animated left-to-right scale on initial load (0.2s delay)
-          - Visible on all sections */}
-      {!isMobile && (
+      {/* ABOUT/CONTACT UNIFIED BORDER SYSTEM: Complete architectural frame for about and contact sections
+          - Creates comprehensive border structure connecting all layout elements
+          - Includes content separator, vertical boundaries, and connecting elements
+          - Forms unified geometric frame that adapts to section content */}
+      {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
+        <>
+          {hasInitialLoaded ? (
+            <svg
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: '100vw',
+                height: '100vh',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}
+            >
+              {/* Content separator - horizontal line at top */}
+              <line
+                x1="30"
+                y1="152"
+                x2="calc(100vw - 30)"
+                y2="152"
+                stroke="var(--border)"
+                strokeWidth="1"
+              />
+              {/* Right vertical border */}
+              <line
+                x1="calc(100vw - 30)"
+                y1="152"
+                x2="calc(100vw - 30)"
+                y2="calc(100vh - 380)"
+                stroke="var(--border)"
+                strokeWidth="1"
+              />
+              {activeTab === 'about' && (
+                <>
+                  {/* About section content connector */}
+                  <line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="152"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="204"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                  {/* About content right border */}
+                  <line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="204"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                  {/* About content left border */}
+                  <line
+                    x1="calc(50% - 20px - 20px - min(82%, 1200px))"
+                    y1="432"
+                    x2="calc(50% - 20px - 20px - min(82%, 1200px))"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                  {/* About viewport left border */}
+                  <line
+                    x1="0"
+                    y1="152"
+                    x2="0"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                  {/* About horizontal merger - bottom connection */}
+                  <line
+                    x1="0"
+                    y1="calc(100vh - 380)"
+                    x2="calc(100vw - 30)"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                </>
+              )}
+              {activeTab === 'contact' && (
+                <>
+                  {/* Contact content connector */}
+                  <line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="152"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="204"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                  />
+                  {/* Contact content box - creating U shape */}
+                  <path
+                    d={`M calc(50% - 20px - 20px - min(82%, 1200px)) 204 
+                        L calc(50% - 20px - 20px - min(82%, 1200px)) calc(100vh - 152px) 
+                        L calc(50% + 20px + 20px + min(82%, 1200px)) calc(100vh - 152px) 
+                        L calc(50% + 20px + 20px + min(82%, 1200px)) 152`}
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    fill="none"
+                  />
+                </>
+              )}
+            </svg>
+          ) : (
+            <motion.svg
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: '100vw',
+                height: '100vh',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}
+            >
+              {/* Animated content separator */}
+              <motion.line
+                x1="30"
+                y1="152"
+                x2="calc(100vw - 30)"
+                y2="152"
+                stroke="var(--border)"
+                strokeWidth="1"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              />
+              {/* Animated right vertical border */}
+              <motion.line
+                x1="calc(100vw - 30)"
+                y1="152"
+                x2="calc(100vw - 30)"
+                y2="calc(100vh - 380)"
+                stroke="var(--border)"
+                strokeWidth="1"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              />
+              {activeTab === 'about' && (
+                <>
+                  {/* Animated about section borders */}
+                  <motion.line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="152"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="204"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  />
+                  <motion.line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="204"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                  />
+                  <motion.line
+                    x1="calc(50% - 20px - 20px - min(82%, 1200px))"
+                    y1="432"
+                    x2="calc(50% - 20px - 20px - min(82%, 1200px))"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                  />
+                  <motion.line
+                    x1="0"
+                    y1="152"
+                    x2="0"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
+                  />
+                  <motion.line
+                    x1="0"
+                    y1="calc(100vh - 380)"
+                    x2="calc(100vw - 30)"
+                    y2="calc(100vh - 380)"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+                  />
+                </>
+              )}
+              {activeTab === 'contact' && (
+                <>
+                  <motion.line
+                    x1="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y1="152"
+                    x2="calc(50% + 20px + 20px + min(82%, 1200px))"
+                    y2="204"
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  />
+                  <motion.path
+                    d={`M calc(50% - 20px - 20px - min(82%, 1200px)) 204 
+                        L calc(50% - 20px - 20px - min(82%, 1200px)) calc(100vh - 152px) 
+                        L calc(50% + 20px + 20px + min(82%, 1200px)) calc(100vh - 152px) 
+                        L calc(50% + 20px + 20px + min(82%, 1200px)) 152`}
+                    stroke="var(--border)"
+                    strokeWidth="1"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+                  />
+                </>
+              )}
+            </motion.svg>
+          )}
+        </>
+      )}
+      
+      {/* CONTENT SEPARATOR BORDER: Horizontal border for work section only */}
+      {!isMobile && activeTab === 'work' && (
         <>
           <motion.div
             initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -200,75 +439,10 @@ const GridLayout = () => {
               pointerEvents: 'none'
             }}
           />
-          {/* Debug label for CONTENT SEPARATOR BORDER */}
-          {activeTab === 'about' && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '157px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                color: 'red',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                background: 'white',
-                padding: '2px 4px',
-                zIndex: 20,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              CONTENT SEPARATOR
-            </div>
-          )}
         </>
       )}
 
 
-      {/* ABOUT/CONTACT RIGHT BORDER: Vertical border separating content from social links
-          - Only visible on ABOUT and CONTACT sections
-          - Positioned at right viewport edge (30px from right)
-          - Starts from content separator (152px) and extends down to connect with ABOUT BOTTOM border
-          - Creates visual boundary between main content and social sidebar
-          - Animated top-to-bottom on section change (0.4s delay) */}
-      {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
-        <>
-          <motion.div
-            initial={{ scaleY: 0, transformOrigin: 'top' }}
-            animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-            style={{
-              position: 'absolute',
-              top: '152px',
-              right: '30px',
-              width: '1px',
-              height: (activeTab === 'about' || activeTab === 'contact') ? 'calc(100vh - 152px - 380px)' : '324px', // Reduced height for about/contact sections
-              background: 'var(--border)',
-              zIndex: 10,
-              pointerEvents: 'none'
-            }}
-          />
-          {/* Debug label for ABOUT/CONTACT RIGHT BORDER */}
-          {activeTab === 'about' && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '152px',
-                right: '40px',
-                color: 'red',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                background: 'white',
-                padding: '2px 4px',
-                zIndex: 20,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              ABOUT/CONTACT RIGHT
-            </div>
-          )}
-          
-        </>
-      )}
 
 
 
@@ -778,28 +952,28 @@ const GridLayout = () => {
                   }}
                 />
                 
-                {/* DEBUG MARKER: Merged point - horizontal line now starts at left case border */}
+                {/* DEBUG MARKER: Work section vertical border intersection with horizontal line */}
                 <div
                   style={{
                     position: 'absolute',
                     bottom: -5,
-                    left: '0', // Now both horizontal line and case border start here
+                    left: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Right edge of horizontal line where it should meet vertical border
                     width: '3px',
                     height: '10px',
-                    background: '#ff00ff', // Purple marker showing merge
+                    background: '#ffff00', // Yellow marker for vertical border intersection
                     zIndex: 15
                   }}
                 />
                 
-                {/* DEBUG MARKER: Right edge of horizontal line */}
+                {/* DEBUG MARKER: Work section main vertical border intersection */}
                 <div
                   style={{
-                    position: 'absolute',
-                    bottom: -5,
-                    left: 'calc(0px + calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px))', // Right edge of horizontal line
+                    position: 'fixed', // Use fixed positioning to align with viewport edge
+                    bottom: 'calc(100vh - 152px - 403px - 5px)', // Position at bottom of work vertical border
+                    right: '30px', // Same position as work section vertical border
                     width: '3px',
                     height: '10px',
-                    background: '#0000ff', // Blue marker for right edge
+                    background: '#ff8000', // Orange marker for work section vertical border
                     zIndex: 15
                   }}
                 />
@@ -912,7 +1086,7 @@ const GridLayout = () => {
                           position: 'absolute',
                           top: 10,
                           right: 0,
-                          bottom: '-200px', // Reduced extension down to meet ABOUT SOCIAL CONNECTION
+                          height: 'calc(100vh - 204px - 380px)', // Aligned to terminate at 380px from bottom
                           width: '1px',
                           background: 'var(--border)',
                           zIndex: 10
@@ -927,7 +1101,7 @@ const GridLayout = () => {
                           position: 'absolute',
                           top: 0,
                           right: 0,
-                          bottom: '-200px', // Reduced extension down to meet ABOUT SOCIAL CONNECTION
+                          height: 'calc(100vh - 204px - 380px)', // Standardized height calculation
                           width: '1px',
                           background: 'var(--border)',
                           zIndex: 10
@@ -951,6 +1125,19 @@ const GridLayout = () => {
                     >
                       ABOUT CONTENT RIGHT
                     </div>
+                    {/* Debug marker for ABOUT CONTENT RIGHT BORDER bottom */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: '380px',
+                        right: '-3px',
+                        width: '6px',
+                        height: '6px',
+                        background: 'blue',
+                        borderRadius: '50%',
+                        zIndex: 20
+                      }}
+                    />
                   </>
                 )}
                 <motion.p
@@ -999,7 +1186,7 @@ const GridLayout = () => {
                           right: '0',
                           top: '280px',
                           width: '1px',
-                          height: 'calc(100% - 280px)',
+                          height: 'calc(100vh - 152px - 380px)', // Aligned to terminate at 380px from bottom
                           background: 'var(--border)'
                         }}
                       />
@@ -1020,9 +1207,22 @@ const GridLayout = () => {
                       >
                         ABOUT CONTENT LEFT
                       </div>
+                      {/* Debug marker for ABOUT CONTENT LEFT BORDER bottom */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '380px',
+                          right: '-3px',
+                          width: '6px',
+                          height: '6px',
+                          background: 'green',
+                          borderRadius: '50%',
+                          zIndex: 20
+                        }}
+                      />
                       {/* ABOUT VIEWPORT LEFT BORDER: Left edge at viewport boundary
                           - Vertical border at far left of viewport
-                          - Extends full height of extended container
+                          - Standardized height to align with other vertical borders
                           - Creates left boundary of the entire layout frame */}
                       <div
                         style={{
@@ -1030,7 +1230,7 @@ const GridLayout = () => {
                           left: '0',
                           top: '0',
                           width: '1px',
-                          height: '100%',
+                          height: 'calc(100vh - 304px)', // Standardized height calculation
                           background: 'var(--border)'
                         }}
                       />
@@ -1051,42 +1251,6 @@ const GridLayout = () => {
                       >
                         ABOUT VIEWPORT LEFT
                       </div>
-                      {/* ABOUT SOCIAL CONNECTION BORDER: Horizontal extension to social area
-                          - Only visible in ABOUT section
-                          - Extends from content area to social sidebar
-                          - Creates connection between main content and social links */}
-                      {activeTab === 'about' && (
-                        <>
-                          <div
-                            style={{
-                              position: 'absolute',
-                              left: 'calc(100% - 1px)',
-                              bottom: '0',
-                              width: 'calc(100vw - 50vw - 50px)',
-                              height: '1px',
-                              background: 'var(--border)',
-                              zIndex: 10
-                            }}
-                          />
-                          {/* Debug label for ABOUT SOCIAL CONNECTION BORDER */}
-                          <div
-                            style={{
-                              position: 'absolute',
-                              left: 'calc(100% + 100px)',
-                              bottom: '10px',
-                              color: 'red',
-                              fontSize: '12px',
-                              fontWeight: 'bold',
-                              background: 'white',
-                              padding: '2px 4px',
-                              zIndex: 20,
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            ABOUT SOCIAL CONNECTION
-                          </div>
-                        </>
-                      )}
                     </div>
                   ) : (
                     <>
@@ -1118,7 +1282,7 @@ const GridLayout = () => {
                           right: '0',
                           top: '280px',
                           width: '1px',
-                          height: 'calc(100% - 280px)',
+                          height: 'calc(100vh - 152px - 380px)', // Aligned to terminate at 380px from bottom
                           background: 'var(--border)'
                         }}
                       />
@@ -1134,30 +1298,10 @@ const GridLayout = () => {
                           left: '0',
                           top: '0',
                           width: '1px',
-                          height: '100%',
+                          height: 'calc(100vh - 304px)', // Standardized height calculation
                           background: 'var(--border)'
                         }}
                       />
-                      {/* ABOUT ANIMATED SOCIAL CONNECTION: Animated content-to-social link
-                          - Only visible in ABOUT section
-                          - Animated left-to-right scale (0.6s delay)
-                          - Creates connection to social sidebar */}
-                      {activeTab === 'about' && (
-                        <motion.div
-                          initial={{ scaleX: 0, transformOrigin: 'left' }}
-                          animate={{ scaleX: 1 }}
-                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                          style={{
-                            position: 'absolute',
-                            left: 'calc(100% - 1px)',
-                            bottom: '0',
-                            width: 'calc(100vw - 50vw - 50px)',
-                            height: '1px',
-                            background: 'var(--border)',
-                            zIndex: 10
-                          }}
-                        />
-                      )}
                     </motion.div>
                     </>
                   )}
@@ -1218,6 +1362,7 @@ const GridLayout = () => {
               Contact
             </motion.h1>
             
+            
             <div className="contact-content">
               <div
                 className="contact-content-box"
@@ -1227,47 +1372,67 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* CONTACT SECTION CONTENT LEFT BORDER: Left edge of contact content box
-                    - Creates left boundary for contact information area
-                    - Positioned at left edge of content box (left: 0)
-                    - Extends full height of content area (top: 0 to bottom: 0)
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay)
-                    - Only visible in CONTACT section */}
+                {/* CONTACT SECTION CONTENT BOX BORDER: Unified border creating complete contact content frame
+                    - Creates left, right, and bottom boundaries for contact information area
+                    - Right border extends upward 52px to connect with CONTENT SEPARATOR
+                    - Forms a U-shaped border around the contact content
+                    - Static on subsequent loads, animated sequentially on initial load */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
                       position: 'absolute',
-                      top: 0,
+                      top: '-52px',
                       left: 0,
+                      right: 0,
                       bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
+                      border: '1px solid var(--border)',
+                      borderTop: 'none',
+                      zIndex: 10,
+                      pointerEvents: 'none'
                     }}
                   />
                 ) : (
                   <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    initial={{ 
+                      borderLeftWidth: 0,
+                      borderRightWidth: 0, 
+                      borderBottomWidth: 0
+                    }}
+                    animate={{ 
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderBottomWidth: 1
+                    }}
+                    transition={{ 
+                      duration: 0.7, 
+                      ease: "easeOut", 
+                      delay: 0.5,
+                      borderLeftWidth: { delay: 0.5 },
+                      borderRightWidth: { delay: 0.55 },
+                      borderBottomWidth: { delay: 0.9 }
+                    }}
                     style={{
                       position: 'absolute',
-                      top: 0,
+                      top: '-52px',
                       left: 0,
+                      right: 0,
                       bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
+                      borderColor: 'var(--border)',
+                      borderStyle: 'solid',
+                      borderTop: 'none',
+                      zIndex: 10,
+                      pointerEvents: 'none'
                     }}
                   />
                 ))}
-                {/* Debug label for CONTACT CONTENT LEFT BORDER */}
+                {/* Debug label for CONTACT CONTENT BOX BORDER */}
                 {!isMobile && activeTab === 'contact' && (
                   <div
                     style={{
                       position: 'absolute',
                       top: '50px',
-                      left: '10px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
                       color: 'red',
                       fontSize: '12px',
                       fontWeight: 'bold',
@@ -1277,59 +1442,53 @@ const GridLayout = () => {
                       whiteSpace: 'nowrap'
                     }}
                   >
-                    CONTACT CONTENT LEFT
+                    CONTACT CONTENT BOX BORDER
                   </div>
                 )}
-                {/* CONTACT SECTION CONTENT RIGHT BORDER: Right edge of contact content box
-                    - Creates right boundary for contact information area
-                    - Extends upward 52px to connect with CONTENT SEPARATOR
-                    - Only visible in CONTACT section */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '-52px', // Extend upward to connect with CONTENT SEPARATOR
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-                    style={{
-                      position: 'absolute',
-                      top: '-52px', // Extend upward to connect with CONTENT SEPARATOR
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                ))}
-                {/* Debug label for CONTACT CONTENT RIGHT BORDER */}
+                {/* Debug marker for CONTACT CONTENT BOX left bottom */}
                 {!isMobile && activeTab === 'contact' && (
                   <div
                     style={{
                       position: 'absolute',
-                      top: '50px',
-                      right: '-130px',
-                      color: 'red',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      background: 'white',
-                      padding: '2px 4px',
-                      zIndex: 20,
-                      whiteSpace: 'nowrap'
+                      bottom: '-3px',
+                      left: '-3px',
+                      width: '6px',
+                      height: '6px',
+                      background: 'purple',
+                      borderRadius: '50%',
+                      zIndex: 20
                     }}
-                  >
-                    CONTACT CONTENT RIGHT L-SHAPE
-                  </div>
+                  />
+                )}
+                {/* Debug marker for CONTACT CONTENT BOX right top */}
+                {!isMobile && activeTab === 'contact' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-55px',
+                      right: '-3px',
+                      width: '6px',
+                      height: '6px',
+                      background: 'orange',
+                      borderRadius: '50%',
+                      zIndex: 20
+                    }}
+                  />
+                )}
+                {/* Debug marker for CONTACT CONTENT BOX right bottom */}
+                {!isMobile && activeTab === 'contact' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '-3px',
+                      right: '-3px',
+                      width: '6px',
+                      height: '6px',
+                      background: 'cyan',
+                      borderRadius: '50%',
+                      zIndex: 20
+                    }}
+                  />
                 )}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -1346,59 +1505,6 @@ const GridLayout = () => {
                 >
                   Based in Your City
                 </motion.p>
-                {/* CONTACT SECTION CONTENT BOTTOM BORDER: Bottom edge of contact content box
-                    - Creates bottom boundary for contact information area
-                    - Spans full width of content box (width: 100%)
-                    - Positioned at bottom of content area (bottom: 0)
-                    - Static on subsequent loads, animated left-to-right width expansion on initial load (0.9s delay)
-                    - Only visible in CONTACT section */}
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      width: '100%',
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      bottom: 0,
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                )}
-                {/* Debug label for CONTACT CONTENT BOTTOM BORDER */}
-                {!isMobile && activeTab === 'contact' && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: '50%',
-                      bottom: '10px',
-                      transform: 'translateX(-50%)',
-                      color: 'red',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      background: 'white',
-                      padding: '2px 4px',
-                      zIndex: 20,
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    CONTACT CONTENT BOTTOM
-                  </div>
-                )}
               </div>
               
             </div>
