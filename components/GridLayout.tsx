@@ -805,43 +805,6 @@ const GridLayout = () => {
               About
             </motion.h1>
             
-            {/* ABOUT CONTENT CONNECTOR: Vertical border connecting CONTENT SEPARATOR to ABOUT CONTENT RIGHT
-                - Only visible in ABOUT section
-                - Connects the horizontal CONTENT SEPARATOR (at top: 152px) to the ABOUT CONTENT RIGHT border
-                - Creates an L-shaped connection between the two borders */}
-            {!isMobile && activeTab === 'about' && (
-              <>
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '152px',
-                      right: 'calc(100% - 50% - 20px - 20px - min(82%, 1200px))', // Aligns with right edge of content box
-                      width: '1px',
-                      height: '52px', // Extends down to where content starts
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-                    style={{
-                      position: 'absolute',
-                      top: '152px',
-                      right: 'calc(100% - 50% - 20px - 20px - min(82%, 1200px))', // Aligns with right edge of content box
-                      width: '1px',
-                      height: '52px', // Extends down to where content starts
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                )}
-              </>
-            )}
-            
             <div className="about-content">
               <div
                 className="about-content-wrapper"
@@ -858,72 +821,72 @@ const GridLayout = () => {
                     position: 'relative'
                   } : {}}
               >
-                {/* ABOUT SECTION CONTENT RIGHT BORDER: Right edge of about text content box
-                    - Extended down to connect with ABOUT SOCIAL CONNECTION border
-                    - Forms part of the unified U-shaped border with CONTENT LEFT and SOCIAL CONNECTION
-                    - Only visible in ABOUT section */}
-                {!isMobile && (
-                  <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: 10,
-                          right: 0,
-                          height: 'calc(100vh - 204px - 380px)', // Aligned to terminate at 380px from bottom
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 10
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          height: 'calc(100vh - 204px - 380px)', // Standardized height calculation
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 10
-                        }}
-                      />
-                    )}
-                    {/* Debug label for ABOUT CONTENT RIGHT BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '50px',
-                        right: '-130px',
-                        color: 'red',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: 'white',
-                        padding: '2px 4px',
-                        zIndex: 20,
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      ABOUT CONTENT RIGHT
-                    </div>
-                    {/* Debug marker for ABOUT CONTENT RIGHT BORDER bottom */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '380px',
-                        right: '-3px',
-                        width: '6px',
-                        height: '6px',
-                        background: 'blue',
-                        borderRadius: '50%',
-                        zIndex: 20
-                      }}
-                    />
-                  </>
-                )}
+                {/* ABOUT CONTENT LEFT BORDER: Left boundary of about text content
+                    - Positioned at left edge of content box (left: 0)
+                    - Extends full height of content area (top: 0 to bottom: 0)
+                    - Creates left edge of the about text container
+                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay) */}
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ))}
+                {/* ABOUT CONTENT RIGHT BORDER: Right boundary of about text content
+                    - Positioned at right edge of content box (right: 0)
+                    - Extends full height of content area (top: 0 to bottom: 0)
+                    - Creates right edge of the about text container
+                    - Static on subsequent loads, animated top-to-bottom on initial load (0.55s delay) */}
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ))}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -939,155 +902,110 @@ const GridLayout = () => {
                 >
                   Currently working as a Design System Expert, creating scalable and consistent design solutions.
                 </motion.p>
+                {/* ABOUT CONTENT BOTTOM BORDER: Bottom boundary of about text content
+                    - Positioned at bottom of content box (bottom: 0)
+                    - Spans full width of content area (width: 100%)
+                    - Creates bottom edge of the about text container
+                    - Static on subsequent loads, animated left-to-right on initial load (0.9s delay) */}
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
               </div>
               
               {/* Extended border container for profile image - only on about page */}
               {!isMobile && (
                 <>
-                  {/* ABOUT SECTION COMPLEX BORDER STRUCTURE: Multi-segment border creating layout frame
-                      - Large container extending left to viewport edge and up to header area
-                      - Creates comprehensive border system for about section with profile image area
-                      - Static rendering on subsequent loads for performance */}
+                  {/* ABOUT PROFILE CONNECTOR VERTICAL: Vertical line extending down from content box
+                      - Positioned 20px from left edge of content area
+                      - Extends down 300px from bottom of content box
+                      - Connects content area to profile image border structure
+                      - Static on subsequent loads, animated top-to-bottom on initial load (1.0s delay) */}
+                  {hasInitialLoaded ? (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: '20px',
+                        top: 'calc(100%)',
+                        height: '300px',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  ) : (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.0 }}
+                      style={{
+                        position: 'absolute',
+                        left: '20px',
+                        top: 'calc(100%)',
+                        height: '300px',
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
+                      }}
+                    />
+                  )}
+                  
+                  
+                  {/* ABOUT VIEWPORT LEFT BORDER: Vertical line at left viewport edge
+                      - Positioned at far left of viewport (left: -50vw)
+                      - Extends from top of about section up past header area
+                      - Creates left boundary of entire about section layout
+                      - Static on subsequent loads, animated bottom-to-top on initial load (1.2s delay) */}
                   {hasInitialLoaded ? (
                     <div
                       style={{
                         position: 'absolute',
                         left: '-50vw',
                         top: '-280px',
-                        width: 'calc(50vw + 20px)',
                         height: 'calc(100% + 580px)',
-                        pointerEvents: 'none',
+                        width: '1px',
+                        background: 'var(--border)',
                         zIndex: 0
                       }}
-                    >
-                      {/* ABOUT CONTENT LEFT BORDER: Right edge of profile image area
-                          - Vertical border separating profile image area from content
-                          - Starts 280px from container top, extends to bottom
-                          - Creates left boundary for about text content */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          right: '0',
-                          top: '280px',
-                          width: '1px',
-                          height: 'calc(100vh - 152px - 380px)', // Aligned to terminate at 380px from bottom
-                          background: 'var(--border)'
-                        }}
-                      />
-                      {/* Debug label for ABOUT CONTENT LEFT BORDER */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          right: '10px',
-                          top: '300px',
-                          color: 'red',
-                          fontSize: '12px',
-                          fontWeight: 'bold',
-                          background: 'white',
-                          padding: '2px 4px',
-                          zIndex: 20,
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        ABOUT CONTENT LEFT
-                      </div>
-                      {/* Debug marker for ABOUT CONTENT LEFT BORDER bottom */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          bottom: '380px',
-                          right: '-3px',
-                          width: '6px',
-                          height: '6px',
-                          background: 'green',
-                          borderRadius: '50%',
-                          zIndex: 20
-                        }}
-                      />
-                      {/* ABOUT VIEWPORT LEFT BORDER: Left edge at viewport boundary
-                          - Vertical border at far left of viewport
-                          - Standardized height to align with other vertical borders
-                          - Creates left boundary of the entire layout frame */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: 'calc(100vh - 304px)', // Standardized height calculation
-                          background: 'var(--border)'
-                        }}
-                      />
-                      {/* Debug label for ABOUT VIEWPORT LEFT BORDER */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '10px',
-                          top: '100px',
-                          color: 'red',
-                          fontSize: '12px',
-                          fontWeight: 'bold',
-                          background: 'white',
-                          padding: '2px 4px',
-                          zIndex: 20,
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        ABOUT VIEWPORT LEFT
-                      </div>
-                    </div>
+                    />
                   ) : (
-                    <>
-                      {/* ABOUT SECTION ANIMATED BORDER STRUCTURE: Initial load animation sequence
-                          - Same border structure as static version but with sequential animations
-                          - Creates choreographed appearance of layout borders
-                          - Overflow hidden to prevent animation artifacts */}
-                      <motion.div
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'bottom' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
                       style={{
                         position: 'absolute',
                         left: '-50vw',
                         top: '-280px',
-                        width: 'calc(50vw + 20px)',
                         height: 'calc(100% + 580px)',
-                        pointerEvents: 'none',
-                        zIndex: 0,
-                        overflow: 'hidden'
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 0
                       }}
-                    >
-                      {/* ABOUT ANIMATED CONTENT LEFT BORDER: Animated profile/content separator
-                          - Same as static version but animated top-to-bottom (0.5s delay)
-                          - Creates left boundary for about text content */}
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                        style={{
-                          position: 'absolute',
-                          right: '0',
-                          top: '280px',
-                          width: '1px',
-                          height: 'calc(100vh - 152px - 380px)', // Aligned to terminate at 380px from bottom
-                          background: 'var(--border)'
-                        }}
-                      />
-                      {/* ABOUT ANIMATED VIEWPORT LEFT BORDER: Animated left edge boundary
-                          - Animated bottom-to-top scale (1.2s delay, last vertical to appear)
-                          - Creates left boundary of the entire layout frame */}
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'bottom' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 1.2 }}
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: 'calc(100vh - 304px)', // Standardized height calculation
-                          background: 'var(--border)'
-                        }}
-                      />
-                    </motion.div>
-                    </>
+                    />
                   )}
                   
                   {/* Profile image container */}
@@ -1130,7 +1048,7 @@ const GridLayout = () => {
                   </motion.div>
                 </>
               )}
-              </div>
+            </div>
             </div>
           </div>
         )}
@@ -1145,8 +1063,6 @@ const GridLayout = () => {
             >
               Contact
             </motion.h1>
-            
-            
             <div className="contact-content">
               <div
                 className="contact-content-box"
@@ -1156,224 +1072,68 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* CONTACT SECTION CONTENT LEFT BORDER: Left edge of contact content box
-                    - Creates left boundary for contact information area
+                {/* CONTACT CONTENT LEFT BORDER: Left boundary of contact information box
                     - Positioned at left edge of content box (left: 0)
                     - Extends full height of content area (top: 0 to bottom: 0)
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay)
-                    - Only visible in CONTACT section */}
-                {!isMobile && (
-                  <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          bottom: 0,
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          bottom: 0,
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    )}
-                    {/* Debug label for CONTACT CONTENT LEFT BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '10px',
-                        top: '50px',
-                        color: 'red',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: 'white',
-                        padding: '2px 4px',
-                        zIndex: 20,
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      CONTACT CONTENT LEFT
-                    </div>
-                    {/* Debug marker for CONTACT CONTENT LEFT BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '-3px',
-                        top: '100px',
-                        width: '6px',
-                        height: '6px',
-                        background: 'purple',
-                        borderRadius: '50%',
-                        zIndex: 20
-                      }}
-                    />
-                  </>
-                )}
-                {/* CONTACT SECTION CONTENT RIGHT BORDER: Right edge of contact content box
-                    - Creates right boundary for contact information area
-                    - Positioned at right edge of content box (right: 0)
-                    - Extends full height of content area (top: 0 to bottom: 0)
-                    - Static on subsequent loads, animated top-to-bottom on initial load (0.55s delay)
-                    - Only visible in CONTACT section */}
-                {!isMobile && (
-                  <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          bottom: 0,
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          bottom: 0,
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    )}
-                    {/* Debug label for CONTACT CONTENT RIGHT BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: '10px',
-                        top: '50px',
-                        color: 'red',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: 'white',
-                        padding: '2px 4px',
-                        zIndex: 20,
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      CONTACT CONTENT RIGHT
-                    </div>
-                    {/* Debug marker for CONTACT CONTENT RIGHT BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: '-3px',
-                        top: '100px',
-                        width: '6px',
-                        height: '6px',
-                        background: 'orange',
-                        borderRadius: '50%',
-                        zIndex: 20
-                      }}
-                    />
-                  </>
-                )}
-                {/* CONTACT SECTION CONTENT BOTTOM BORDER: Bottom edge of contact content box extended to vertical border
-                    - Creates bottom boundary for contact information area
-                    - Extended to connect with the ABOUT/CONTACT RIGHT BORDER (vertical line at viewport edge)
-                    - Spans from content box to the right vertical border at 30px from viewport edge
-                    - Positioned at bottom of content area (bottom: 0)
-                    - Static on subsequent loads, animated left-to-right width expansion on initial load (0.9s delay)
-                    - Only visible in CONTACT section */}
-                {!isMobile && (
-                  <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          bottom: 0,
-                          right: 'calc(-100vw + 100% + 30px)', // Extend to connect with right vertical border
-                          height: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ width: '0%' }}
-                        animate={{ width: 'calc(100% + 100vw - 100% - 30px)' }} // Animate to full extended width
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          bottom: 0,
-                          height: '1px',
-                          background: 'var(--border)',
-                          zIndex: 0
-                        }}
-                      />
-                    )}
-                    {/* Debug label for CONTACT CONTENT BOTTOM BORDER */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '50%',
-                        bottom: '-20px',
-                        transform: 'translateX(-50%)',
-                        color: 'red',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: 'white',
-                        padding: '2px 4px',
-                        zIndex: 20,
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      CONTACT CONTENT BOTTOM (EXTENDED)
-                    </div>
-                    {/* Debug marker for CONTACT CONTENT BOTTOM BORDER - left end */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: '-3px',
-                        bottom: '-3px',
-                        width: '6px',
-                        height: '6px',
-                        background: 'cyan',
-                        borderRadius: '50%',
-                        zIndex: 20
-                      }}
-                    />
-                    {/* Debug marker for CONTACT CONTENT BOTTOM BORDER - right end (at vertical border) */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: 'calc(-100vw + 100% + 27px)', // Position at the vertical border
-                        bottom: '-3px',
-                        width: '6px',
-                        height: '6px',
-                        background: 'yellow',
-                        borderRadius: '50%',
-                        zIndex: 20
-                      }}
-                    />
-                  </>
-                )}
+                    - Creates left edge of the contact info container
+                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay) */}
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ))}
+                {/* Animated right border */}
+                {!isMobile && (hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ))}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1389,10 +1149,40 @@ const GridLayout = () => {
                 >
                   Based in Your City
                 </motion.p>
+                {/* CONTACT CONTENT BOTTOM BORDER: Bottom boundary of contact information box
+                    - Positioned at bottom of content box (bottom: 0)
+                    - Spans full width of content area (width: 100%)
+                    - Creates bottom edge of the contact info container
+                    - Static on subsequent loads, animated left-to-right on initial load (0.9s delay) */}
+                {hasInitialLoaded ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      width: '100%',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      bottom: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
               </div>
-              
             </div>
-            
           </div>
         )}
       </div>
