@@ -482,6 +482,23 @@ const ProjectLayout = ({
                     }}
                   />
                 )}
+                {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
+                {isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
                   {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border
                       Creates the vertical divider extending to absolutely infinite proportions, completely
@@ -520,6 +537,23 @@ const ProjectLayout = ({
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
+                {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
+                {isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -580,6 +614,23 @@ const ProjectLayout = ({
                     }}
                   />
                 )}
+                {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
+                {isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
                   {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border
                       Divider line extending to galactic proportions, creating titan-sized pillars that
@@ -623,6 +674,23 @@ const ProjectLayout = ({
                       initial={{ scaleX: 0, transformOrigin: 'left' }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
+                  {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
+                  {isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
                       style={{
                         position: 'absolute',
                         top: 0,
