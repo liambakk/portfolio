@@ -473,11 +473,13 @@ const ProjectLayout = ({
                   />
                 </motion.div>
               )}
-            </div>
-            <div className="project-sections-container">
+              <div className="project-sections-container">
               {/* Overview Section */}
               <div className="project-section-bordered">
-                <div className="section-header">Overview</div>
+                <div className="section-header">
+                  <span className="section-label">01.</span>
+                  Overview
+                </div>
                 <div className="section-content">
                   {overview.description}
                 </div>
@@ -485,7 +487,10 @@ const ProjectLayout = ({
 
               {/* Team Section */}
               <div className="project-section-bordered">
-                <div className="section-header">Team</div>
+                <div className="section-header">
+                  <span className="section-label">02.</span>
+                  Team
+                </div>
                 <div className="section-content">
                   {team.description}
                 </div>
@@ -493,7 +498,10 @@ const ProjectLayout = ({
 
               {/* Goals Section */}
               <div className="project-section-bordered">
-                <div className="section-header">Goals</div>
+                <div className="section-header">
+                  <span className="section-label">03.</span>
+                  Goals
+                </div>
                 <div className="section-content">
                   <ul className="goals-list">
                     {goals.items.map((goal, index) => (
@@ -506,7 +514,10 @@ const ProjectLayout = ({
               {/* Role & Process Section */}
               {roleProcess.map((role, index) => (
                 <div key={index} className="project-section-bordered">
-                  <div className="section-header">{role.title}</div>
+                  <div className="section-header">
+                    <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
+                    {role.title}
+                  </div>
                   <div className="section-content">
                     <p className="role-description">{role.description}</p>
                     {role.tasks && role.tasks.length > 0 && (
@@ -517,63 +528,78 @@ const ProjectLayout = ({
                       </ul>
                     )}
                     {role.images && role.images.length > 0 && (
-                      <div className="role-images">
+                      <div className="relay-images-container role-image-container" style={{
+                        display: "flex",
+                        gap: "20px",
+                        padding: "20px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
                         {role.images.map((image, imgIndex) => (
-                          <div key={imgIndex} className="role-image-container">
-                            <OptimizedImage 
-                              src={image} 
-                              alt={`${role.title} image ${imgIndex + 1}`}
-                              width={780}
-                              height={520}
-                              quality={95}
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
-                              style={{
-                                width: '100%',
-                                height: 'auto'
-                              }}
-                              useOptimized={false}
-                            />
-                          </div>
+                          <OptimizedImage 
+                            key={imgIndex}
+                            src={image} 
+                            alt={`${role.title} image ${imgIndex + 1}`}
+                            width={450}
+                            height={300}
+                            quality={85}
+                            sizes="(max-width: 768px) 100vw, 450px"
+                            priority={index === 0}
+                            style={{
+                              width: '100%',
+                              height: 'auto'
+                            }}
+                          />
                         ))}
                       </div>
                     )}
                     {role.image && (
-                      <div className="role-image-container">
+                      <div className="relay-design-system-container" style={{
+                        display: "flex",
+                        padding: "40px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
                         <OptimizedImage 
                           src={role.image} 
-                          alt={`${role.title} image`}
-                          width={780}
-                          height={520}
-                          quality={95}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
+                          alt={`${role.title} design system`}
+                          width={1600}
+                          height={900}
+                          quality={85}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1600px"
                           style={{
                             width: '100%',
                             height: 'auto'
                           }}
-                          useOptimized={false}
                         />
                       </div>
                     )}
                     {role.bottomImage && (
-                      <div className="role-image-container">
+                      <div className="relay-logo-container role-image-container" style={{
+                        display: "flex",
+                        padding: "20px 0",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
                         <OptimizedImage 
                           src={role.bottomImage} 
-                          alt={`${role.title} bottom image`}
-                          width={780}
-                          height={520}
-                          quality={95}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 780px"
+                          alt={`${role.title} logo`}
+                          width={938}
+                          height={300}
+                          quality={85}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 938px"
                           style={{
                             width: '100%',
                             height: 'auto'
                           }}
-                          useOptimized={false}
                         />
                       </div>
                     )}
+                    {role.customContent}
                   </div>
                 </div>
               ))}
+              </div>
             </div>
           </div>
         )}
