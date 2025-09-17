@@ -90,7 +90,11 @@ const GridLayout = () => {
     <div className="grid-container">
       <CustomCursor />
 
-      {/* BORDER 1: Top horizontal border - Header bottom border */}
+      {/* GLOBAL HEADER BORDER: Top horizontal border separating header from main content
+          - Spans full width between left and right margins (30px each)
+          - Located at 80px from top, directly below the top navigation bar
+          - Appears on all sections (work/about/contact)
+          - Animated with left-to-right scale on initial load (0.2s delay) */}
       {!isMobile && (
         <motion.div
           initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -109,6 +113,11 @@ const GridLayout = () => {
         />
       )}
 
+      {/* WORK SECTION L-SHAPED BORDER: Composite border creating L-shape on right side
+          - Only visible on WORK section
+          - Positioned at right viewport edge (30px from right)
+          - Height spans from content top (152px) down 403px
+          - Creates visual frame for work content area */}
       {!isMobile && activeTab === 'work' && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -125,7 +134,10 @@ const GridLayout = () => {
             pointerEvents: 'none'
           }}
         >
-          {/* Vertical segment */}
+          {/* WORK SECTION VERTICAL BORDER: Right edge border of work content area
+              - Extends vertically down from content separator
+              - Animated top-to-bottom on work tab activation
+              - Creates right boundary for case studies list */}
           <motion.div
             initial={{ scaleY: 0, transformOrigin: 'top' }}
             animate={{ scaleY: 1 }}
@@ -139,7 +151,10 @@ const GridLayout = () => {
               background: 'var(--border)'
             }}
           />
-          {/* Horizontal segment extending left from bottom of vertical */}
+          {/* WORK SECTION HORIZONTAL EXTENSION: Bottom border extending left from vertical
+              - Creates L-shape by extending horizontally from bottom of vertical border
+              - Width calculated to reach specific layout boundary (905px from left)
+              - Animated right-to-left after vertical border completes */}
           <motion.div
             initial={{ scaleX: 0, transformOrigin: 'right' }}
             animate={{ scaleX: 1 }}
@@ -157,7 +172,12 @@ const GridLayout = () => {
       )}
 
 
-      {/* BORDER 2: Horizontal border under logo/section title - Main content top separator */}
+      {/* CONTENT SEPARATOR BORDER: Horizontal border separating section titles from main content
+          - Spans full width between margins, positioned 152px from top
+          - Appears below section titles (Work/About/Contact)
+          - Creates visual separation between header area and content area
+          - Animated left-to-right scale on initial load (0.2s delay)
+          - Visible on all sections */}
       {!isMobile && (
         <motion.div
           initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -177,7 +197,12 @@ const GridLayout = () => {
       )}
 
 
-      {/* ABOUT/CONTACT BORDER 2: Right vertical border - social links separator (about/contact sections) */}
+      {/* ABOUT/CONTACT RIGHT BORDER: Vertical border separating content from social links
+          - Only visible on ABOUT and CONTACT sections
+          - Positioned at right viewport edge (30px from right)
+          - Starts from content separator (152px) and extends down 324px
+          - Creates visual boundary between main content and social sidebar
+          - Animated top-to-bottom on section change (0.4s delay) */}
       {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
         <motion.div
           initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -208,7 +233,11 @@ const GridLayout = () => {
           style={{ position: 'relative' }}
         >
           © 2025
-          {/* Copyright left vertical border */}
+          {/* COPYRIGHT LEFT BORDER: Vertical border extending down from copyright text
+              - Positioned at left edge of copyright text (left: 0)
+              - Extends from 24px below text down to header bottom
+              - Creates visual connection between copyright and layout structure
+              - Animated top-to-bottom with 0.3s delay */}
           {!isMobile && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -231,7 +260,11 @@ const GridLayout = () => {
           onMouseLeave={() => setHoveredTab(null)}
           style={{ position: 'relative' }}
         >
-          {/* White bar at top of tabs */}
+          {/* NAVIGATION WHITE ACCENT: White bar accent at top of tab section
+              - Spans full width of navigation tabs area
+              - Height: 8px, positioned at very top of tabs (top: 0)
+              - Provides visual weight and contrast for navigation area
+              - Animated left-to-right scale with 0.35s delay */}
           {!isMobile && (
             <motion.div
               initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -247,7 +280,11 @@ const GridLayout = () => {
               }}
             />
           )}
-          {/* Left border of tab section */}
+          {/* NAVIGATION LEFT BORDER: Left boundary of tab section
+              - Creates left edge of the navigation tab container
+              - Starts 32px from top (below white accent bar)
+              - Extends to bottom of navigation area
+              - Animated top-to-bottom with 0.3s delay */}
           {!isMobile && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -264,7 +301,11 @@ const GridLayout = () => {
               }}
             />
           )}
-          {/* Tab divider 1 (between Work and About) */}
+          {/* NAVIGATION TAB DIVIDER 1: Vertical separator between Work and About tabs
+              - Positioned at 33.333% from left (1/3 width) to separate first two tabs
+              - Starts 32px from top (below white accent bar)
+              - Creates visual separation between Work and About navigation options
+              - Animated top-to-bottom with 0.35s delay */}
           {!isMobile && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -281,7 +322,11 @@ const GridLayout = () => {
               }}
             />
           )}
-          {/* Tab divider 2 (between About and Contact) */}
+          {/* NAVIGATION TAB DIVIDER 2: Vertical separator between About and Contact tabs
+              - Positioned at 66.666% from left (2/3 width) to separate last two tabs
+              - Starts 32px from top (below white accent bar)
+              - Creates visual separation between About and Contact navigation options
+              - Animated top-to-bottom with 0.4s delay */}
           {!isMobile && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -298,7 +343,11 @@ const GridLayout = () => {
               }}
             />
           )}
-          {/* Right border of tab section */}
+          {/* NAVIGATION RIGHT BORDER: Right boundary of tab section
+              - Creates right edge of the navigation tab container
+              - Starts 32px from top (below white accent bar)
+              - Extends to bottom of navigation area
+              - Animated top-to-bottom with 0.45s delay (last border to appear) */}
           {!isMobile && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -466,6 +515,12 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
+                {/* WORK SECTION CASE LIST RIGHT BORDER: Right edge of case studies list
+                    - Creates right boundary for the work cases container
+                    - Extends full height of the cases list area
+                    - Positioned at right edge of cases container (right: 0)
+                    - Animated top-to-bottom with 0.55s delay
+                    - Only visible in WORK section */}
                 {!isMobile && (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -544,6 +599,11 @@ const GridLayout = () => {
                       >
                         {caseItem.title}
                       </motion.div>
+                      {/* WORK SECTION CASE ITEM DIVIDER: Horizontal separator between case study items
+                          - Appears between each case study item in the list
+                          - Full width (100%) horizontal line
+                          - Animated left-to-right with staggered delay (0.65s + index * 0.1s)
+                          - Not rendered after the last item */}
                       {!isLastItem && (
                         <motion.div
                           initial={{ scaleX: 0 }}
@@ -567,6 +627,11 @@ const GridLayout = () => {
                   );
                 })}
                 
+                {/* WORK SECTION FINAL DIVIDER: Horizontal border after last case study item
+                    - Positioned after all case study items, before "More" button
+                    - Full width (100%) horizontal separator
+                    - Animated left-to-right on initial load (1.05s delay)
+                    - Creates visual separation between case studies and additional content */}
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
@@ -618,6 +683,12 @@ const GridLayout = () => {
                   More
                 </motion.div>
                 
+                {/* WORK SECTION CASE LIST LEFT BORDER: Left edge of case studies container
+                    - Creates left boundary for the work cases list
+                    - Positioned at left edge of cases container (left: 0)
+                    - Height covers 99.5% of container to avoid overlap issues
+                    - Animated top-to-bottom on initial load (0.5s delay)
+                    - Only visible in WORK section */}
                 {!isMobile && activeTab === 'work' && (
                   <>
                     <motion.div
@@ -671,7 +742,12 @@ const GridLayout = () => {
                     position: 'relative'
                   } : {}}
               >
-                {/* ABOUT SECTION BORDER 2: Right border of about content box */}
+                {/* ABOUT SECTION CONTENT RIGHT BORDER: Right edge of about text content box
+                    - Creates right boundary for the about text content area
+                    - Positioned at right edge of content box (right: 0)
+                    - On initial load: starts from top (top: 0), animated top-to-bottom (0.55s delay)
+                    - On subsequent loads: starts 10px from top to avoid visual overlap
+                    - Only visible in ABOUT section */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -720,7 +796,10 @@ const GridLayout = () => {
               {/* Extended border container for profile image - only on about page */}
               {!isMobile && (
                 <>
-                  {/* ABOUT SECTION BORDER 1: Extended U-shaped border - merged header vertical, content left border, horizontal extension, and left viewport edge vertical */}
+                  {/* ABOUT SECTION COMPLEX BORDER STRUCTURE: Multi-segment border creating layout frame
+                      - Large container extending left to viewport edge and up to header area
+                      - Creates comprehensive border system for about section with profile image area
+                      - Static rendering on subsequent loads for performance */}
                   {hasInitialLoaded ? (
                     <div
                       style={{
@@ -733,7 +812,10 @@ const GridLayout = () => {
                         zIndex: 0
                       }}
                     >
-                      {/* Right vertical segment - content left border */}
+                      {/* ABOUT CONTENT LEFT BORDER: Right edge of profile image area
+                          - Vertical border separating profile image area from content
+                          - Starts 280px from container top, extends to bottom
+                          - Creates left boundary for about text content */}
                       <div
                         style={{
                           position: 'absolute',
@@ -744,7 +826,9 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Horizontal bottom segment */}
+                      {/* ABOUT BOTTOM BORDER: Horizontal border at bottom of layout
+                          - Spans full width of the extended border container
+                          - Creates bottom boundary of the about section layout frame */}
                       <div
                         style={{
                           position: 'absolute',
@@ -755,7 +839,10 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Left vertical segment - viewport edge */}
+                      {/* ABOUT VIEWPORT LEFT BORDER: Left edge at viewport boundary
+                          - Vertical border at far left of viewport
+                          - Extends full height of extended container
+                          - Creates left boundary of the entire layout frame */}
                       <div
                         style={{
                           position: 'absolute',
@@ -766,7 +853,10 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Header vertical segment - connects header to content */}
+                      {/* ABOUT HEADER CONNECTION BORDER: Vertical link from header to content
+                          - Connects header area to main content area
+                          - Complex positioning calculation to align with header structure
+                          - Higher z-index (10) to appear above other elements */}
                       <div
                         style={{
                           position: 'absolute',
@@ -778,7 +868,10 @@ const GridLayout = () => {
                           zIndex: 10
                         }}
                       />
-                      {/* Horizontal extension to social area - only for about section */}
+                      {/* ABOUT SOCIAL CONNECTION BORDER: Horizontal extension to social area
+                          - Only visible in ABOUT section
+                          - Extends from content area to social sidebar
+                          - Creates connection between main content and social links */}
                       {activeTab === 'about' && (
                         <div
                           style={{
@@ -794,7 +887,12 @@ const GridLayout = () => {
                       )}
                     </div>
                   ) : (
-                    <motion.div
+                    <>
+                      {/* ABOUT SECTION ANIMATED BORDER STRUCTURE: Initial load animation sequence
+                          - Same border structure as static version but with sequential animations
+                          - Creates choreographed appearance of layout borders
+                          - Overflow hidden to prevent animation artifacts */}
+                      <motion.div
                       style={{
                         position: 'absolute',
                         left: '-50vw',
@@ -806,7 +904,9 @@ const GridLayout = () => {
                         overflow: 'hidden'
                       }}
                     >
-                      {/* Animated right vertical segment - content left border */}
+                      {/* ABOUT ANIMATED CONTENT LEFT BORDER: Animated profile/content separator
+                          - Same as static version but animated top-to-bottom (0.5s delay)
+                          - Creates left boundary for about text content */}
                       <motion.div
                         initial={{ scaleY: 0, transformOrigin: 'top' }}
                         animate={{ scaleY: 1 }}
@@ -820,7 +920,9 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Animated horizontal bottom segment */}
+                      {/* ABOUT ANIMATED BOTTOM BORDER: Animated horizontal bottom boundary
+                          - Animated right-to-left scale (0.9s delay)
+                          - Creates bottom boundary of the layout frame */}
                       <motion.div
                         initial={{ scaleX: 0, transformOrigin: 'right' }}
                         animate={{ scaleX: 1 }}
@@ -834,7 +936,9 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Animated left vertical segment - viewport edge */}
+                      {/* ABOUT ANIMATED VIEWPORT LEFT BORDER: Animated left edge boundary
+                          - Animated bottom-to-top scale (1.2s delay, last vertical to appear)
+                          - Creates left boundary of the entire layout frame */}
                       <motion.div
                         initial={{ scaleY: 0, transformOrigin: 'bottom' }}
                         animate={{ scaleY: 1 }}
@@ -848,7 +952,9 @@ const GridLayout = () => {
                           background: 'var(--border)'
                         }}
                       />
-                      {/* Animated header vertical segment - connects header to content */}
+                      {/* ABOUT ANIMATED HEADER CONNECTION: Animated header-to-content link
+                          - Animated top-to-bottom (0.3s delay, appears early in sequence)
+                          - Connects header structure to content area */}
                       <motion.div
                         initial={{ scaleY: 0, transformOrigin: 'top' }}
                         animate={{ scaleY: 1 }}
@@ -863,7 +969,10 @@ const GridLayout = () => {
                           zIndex: 10
                         }}
                       />
-                      {/* Animated horizontal extension to social area - only for about section */}
+                      {/* ABOUT ANIMATED SOCIAL CONNECTION: Animated content-to-social link
+                          - Only visible in ABOUT section
+                          - Animated left-to-right scale (0.6s delay)
+                          - Creates connection to social sidebar */}
                       {activeTab === 'about' && (
                         <motion.div
                           initial={{ scaleX: 0, transformOrigin: 'left' }}
@@ -881,6 +990,7 @@ const GridLayout = () => {
                         />
                       )}
                     </motion.div>
+                    </>
                   )}
                   
                   {/* Profile image container */}
@@ -923,7 +1033,7 @@ const GridLayout = () => {
                   </motion.div>
                 </>
               )}
-            </div>
+              </div>
             </div>
           </div>
         )}
@@ -947,7 +1057,12 @@ const GridLayout = () => {
                   position: 'relative'
                 } : {}}
               >
-                {/* CONTACT LEFT BORDER: Left vertical border of contact content box */}
+                {/* CONTACT SECTION CONTENT LEFT BORDER: Left edge of contact content box
+                    - Creates left boundary for contact information area
+                    - Positioned at left edge of content box (left: 0)
+                    - Extends full height of content area (top: 0 to bottom: 0)
+                    - Static on subsequent loads, animated top-to-bottom on initial load (0.5s delay)
+                    - Only visible in CONTACT section */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -976,7 +1091,12 @@ const GridLayout = () => {
                     }}
                   />
                 ))}
-                {/* CONTACT RIGHT BORDER: Right vertical border of contact content box */}
+                {/* CONTACT SECTION CONTENT RIGHT BORDER: Right edge of contact content box
+                    - Creates right boundary for contact information area
+                    - Positioned at right edge of content box (right: 0)
+                    - Extends full height of content area (top: 0 to bottom: 0)
+                    - Static on subsequent loads, animated top-to-bottom on initial load (0.55s delay)
+                    - Only visible in CONTACT section */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
@@ -1020,7 +1140,12 @@ const GridLayout = () => {
                 >
                   Based in Your City
                 </motion.p>
-                {/* CONTACT BOTTOM BORDER: Bottom horizontal border of contact content box */}
+                {/* CONTACT SECTION CONTENT BOTTOM BORDER: Bottom edge of contact content box
+                    - Creates bottom boundary for contact information area
+                    - Spans full width of content box (width: 100%)
+                    - Positioned at bottom of content area (bottom: 0)
+                    - Static on subsequent loads, animated left-to-right width expansion on initial load (0.9s delay)
+                    - Only visible in CONTACT section */}
                 {hasInitialLoaded ? (
                   <div
                     style={{
@@ -1054,23 +1179,31 @@ const GridLayout = () => {
         )}
       </div>
 
-      {/* CONTACT HORIZONTAL BORDER: Horizontal border extending to social area - only for contact section */}
       {!isMobile && activeTab === 'contact' && (
-        <motion.div
-          initial={{ scaleX: 0, transformOrigin: 'left' }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-          style={{
-            position: 'absolute',
-            top: 'calc(152px + 324px)',
-            left: '50px',
-            right: '30px',
-            height: '1px',
-            background: 'var(--border)',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }}
-        />
+        <>
+          {/* CONTACT SECTION SOCIAL CONNECTION BORDER: Horizontal border connecting content to social area
+              - Only visible in CONTACT section
+              - Positioned at bottom of contact content area (152px + 324px from top)
+              - Spans from content left edge (50px) to viewport right margin (30px)
+              - Creates visual connection between contact content and social sidebar
+              - Animated left-to-right scale with 0.6s delay
+              - Higher z-index (10) to appear above other elements */}
+          <motion.div
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            style={{
+              position: 'absolute',
+              top: 'calc(152px + 324px)',
+              left: '50px',
+              right: '30px',
+              height: '1px',
+              background: 'var(--border)',
+              zIndex: 10,
+              pointerEvents: 'none'
+            }}
+          />
+        </>
       )}
 
       {/* Right Sidebar - Social Links */}
@@ -1118,7 +1251,14 @@ const GridLayout = () => {
 
       {/* Bottom Bar */}
       <div className="bottom-bar">
-        {/* BOTTOM BAR WHITE ACCENT: White horizontal bar in bottom right corner - only on work and contact */}
+        {/* BOTTOM BAR WHITE ACCENT: Decorative white bar in footer area
+            - Only visible on WORK and CONTACT sections (not on ABOUT)
+            - Positioned in bottom right area of viewport
+            - Width spans half viewport minus margin (calc(50% - 30px))
+            - Height: 8px for visual prominence
+            - White background for contrast and visual weight
+            - Animated left-to-right on enter, right-to-left on exit
+            - Different delay timing for initial vs subsequent loads */}
         <AnimatePresence>
           {!isMobile && (activeTab === 'work' || activeTab === 'contact') && (
             <motion.div
