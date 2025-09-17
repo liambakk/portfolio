@@ -173,23 +173,6 @@ const GridLayout = () => {
               background: '#ffffff'
             }}
           />
-          {/* WORK SECTION HORIZONTAL EXTENSION: Bottom border extending left from vertical
-              - Creates L-shape by extending horizontally from bottom of vertical border
-              - Width calculated to reach specific layout boundary (905px from left)
-              - Animated right-to-left after vertical border completes */}
-          <motion.div
-            initial={{ scaleX: 0, transformOrigin: 'right' }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              width: 'calc(100vw - 905px)',
-              height: '1px',
-              background: '#ffffff'
-            }}
-          />
         </motion.div>
       )}
 
@@ -258,7 +241,7 @@ const GridLayout = () => {
               top: '152px',
               right: '30px',
               width: '1px',
-              height: (activeTab === 'about' || activeTab === 'contact') ? 'calc(100vh - 152px - 280px)' : '324px', // Extends to connect with bottom connector in about/contact sections
+              height: (activeTab === 'about' || activeTab === 'contact') ? 'calc(100vh - 152px - 380px)' : '324px', // Reduced height for about/contact sections
               background: 'var(--border)',
               zIndex: 10,
               pointerEvents: 'none'
@@ -770,6 +753,57 @@ const GridLayout = () => {
                   More
                 </motion.div>
                 
+                {/* WORK SECTION MORE BOTTOM BORDER: Extended horizontal border connecting to vertical border
+                    - Extends from cases container to connect with the right vertical border
+                    - Positioned absolutely to span from cases-inner left edge to viewport right edge (30px margin)
+                    - Animated left-to-right on initial load (1.1s delay, after More button)
+                    - Only visible in WORK section */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                    delay: 1.1
+                  }}
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: '0', // Start from the left case border position
+                    width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
+                    height: '1px',
+                    background: 'var(--border)',
+                    zIndex: 0,
+                    transformOrigin: '0% 50%'
+                  }}
+                />
+                
+                {/* DEBUG MARKER: Merged point - horizontal line now starts at left case border */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: -5,
+                    left: '0', // Now both horizontal line and case border start here
+                    width: '3px',
+                    height: '10px',
+                    background: '#ff00ff', // Purple marker showing merge
+                    zIndex: 15
+                  }}
+                />
+                
+                {/* DEBUG MARKER: Right edge of horizontal line */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: -5,
+                    left: 'calc(0px + calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px))', // Right edge of horizontal line
+                    width: '3px',
+                    height: '10px',
+                    background: '#0000ff', // Blue marker for right edge
+                    zIndex: 15
+                  }}
+                />
+                
                 {/* WORK SECTION CASE LIST LEFT BORDER: Left edge of case studies container
                     - Creates left boundary for the work cases list
                     - Positioned at left edge of cases container (left: 0)
@@ -878,7 +912,7 @@ const GridLayout = () => {
                           position: 'absolute',
                           top: 10,
                           right: 0,
-                          bottom: '-300px', // Extends down to meet ABOUT SOCIAL CONNECTION
+                          bottom: '-200px', // Reduced extension down to meet ABOUT SOCIAL CONNECTION
                           width: '1px',
                           background: 'var(--border)',
                           zIndex: 10
@@ -893,7 +927,7 @@ const GridLayout = () => {
                           position: 'absolute',
                           top: 0,
                           right: 0,
-                          bottom: '-300px', // Extends down to meet ABOUT SOCIAL CONNECTION
+                          bottom: '-200px', // Reduced extension down to meet ABOUT SOCIAL CONNECTION
                           width: '1px',
                           background: 'var(--border)',
                           zIndex: 10
@@ -1184,62 +1218,6 @@ const GridLayout = () => {
               Contact
             </motion.h1>
             
-            {/* CONTACT CONTENT CONNECTOR: Vertical border connecting CONTENT SEPARATOR to CONTACT CONTENT RIGHT
-                - Only visible in CONTACT section
-                - Connects the horizontal CONTENT SEPARATOR (at top: 152px) to the CONTACT CONTENT RIGHT border
-                - Creates an L-shaped connection between the two borders */}
-            {!isMobile && (
-              <>
-                {hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '152px',
-                      right: 'calc(100% - 50% - 20px - 20px - min(82%, 1200px))', // Aligns with right edge of content box
-                      width: '1px',
-                      height: '52px', // Extends down to where content starts
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    initial={{ scaleY: 0, transformOrigin: 'top' }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-                    style={{
-                      position: 'absolute',
-                      top: '152px',
-                      right: 'calc(100% - 50% - 20px - 20px - min(82%, 1200px))', // Aligns with right edge of content box
-                      width: '1px',
-                      height: '52px', // Extends down to where content starts
-                      background: 'var(--border)',
-                      zIndex: 10
-                    }}
-                  />
-                )}
-                {/* Debug label for CONTACT CONTENT CONNECTOR */}
-                {activeTab === 'contact' && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '180px',
-                      left: 'calc(50% + 20px + 20px + 82% * 0.48 + 10px)',
-                      color: 'red',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      background: 'white',
-                      padding: '2px 4px',
-                      zIndex: 20,
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    CONTACT CONNECTOR
-                  </div>
-                )}
-              </>
-            )}
-            
             <div className="contact-content">
               <div
                 className="contact-content-box"
@@ -1302,36 +1280,22 @@ const GridLayout = () => {
                     CONTACT CONTENT LEFT
                   </div>
                 )}
-                {/* CONTACT SECTION CONTENT RIGHT BORDER WITH EXTENSION: L-shaped border extending to right edge
+                {/* CONTACT SECTION CONTENT RIGHT BORDER: Right edge of contact content box
                     - Creates right boundary for contact information area
-                    - Extends beyond content box to connect with ABOUT/CONTACT RIGHT border
-                    - Forms unified L-shaped border structure
-                    - Static on subsequent loads, animated sequentially on initial load */}
+                    - Extends upward 52px to connect with CONTENT SEPARATOR
+                    - Only visible in CONTACT section */}
                 {!isMobile && (hasInitialLoaded ? (
                   <div
                     style={{
                       position: 'absolute',
-                      top: 0,
+                      top: '-52px', // Extend upward to connect with CONTENT SEPARATOR
                       right: 0,
                       bottom: 0,
                       width: '1px',
                       background: 'var(--border)',
-                      zIndex: 0
+                      zIndex: 10
                     }}
-                  >
-                    {/* Horizontal extension to connect with ABOUT/CONTACT RIGHT border */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)',
-                        height: '1px',
-                        background: 'var(--border)',
-                        zIndex: 10
-                      }}
-                    />
-                  </div>
+                  />
                 ) : (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
@@ -1339,30 +1303,14 @@ const GridLayout = () => {
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
                     style={{
                       position: 'absolute',
-                      top: 0,
+                      top: '-52px', // Extend upward to connect with CONTENT SEPARATOR
                       right: 0,
                       bottom: 0,
                       width: '1px',
                       background: 'var(--border)',
-                      zIndex: 0
+                      zIndex: 10
                     }}
-                  >
-                    {/* Animated horizontal extension to connect with ABOUT/CONTACT RIGHT border */}
-                    <motion.div
-                      initial={{ scaleX: 0, transformOrigin: 'left' }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)',
-                        height: '1px',
-                        background: 'var(--border)',
-                        zIndex: 10
-                      }}
-                    />
-                  </motion.div>
+                  />
                 ))}
                 {/* Debug label for CONTACT CONTENT RIGHT BORDER */}
                 {!isMobile && activeTab === 'contact' && (
