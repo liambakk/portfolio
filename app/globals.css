@@ -537,7 +537,7 @@ body {
   margin-left: -70px;
   margin-top: 40px; /* Reduced since image is now relative positioned */
   margin-right: 0;
-  padding-bottom: 50px; /* Add padding to ensure content doesn't touch bottom border */
+  padding-bottom: 0; /* Remove padding so content reaches bottom border */
 }
 
 /* Individual bordered sections - borders now handled by ProjectBorderFrame */
@@ -549,9 +549,9 @@ body {
   border-top: 1px solid var(--border);
 }
 
-/* Remove top border from first section to avoid double border with frame */
+/* First section should have top border */
 .project-section-bordered:first-child {
-  border-top: none;
+  border-top: 1px solid var(--border);
 }
 
 /* Borders now handled by ProjectBorderFrame component */
@@ -565,6 +565,7 @@ body {
   background: var(--background);
   display: flex;
   align-items: flex-start;
+  border-right: 1px solid var(--border);
 }
 
 .section-label {

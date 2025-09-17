@@ -434,6 +434,8 @@ const ProjectLayout = ({
           <div className="project-main-content">
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
+            {/* PROJECT CONTENT FRAME: Unified border system wrapping all project sections */}
+            <ProjectBorderFrame />
             <div className="project-section">
               <div className="project-title-border-wrapper">
                 <motion.h1 
@@ -446,8 +448,6 @@ const ProjectLayout = ({
                   {title}
                   {externalLink && titleIcon}
                 </motion.h1>
-                {/* PROJECT CONTENT FRAME: Unified border system wrapping all project sections */}
-                <ProjectBorderFrame />
               </div>
               {previewImage && (
                 <motion.div 
@@ -511,7 +511,7 @@ const ProjectLayout = ({
                 </div>
               </div>
 
-              {/* Role & Process Section */}
+              {/* Role & Process Sections */}
               {roleProcess.map((role, index) => (
                 <div key={index} className="project-section-bordered">
                   <div className="section-header">

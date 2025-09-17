@@ -36,7 +36,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         left: "-70px",
         top: "52px",
         width: "calc(100% + 80px)",
-        height: "calc(100vh + 2386px)",
+        height: "100%",
         zIndex: 1
       }}
       aria-hidden="true"
