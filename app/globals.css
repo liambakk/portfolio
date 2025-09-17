@@ -547,23 +547,21 @@ body {
   padding-bottom: 0; /* Remove padding so content reaches bottom border */
 }
 
-/* Individual bordered sections - borders now handled by ProjectBorderFrame */
+/* Individual bordered sections - borders now handled by motion.div animations */
 .project-section-bordered {
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 120px;
   position: relative;
-  border-top: 1px solid var(--border);
 }
 
-/* First section should have top border */
+/* First section top border now handled by motion.div animation */
 .project-section-bordered:first-child {
-  border-top: 1px solid var(--border);
 }
 
 /* Borders now handled by ProjectBorderFrame component */
 
-/* Section header - left column */
+/* Section header - left column - right border now handled by motion.div animation */
 .section-header {
   padding: 16px 0px 16px 20px;
   font-size: 14px;
@@ -572,7 +570,6 @@ body {
   background: var(--background);
   display: flex;
   align-items: flex-start;
-  border-right: 1px solid var(--border);
 }
 
 .section-label {

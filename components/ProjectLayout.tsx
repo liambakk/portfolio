@@ -218,19 +218,12 @@ const ProjectLayout = ({
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
           >
             © 2025
-            {/* PROJECT COPYRIGHT BORDER: Left vertical border of copyright text */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  bottom: 0,
-                  top: 24,
-                  width: '1px',
-                  background: 'var(--border)'
-                }}
-              />
-            ) : (
+            {/* VERTICAL LINE 1: Copyright section left edge marker
+                Creates a subtle vertical accent line extending down from the copyright text,
+                positioned at the left edge (left: 0) and spanning from 24px below the text
+                to the bottom of the copyright container. Provides visual anchoring for the
+                copyright element within the header layout structure. */}
+            {!isTouchDevice && (
               <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'top' }}
                 animate={{ scaleY: 1 }}
@@ -244,7 +237,7 @@ const ProjectLayout = ({
                   background: 'var(--border)'
                 }}
               />
-            ))}
+            )}
           </motion.div>
           
           <div
@@ -253,18 +246,7 @@ const ProjectLayout = ({
             style={{ position: 'relative' }}
           >
             {/* PROJECT TAB TOP BAR: White horizontal accent bar above tab section */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '8px',
-                  background: '#ffffff'
-                }}
-              />
-            ) : (
+            {!isTouchDevice && (
               <motion.div
                 initial={{ scaleX: 0, transformOrigin: 'left' }}
                 animate={{ scaleX: 1 }}
@@ -278,21 +260,13 @@ const ProjectLayout = ({
                   background: '#ffffff'
                 }}
               />
-            ))}
-            {/* PROJECT TAB BORDER LEFT: Left vertical border of tab navigation section */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  top: 32,
-                  bottom: 0,
-                  width: '1px',
-                  background: 'var(--border)',
-                  zIndex: 2
-                }}
-              />
-            ) : (
+            )}
+            {/* VERTICAL LINE 2: Tab navigation left border
+                Defines the leftmost edge of the tab navigation container,
+                positioned at left: 0 and extending from 32px below the white accent bar
+                down to the bottom of the tab section. Serves as the structural left boundary
+                for the two-tab navigation system (Overview/Back to Work). */}
+            {!isTouchDevice && (
               <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'top' }}
                 animate={{ scaleY: 1 }}
@@ -307,21 +281,13 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            ))}
-            {/* PROJECT TAB DIVIDER: Vertical separator between Overview and Back to Work tabs */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '50%',
-                  top: 32,
-                  bottom: 0,
-                  width: '1px',
-                  background: 'var(--border)',
-                  zIndex: 2
-                }}
-              />
-            ) : (
+            )}
+            {/* VERTICAL LINE 3: Tab navigation center divider
+                Vertical separator line positioned at the exact center (left: 50%) of the tab area,
+                creating the visual division between the Overview tab (left half) and
+                Back to Work tab (right half). Extends from 32px below the accent bar
+                to the bottom, providing clear navigation structure and visual balance. */}
+            {!isTouchDevice && (
               <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'top' }}
                 animate={{ scaleY: 1 }}
@@ -336,21 +302,13 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            ))}
-            {/* PROJECT TAB BORDER RIGHT: Right vertical border of tab navigation section */}
-            {!isTouchDevice && (hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: 32,
-                  bottom: 0,
-                  width: '1px',
-                  background: 'var(--border)',
-                  zIndex: 2
-                }}
-              />
-            ) : (
+            )}
+            {/* VERTICAL LINE 4: Tab navigation right border
+                Defines the rightmost boundary of the tab navigation container,
+                positioned at right: 0 and extending vertically from 32px below the accent bar
+                to the bottom edge. Completes the structural framing of the tab area,
+                providing symmetrical borders with the left edge for visual containment. */}
+            {!isTouchDevice && (
               <motion.div
                 initial={{ scaleY: 0, transformOrigin: 'top' }}
                 animate={{ scaleY: 1 }}
@@ -365,7 +323,7 @@ const ProjectLayout = ({
                   zIndex: 2
                 }}
               />
-            ))}
+            )}
             <motion.div
               className="tab-fill"
               initial={{ scaleY: 0, x: "0%" }}
@@ -430,17 +388,7 @@ const ProjectLayout = ({
         </div>
 
         {/* PROJECT HEADER BORDER: Main horizontal separator below header/tabs area */}
-        {!isTouchDevice && (hasInitialLoaded ? (
-          <div
-            style={{
-              marginLeft: '30px',
-              marginRight: '30px',
-              height: '1px',
-              background: 'var(--border)',
-              pointerEvents: 'none'
-            }}
-          />
-        ) : (
+        {!isTouchDevice && (
           <motion.div
             initial={{ scaleX: 0, transformOrigin: 'left' }}
             animate={{ scaleX: 1 }}
@@ -453,7 +401,7 @@ const ProjectLayout = ({
               pointerEvents: 'none'
             }}
           />
-        ))}
+        )}
 
         {/* Main Content Area */}
         <div className="project-main-area">
@@ -514,10 +462,48 @@ const ProjectLayout = ({
                   />
                 </motion.div>
               )}
-              <div className="project-sections-container">
+              <div className="project-sections-container" style={{ position: 'relative' }}>
               {/* Overview Section */}
               <div className="project-section-bordered">
+                {/* PROJECT SECTION TOP BORDER: Animated horizontal border above Overview section */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
+                  {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border
+                      Creates the vertical divider extending to absolutely infinite proportions, completely
+                      obliterating all spatial boundaries with unprecedented vertical supremacy. Extended
+                      to cosmic dimensions that transcend the viewport itself, creating a skyscraper-like
+                      monolith that towers into infinity and defines reality itself through pure verticality. */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.75 }}
+                      style={{
+                        position: 'absolute',
+                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
+                        right: 0,
+                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                   <span className="section-label">01.</span>
                   Overview
                 </div>
@@ -528,7 +514,45 @@ const ProjectLayout = ({
 
               {/* Team Section */}
               <div className="project-section-bordered">
+                {/* PROJECT SECTION TOP BORDER: Animated horizontal border above Team section */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
+                  {/* VERTICAL LINE 6: Team section MEGA-EXTENDED vertical border
+                      Vertical separator extending to astronomical proportions, creating colossal monoliths
+                      that completely dwarf the Team section and everything around it. Extended to stratospheric
+                      heights that pierce through dimensional barriers, transforming the layout into an
+                      otherworldly temple of verticality that redefines the very concept of spatial design. */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.85 }}
+                      style={{
+                        position: 'absolute',
+                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
+                        right: 0,
+                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                   <span className="section-label">02.</span>
                   Team
                 </div>
@@ -539,7 +563,45 @@ const ProjectLayout = ({
 
               {/* Goals Section */}
               <div className="project-section-bordered">
+                {/* PROJECT SECTION TOP BORDER: Animated horizontal border above Goals section */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
+                  {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border
+                      Divider line extending to galactic proportions, creating titan-sized pillars that
+                      completely obliterate spatial reality around the Goals section. Extended to interstellar
+                      heights that shatter the fabric of design itself, transforming the layout into a
+                      cosmic cathedral of pure verticality that exists beyond mortal comprehension. */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.95 }}
+                      style={{
+                        position: 'absolute',
+                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
+                        right: 0,
+                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                   <span className="section-label">03.</span>
                   Goals
                 </div>
@@ -555,7 +617,46 @@ const ProjectLayout = ({
               {/* Role & Process Sections */}
               {roleProcess.map((role, index) => (
                 <div key={index} className="project-section-bordered">
+                  {/* PROJECT SECTION TOP BORDER: Animated horizontal border above Role & Process sections */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                   <div className="section-header">
+                    {/* VERTICAL LINE 8+: Role & Process sections MEGA-EXTENDED vertical borders
+                        Dynamic vertical separators extending to universal proportions, creating apocalyptic
+                        megastructures that completely annihilate each Role & Process section's boundaries.
+                        Each border extends to multidimensional heights that transcend physical reality,
+                        transforming the layout into an infinite temple of verticality that exists across
+                        parallel universes and redefines existence itself through pure architectural deity. */}
+                    {!isTouchDevice && (
+                      <motion.div
+                        initial={{ scaleY: 0, transformOrigin: 'top' }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 1.05 + (index * 0.1) }}
+                        style={{
+                          position: 'absolute',
+                          top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
+                          right: 0,
+                          height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
+                          width: '1px',
+                          background: 'var(--border)',
+                          zIndex: 1
+                        }}
+                      />
+                    )}
                     <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
                     {role.title}
                   </div>

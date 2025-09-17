@@ -49,141 +49,74 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
       }}
       aria-hidden="true"
     >
-      {/* PROJECT FRAME LEFT BORDER: Left vertical border of main content frame */}
-      {hasInitialLoaded ? (
-        <div style={{
+      {/* VERTICAL LINE 9: Project frame left border
+          Main structural left boundary of the entire project content frame.
+          Positioned at left: 0 of the frame container (-70px from content),
+          extending the full height from top to bottom. Creates the primary
+          left edge that contains all project sections and content within the frame. */}
+      <motion.div
+        initial={{ scaleY: 0, transformOrigin: "top" }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+        style={{
           position: "absolute",
           left: 0,
           top: 0,
           bottom: 0,
           width: "1px",
           backgroundColor: "var(--border)"
-        }} />
-      ) : (
-        <motion.div
-          initial={{ scaleY: 0, transformOrigin: "top" }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: "1px",
-            backgroundColor: "var(--border)"
-          }}
-        />
-      )}
+        }}
+      />
       
       {/* PROJECT FRAME TOP BORDER: Top horizontal border of main content frame */}
-      {hasInitialLoaded ? (
-        <div style={{
+      <motion.div
+        initial={{ scaleX: 0, transformOrigin: "left" }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        style={{
           position: "absolute",
           left: 0,
           top: 0,
           right: 0,
           height: "1px",
           backgroundColor: "var(--border)"
-        }} />
-      ) : (
-        <motion.div
-          initial={{ scaleX: 0, transformOrigin: "left" }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            right: 0,
-            height: "1px",
-            backgroundColor: "var(--border)"
-          }}
-        />
-      )}
+        }}
+      />
       
-      {/* PROJECT FRAME RIGHT BORDER: Right vertical border of main content frame */}
-      {hasInitialLoaded ? (
-        <div style={{
+      {/* VERTICAL LINE 10: Project frame right border
+          Primary structural right boundary of the project content frame.
+          Positioned at right: 0 of the frame container, spanning full height
+          from top to bottom. Forms the rightmost containment edge for all
+          project content, completing the rectangular frame structure. */}
+      <motion.div
+        initial={{ scaleY: 0, transformOrigin: "top" }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+        style={{
           position: "absolute",
           right: 0,
           top: 0,
           bottom: 0,
           width: "1px",
           backgroundColor: "var(--border)"
-        }} />
-      ) : (
-        <motion.div
-          initial={{ scaleY: 0, transformOrigin: "top" }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: "1px",
-            backgroundColor: "var(--border)"
-          }}
-        />
-      )}
+        }}
+      />
       
       {/* PROJECT FRAME BOTTOM BORDER: Bottom horizontal border of main content frame */}
-      {hasInitialLoaded ? (
-        <div style={{
+      <motion.div
+        initial={{ scaleX: 0, transformOrigin: "left" }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+        style={{
           position: "absolute",
           left: 0,
           bottom: 0,
           right: 0,
           height: "1px",
           backgroundColor: "var(--border)"
-        }} />
-      ) : (
-        <motion.div
-          initial={{ scaleX: 0, transformOrigin: "left" }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-          style={{
-            position: "absolute",
-            left: 0,
-            bottom: 0,
-            right: 0,
-            height: "1px",
-            backgroundColor: "var(--border)"
-          }}
-        />
-      )}
+        }}
+      />
       
-      {/* PROJECT FRAME INNER DIVIDER: Vertical separator between content and section headers */}
-      {hasInitialLoaded ? (
-        <div
-          className="border-inner-vertical"
-          style={{
-            position: "absolute",
-            right: "276px",
-            top: "0",
-            height: "100%",
-            width: "1px",
-            backgroundColor: "var(--border)",
-            zIndex: 1
-          }}
-        />
-      ) : (
-        <motion.div
-          className="border-inner-vertical"
-          initial={{ scaleY: 0, transformOrigin: "top" }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
-          style={{
-            position: "absolute",
-            right: "276px",
-            top: "0",
-            height: "100%",
-            width: "1px",
-            backgroundColor: "var(--border)",
-            zIndex: 1
-          }}
-        />
-      )}
 
 
     </div>
