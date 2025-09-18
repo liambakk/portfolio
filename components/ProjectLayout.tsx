@@ -454,26 +454,6 @@ const ProjectLayout = ({
                     />
                   )}
                   
-                  {/* DEBUG LABEL: Overview Section Vertical Border */}
-                  {!isTouchDevice && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: 5,
-                        top: 100,
-                        background: "#e74c3c",
-                        color: "white",
-                        padding: "2px 6px",
-                        fontSize: "10px",
-                        fontFamily: "monospace",
-                        borderRadius: "3px",
-                        zIndex: 1000,
-                        whiteSpace: "nowrap"
-                      }}
-                    >
-                      OVERVIEW VERTICAL
-                    </div>
-                  )}
                   <span className="section-label">01.</span>
                   Overview
                 </div>
@@ -544,26 +524,6 @@ const ProjectLayout = ({
                     />
                   )}
                   
-                  {/* DEBUG LABEL: Team Section Vertical Border */}
-                  {!isTouchDevice && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: 5,
-                        top: 150,
-                        background: "#27ae60",
-                        color: "white",
-                        padding: "2px 6px",
-                        fontSize: "10px",
-                        fontFamily: "monospace",
-                        borderRadius: "3px",
-                        zIndex: 1000,
-                        whiteSpace: "nowrap"
-                      }}
-                    >
-                      TEAM VERTICAL
-                    </div>
-                  )}
                   <span className="section-label">02.</span>
                   Team
                 </div>
@@ -631,26 +591,6 @@ const ProjectLayout = ({
                     />
                   )}
                   
-                  {/* DEBUG LABEL: Goals Section Vertical Border */}
-                  {!isTouchDevice && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        right: 5,
-                        top: 200,
-                        background: "#3498db",
-                        color: "white",
-                        padding: "2px 6px",
-                        fontSize: "10px",
-                        fontFamily: "monospace",
-                        borderRadius: "3px",
-                        zIndex: 1000,
-                        whiteSpace: "nowrap"
-                      }}
-                    >
-                      GOALS VERTICAL
-                    </div>
-                  )}
                   <span className="section-label">03.</span>
                   Goals
                 </div>
@@ -724,26 +664,6 @@ const ProjectLayout = ({
                       />
                     )}
                     
-                    {/* DEBUG LABEL: Role & Process Section Vertical Border */}
-                    {!isTouchDevice && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          right: 5,
-                          top: 250 + (index * 30),
-                          background: "#8e44ad",
-                          color: "white",
-                          padding: "2px 6px",
-                          fontSize: "10px",
-                          fontFamily: "monospace",
-                          borderRadius: "3px",
-                          zIndex: 1000,
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        {role.title.toUpperCase()} VERTICAL
-                      </div>
-                    )}
                     <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
                     {role.title}
                   </div>
