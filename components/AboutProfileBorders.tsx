@@ -47,24 +47,6 @@ const AboutProfileBorders: React.FC<AboutProfileBordersProps> = ({ hasInitialLoa
             }}
           />
         )}
-        {/* Debug label for ABOUT VIEWPORT LEFT BORDER */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 'calc(-50vw + 10px)',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            color: 'red',
-            fontSize: '12px',
-            fontWeight: 'bold',
-            background: 'white',
-            padding: '2px 4px',
-            zIndex: 20,
-            whiteSpace: 'nowrap'
-          }}
-        >
-          VIEWPORT LEFT
-        </div>
       </>
     </>
   );

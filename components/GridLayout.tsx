@@ -114,26 +114,6 @@ const GridLayout = () => {
               pointerEvents: 'none'
             }}
           />
-          {/* Debug label for GLOBAL HEADER BORDER */}
-          {activeTab === 'about' && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '85px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                color: 'red',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                background: 'white',
-                padding: '2px 4px',
-                zIndex: 20,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              GLOBAL HEADER
-            </div>
-          )}
         </>
       )}
 
@@ -189,24 +169,6 @@ const GridLayout = () => {
                 }}
               />
             )}
-            {/* Debug label for WORK SECTION VERTICAL BORDER */}
-            <div
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'red',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                background: 'white',
-                padding: '2px 4px',
-                zIndex: 20,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              WORK VERTICAL RIGHT
-            </div>
           </>
         </motion.div>
       )}
@@ -259,24 +221,6 @@ const GridLayout = () => {
               pointerEvents: 'none'
             }}
           />
-          {/* Debug label for ABOUT/CONTACT RIGHT BORDER */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 'calc(152px + 162px)',
-              right: '40px',
-              transform: 'translateY(-50%)',
-              color: 'red',
-              fontSize: '12px',
-              fontWeight: 'bold',
-              background: 'white',
-              padding: '2px 4px',
-              zIndex: 20,
-              whiteSpace: 'nowrap'
-            }}
-          >
-            {activeTab.toUpperCase()} RIGHT BORDER
-          </div>
         </>
       )}
 
@@ -316,25 +260,6 @@ const GridLayout = () => {
                   background: 'var(--border)'
                 }}
               />
-              {/* Debug label for COPYRIGHT LEFT BORDER */}
-              {activeTab === 'about' && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50px',
-                    color: 'red',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    background: 'white',
-                    padding: '2px 4px',
-                    zIndex: 20,
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  COPYRIGHT LEFT
-                </div>
-              )}
             </>
           )}
         </motion.div>
@@ -812,7 +737,7 @@ const GridLayout = () => {
                       position: 'absolute',
                       bottom: 0,
                       left: '0', // Start from the left case border position
-                      width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
+                      width: 'calc(100vw - 877.5px)', // Extend to vertical border at right: 30px
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 0
@@ -821,7 +746,7 @@ const GridLayout = () => {
                 ) : (
                   <motion.div
                     initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
+                    animate={{ scaleX: 1, width: 'calc(100vw - 877.5px)' }}
                     transition={{
                       duration: 0.6,
                       ease: "easeOut",
@@ -831,7 +756,7 @@ const GridLayout = () => {
                       position: 'absolute',
                       bottom: 0,
                       left: '0', // Start from the left case border position
-                      width: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Extend to vertical border at right: 30px
+                      width: 'calc(100vw - 877.5px)', // Extend to vertical border at right: 30px
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 0,
@@ -839,32 +764,6 @@ const GridLayout = () => {
                     }}
                   />
                 )}
-                
-                {/* DEBUG MARKER: Work section vertical border intersection with horizontal line */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: -5,
-                    left: 'calc(100vw - 50% - 20px - 20px - min(82%, 1200px) - 30px)', // Right edge of horizontal line where it should meet vertical border
-                    width: '3px',
-                    height: '10px',
-                    background: '#ffff00', // Yellow marker for vertical border intersection
-                    zIndex: 15
-                  }}
-                />
-                
-                {/* DEBUG MARKER: Work section main vertical border intersection */}
-                <div
-                  style={{
-                    position: 'fixed', // Use fixed positioning to align with viewport edge
-                    bottom: 'calc(100vh - 152px - 403px - 5px)', // Position at bottom of work vertical border
-                    right: '30px', // Same position as work section vertical border
-                    width: '3px',
-                    height: '10px',
-                    background: '#ff8000', // Orange marker for work section vertical border
-                    zIndex: 15
-                  }}
-                />
                 
                 {/* WORK SECTION CASE LIST LEFT BORDER: Left edge of case studies container
                     - Creates left boundary for the work cases list

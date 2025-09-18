@@ -46,23 +46,6 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               }}
             />
           )}
-          {/* Debug label for ABOUT CONTENT LEFT BORDER */}
-          <div
-            style={{
-              position: 'absolute',
-              left: '10px',
-              top: '50px',
-              color: 'red',
-              fontSize: '12px',
-              fontWeight: 'bold',
-              background: 'white',
-              padding: '2px 4px',
-              zIndex: 20,
-              whiteSpace: 'nowrap'
-            }}
-          >
-            ABOUT CONTENT LEFT
-          </div>
         </>
       )}
       
@@ -101,23 +84,6 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               }}
             />
           )}
-          {/* Debug label for ABOUT CONTENT RIGHT BORDER */}
-          <div
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '50px',
-              color: 'red',
-              fontSize: '12px',
-              fontWeight: 'bold',
-              background: 'white',
-              padding: '2px 4px',
-              zIndex: 20,
-              whiteSpace: 'nowrap'
-            }}
-          >
-            ABOUT CONTENT RIGHT
-          </div>
         </>
       )}
       
@@ -133,7 +99,7 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               position: 'absolute',
               left: 0,
               bottom: 0,
-              width: 'calc(100% + 50vw)',
+              width: 'calc(100vw - 877.5px)',
               height: '1px',
               background: 'var(--border)',
               zIndex: 0
@@ -142,7 +108,7 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
         ) : (
           <motion.div
             initial={{ width: '0%' }}
-            animate={{ width: 'calc(100% + 50vw)' }}
+            animate={{ width: 'calc(100vw - 877.5px)' }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
             style={{
               position: 'absolute',
@@ -154,24 +120,6 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
             }}
           />
         )}
-        {/* Debug label for ABOUT CONTENT BOTTOM BORDER */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            bottom: '10px',
-            transform: 'translateX(-50%)',
-            color: 'red',
-            fontSize: '12px',
-            fontWeight: 'bold',
-            background: 'white',
-            padding: '2px 4px',
-            zIndex: 20,
-            whiteSpace: 'nowrap'
-          }}
-        >
-          ABOUT CONTENT BOTTOM
-        </div>
       </>
     </>
   );
