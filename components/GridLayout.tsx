@@ -136,34 +136,19 @@ const GridLayout = () => {
               - Extends vertically down from content separator
               - Animated top-to-bottom on work tab activation
               - Creates right boundary for case studies list */}
-          <>
-            {hasInitialLoaded ? (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: '1px',
-                  height: '100%',
-                  background: '#ffffff'
-                }}
-              />
-            ) : (
-              <motion.div
-                initial={{ scaleY: 0, transformOrigin: 'top' }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: '1px',
-                  height: '100%',
-                  background: '#ffffff'
-                }}
-              />
-            )}
-          </>
+          <motion.div
+            initial={{ scaleY: 0, transformOrigin: 'top' }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '1px',
+              height: '100%',
+              background: '#ffffff'
+            }}
+          />
         </motion.div>
       )}
 
@@ -201,6 +186,7 @@ const GridLayout = () => {
       {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
         <>
           <motion.div
+            key={`about-contact-border-${activeTab}`}
             initial={{ scaleY: 0, transformOrigin: 'top' }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -524,19 +510,7 @@ const GridLayout = () => {
                     - Positioned at right edge of cases container (right: 0)
                     - Animated top-to-bottom with 0.55s delay
                     - Only visible in WORK section */}
-                {!isMobile && (hasInitialLoaded ? (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      width: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0
-                    }}
-                  />
-                ) : (
+                {!isMobile && (
                   <motion.div
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
@@ -551,7 +525,7 @@ const GridLayout = () => {
                       zIndex: 0
                     }}
                   />
-                ))}
+                )}
                 
                 {/* Social Buttons attached to right border */}
                 <SocialButtons section="work" isMobile={isMobile} />
@@ -624,17 +598,27 @@ const GridLayout = () => {
                           - Animated left-to-right with staggered delay (0.65s + index * 0.1s)
                           - Not rendered after the last item */}
                       {!isLastItem && (hasInitialLoaded ? (
-                        <div
+                        <motion.div
+                          key={`work-divider-${index}-${activeTab}`}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{
+                            duration: 0.6,
+                            ease: "easeOut",
+                            delay: 0.65 + (index * 0.1)
+                          }}
                           style={{
                             height: '1px',
                             background: 'var(--border)',
                             width: '100%',
                             position: 'relative',
-                            zIndex: 0
+                            zIndex: 0,
+                            transformOrigin: '0% 50%'
                           }}
                         />
                       ) : (
                         <motion.div
+                          key={`work-divider-initial-${index}-${activeTab}`}
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
                           transition={{
@@ -662,17 +646,27 @@ const GridLayout = () => {
                     - Animated left-to-right on initial load (1.05s delay)
                     - Creates visual separation between case studies and additional content */}
                 {hasInitialLoaded ? (
-                  <div
+                  <motion.div
+                    key={`work-final-divider-${activeTab}`}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 1.05
+                    }}
                     style={{
                       height: '1px',
                       background: 'var(--border)',
                       width: '100%',
                       position: 'relative',
-                      zIndex: 0
+                      zIndex: 0,
+                      transformOrigin: '0% 50%'
                     }}
                   />
                 ) : (
                   <motion.div
+                    key={`work-final-divider-initial-${activeTab}`}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{
@@ -730,7 +724,15 @@ const GridLayout = () => {
                     - Animated left-to-right on initial load (1.1s delay, after More button)
                     - Only visible in WORK section */}
                 {hasInitialLoaded ? (
-                  <div
+                  <motion.div
+                    key={`work-bottom-border-${activeTab}`}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 1.1
+                    }}
                     style={{
                       position: 'absolute',
                       bottom: 0,
@@ -738,11 +740,13 @@ const GridLayout = () => {
                       width: 'calc(100vw - 877.5px)', // Extend to vertical border at right: 30px
                       height: '1px',
                       background: 'var(--border)',
-                      zIndex: 0
+                      zIndex: 0,
+                      transformOrigin: '0% 50%'
                     }}
                   />
                 ) : (
                   <motion.div
+                    key={`work-bottom-border-initial-${activeTab}`}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1, width: 'calc(100vw - 877.5px)' }}
                     transition={{
@@ -770,38 +774,21 @@ const GridLayout = () => {
                     - Animated top-to-bottom on initial load (0.5s delay)
                     - Only visible in WORK section */}
                 {!isMobile && activeTab === 'work' && (
-                  <>
-                    {hasInitialLoaded ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: '99.5%',
-                          background: 'var(--border)',
-                          pointerEvents: 'none',
-                          zIndex: 0
-                        }}
-                      />
-                    ) : (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                        style={{
-                          position: 'absolute',
-                          left: '0',
-                          top: '0',
-                          width: '1px',
-                          height: '99.5%',
-                          background: 'var(--border)',
-                          pointerEvents: 'none',
-                          zIndex: 0
-                        }}
-                      />
-                    )}
-                  </>
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      left: '0',
+                      top: '0',
+                      width: '1px',
+                      height: '99.5%',
+                      background: 'var(--border)',
+                      pointerEvents: 'none',
+                      zIndex: 0
+                    }}
+                  />
                 )}
               </div>
               
