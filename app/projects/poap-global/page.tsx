@@ -48,8 +48,7 @@ export default function PoapGlobalProject() {
           { description: "Collectible Aesthetics - Each digital stamp features unique, artistic representations of landmarks and locations" },
           { description: "Seamless Verification - Location check-ins use intuitive, frictionless verification methods" },
           { description: "Social Discovery - Community features that inspire exploration through shared experiences" }
-        ],
-        images: ["/collectible.png", "/passport.png", "/featured.png"]
+        ]
       },
       {
         title: "Design System",

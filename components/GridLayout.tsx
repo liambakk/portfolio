@@ -236,7 +236,6 @@ const GridLayout = () => {
         />
       )}
 
-
       {/* ABOUT/CONTACT RIGHT BORDER: Vertical border separating content from social links
           - Only visible on ABOUT and CONTACT sections
           - Positioned at right viewport edge (30px from right)
@@ -280,6 +279,8 @@ const GridLayout = () => {
           </div>
         </>
       )}
+
+
 
 
 

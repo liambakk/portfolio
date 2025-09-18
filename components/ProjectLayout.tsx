@@ -743,7 +743,10 @@ const ProjectLayout = ({
                         gap: "20px",
                         padding: "20px 0",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        maxWidth: "100%",
+                        overflow: "hidden"
                       }}>
                         {role.images.map((image, imgIndex) => (
                           <OptimizedImage 
@@ -756,8 +759,11 @@ const ProjectLayout = ({
                             sizes="(max-width: 768px) 100vw, 450px"
                             priority={index === 0}
                             style={{
-                              width: '100%',
-                              height: 'auto'
+                              width: 'auto',
+                              height: 'auto',
+                              maxWidth: '120px',
+                              maxHeight: '200px',
+                              objectFit: 'contain'
                             }}
                           />
                         ))}
