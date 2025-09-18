@@ -54,7 +54,7 @@ const Contact: React.FC<ContactProps> = ({ initialHasLoaded = false }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
           >
-            hello@example.com
+            liam@bakk3r.com
           </motion.p>
           <motion.p
             className="mt-2"
@@ -62,7 +62,7 @@ const Contact: React.FC<ContactProps> = ({ initialHasLoaded = false }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
           >
-            Based in Your City
+            Based in London, Availible Globally
           </motion.p>
         </div>
       </div>

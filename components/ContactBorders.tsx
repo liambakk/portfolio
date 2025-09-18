@@ -11,20 +11,6 @@ interface ContactBordersProps {
 const ContactBorders: React.FC<ContactBordersProps> = ({ hasInitialLoaded, isMobile }) => {
   return (
     <>
-      {/* Mobile horizontal border under section title */}
-      {isMobile && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-44px',
-            left: 0,
-            right: 0,
-            height: '1px',
-            background: 'var(--border)',
-            zIndex: 0
-          }}
-        />
-      )}
       
       {/* CONTACT CONTENT BORDERS: Combined outline of contact information box
           - Creates left, right, and bottom borders in a single div

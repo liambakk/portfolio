@@ -91,37 +91,40 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
           - Positioned at bottom of content box (bottom: 0)
           - Spans full width of content area (width: 100%)
           - Creates bottom edge of the about text container
-          - Static on subsequent loads, animated left-to-right on initial load (0.9s delay) */}
-      <>
-        {hasInitialLoaded ? (
-          <div
-            style={{
-              position: 'absolute',
-              left: '0px',
-              right: '-385px',
-              bottom: 0,
-              height: '1px',
-              background: 'var(--border)',
-              zIndex: 0
-            }}
-          />
-        ) : (
-          <motion.div
-            initial={{ scaleX: 0, transformOrigin: 'left' }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
-            style={{
-              position: 'absolute',
-              left: '0px',
-              right: '-385px',
-              bottom: 0,
-              height: '1px',
-              background: 'var(--border)',
-              zIndex: 0
-            }}
-          />
-        )}
-      </>
+          - Static on subsequent loads, animated left-to-right on initial load (0.9s delay)
+          - Hidden on mobile */}
+      {!isMobile && (
+        <>
+          {hasInitialLoaded ? (
+            <div
+              style={{
+                position: 'absolute',
+                left: '0px',
+                right: '-385px',
+                bottom: 0,
+                height: '1px',
+                background: 'var(--border)',
+                zIndex: 0
+              }}
+            />
+          ) : (
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
+              style={{
+                position: 'absolute',
+                left: '0px',
+                right: '-385px',
+                bottom: 0,
+                height: '1px',
+                background: 'var(--border)',
+                zIndex: 0
+              }}
+            />
+          )}
+        </>
+      )}
     </>
   );
 };

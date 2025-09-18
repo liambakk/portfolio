@@ -722,8 +722,8 @@ const GridLayout = () => {
                     - Extends from cases container to connect with the right vertical border
                     - Positioned absolutely to span from cases-inner left edge to viewport right edge (30px margin)
                     - Animated left-to-right on initial load (1.1s delay, after More button)
-                    - Only visible in WORK section */}
-                {hasInitialLoaded ? (
+                    - Only visible in WORK section and desktop views */}
+                {!isMobile && hasInitialLoaded ? (
                   <motion.div
                     key={`work-bottom-border-${activeTab}`}
                     initial={{ scaleX: 0 }}
@@ -744,7 +744,7 @@ const GridLayout = () => {
                       transformOrigin: '0% 50%'
                     }}
                   />
-                ) : (
+                ) : !isMobile && (
                   <motion.div
                     key={`work-bottom-border-initial-${activeTab}`}
                     initial={{ scaleX: 0 }}

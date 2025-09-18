@@ -63,7 +63,7 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
             >
-              Product designer with over 7 years of experience focused on developing and maintaining design systems.
+              Designer and developer who finds satisfaction in solving everyday problems through thoughtful digital experiences. I'm driven by the belief that technology should feel intuitive and purposeful, not overwhelming or complicated.
             </motion.p>
             <motion.p
               className="mt-4"
@@ -71,7 +71,7 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
             >
-              Currently working as a Design System Expert, creating scalable and consistent design solutions.
+              I've learned that building great products isn't just about the tech—it's about understanding people, iterating quickly, and staying resilient through the inevitable challenges that come with bringing new ideas to life.
             </motion.p>
           </div>
           

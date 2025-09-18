@@ -5,7 +5,7 @@ import { FaLinkedin, FaXTwitter, FaGithub } from "react-icons/fa6";
 
 const MobileFooter = () => {
   const socialLinks = [
-    { icon: FaXTwitter, href: "https://x.com", label: "X" },
+    { icon: FaXTwitter, href: "https://x.com/liambakk", label: "X" },
     { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
   ];
