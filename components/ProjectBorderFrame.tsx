@@ -68,6 +68,25 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         }}
       />
       
+      {/* DEBUG LABEL: Left Border */}
+      <div
+        style={{
+          position: "absolute",
+          left: 5,
+          top: 50,
+          background: "#ff6b6b",
+          color: "white",
+          padding: "2px 6px",
+          fontSize: "10px",
+          fontFamily: "monospace",
+          borderRadius: "3px",
+          zIndex: 1000,
+          whiteSpace: "nowrap"
+        }}
+      >
+        LEFT BORDER
+      </div>
+      
       {/* PROJECT FRAME TOP BORDER: Top horizontal border of main content frame */}
       <motion.div
         initial={{ scaleX: 0, transformOrigin: "left" }}
@@ -82,6 +101,26 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
           backgroundColor: "var(--border)"
         }}
       />
+      
+      {/* DEBUG LABEL: Top Border */}
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: 5,
+          transform: "translateX(-50%)",
+          background: "#4ecdc4",
+          color: "white",
+          padding: "2px 6px",
+          fontSize: "10px",
+          fontFamily: "monospace",
+          borderRadius: "3px",
+          zIndex: 1000,
+          whiteSpace: "nowrap"
+        }}
+      >
+        TOP BORDER
+      </div>
       
       {/* VERTICAL LINE 10: Project frame right border
           Primary structural right boundary of the project content frame.
@@ -102,6 +141,25 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
         }}
       />
       
+      {/* DEBUG LABEL: Right Border */}
+      <div
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 50,
+          background: "#9b59b6",
+          color: "white",
+          padding: "2px 6px",
+          fontSize: "10px",
+          fontFamily: "monospace",
+          borderRadius: "3px",
+          zIndex: 1000,
+          whiteSpace: "nowrap"
+        }}
+      >
+        RIGHT BORDER
+      </div>
+      
       {/* PROJECT FRAME BOTTOM BORDER: Bottom horizontal border of main content frame */}
       <motion.div
         initial={{ scaleX: 0, transformOrigin: "left" }}
@@ -116,6 +174,26 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
           backgroundColor: "var(--border)"
         }}
       />
+      
+      {/* DEBUG LABEL: Bottom Border */}
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          bottom: 5,
+          transform: "translateX(-50%)",
+          background: "#f39c12",
+          color: "white",
+          padding: "2px 6px",
+          fontSize: "10px",
+          fontFamily: "monospace",
+          borderRadius: "3px",
+          zIndex: 1000,
+          whiteSpace: "nowrap"
+        }}
+      >
+        BOTTOM BORDER
+      </div>
       
 
 

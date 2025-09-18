@@ -3,8 +3,6 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaLinkedin } from "react-icons/fa";
-import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import Image from "next/image";
@@ -12,6 +10,7 @@ import OptimizedImage from "./OptimizedImage";
 import { ProjectData } from "@/types/project";
 import ProjectBorderFrame from "./ProjectBorderFrame";
 import { useNavigation } from "./ClientWrapper";
+import SocialButtons from "./SocialButtons";
 
 type ProjectLayoutProps = ProjectData;
 
@@ -28,10 +27,8 @@ const ProjectLayout = ({
   const [activeTab, setActiveTab] = useState("overview");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
-  const [socialIsSticky, setSocialIsSticky] = useState(false);
   // Initialize touch device detection properly
   const [isTouchDevice, setIsTouchDevice] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -40,13 +37,6 @@ const ProjectLayout = ({
     return false;
   });
   const router = useRouter();
-  const socialRef = useRef<HTMLDivElement>(null);
-
-  const socialLinks = [
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
-    { icon: FaXTwitter, href: "https://x.com", label: "X" },
-  ];
 
   useEffect(() => {
     // Re-check on mount and resize
@@ -114,38 +104,9 @@ const ProjectLayout = ({
     });
 
     // Scroll detection for sticky social buttons
-    let scrollTimeout: NodeJS.Timeout;
-    const handleScroll = () => {
-      // Clear the timeout to debounce the scroll handler
-      clearTimeout(scrollTimeout);
-      
-      scrollTimeout = setTimeout(() => {
-        // Only handle sticky behavior on desktop
-        if (!isTouchDevice && window.innerWidth > 1024 && socialRef.current) {
-          const rect = socialRef.current.getBoundingClientRect();
-          // Make social buttons sticky when they're about to scroll out of viewport
-          // Stick when top edge is 20px or less from viewport top
-          setSocialIsSticky(rect.top <= 20);
-        }
-      }, 10); // Small debounce for performance
-    };
-
-    // Add scroll listener only on desktop
-    // Need to listen to the scrollable container, not window
-    const scrollableElement = document.querySelector('.project-scrollable-content');
-    if (!isTouchDevice && window.innerWidth > 1024 && scrollableElement) {
-      scrollableElement.addEventListener('scroll', handleScroll);
-      // Check initial scroll position
-      handleScroll();
-    }
-
     return () => {
       window.removeEventListener('resize', checkTouchDevice);
-      if (scrollableElement) {
-        scrollableElement.removeEventListener('scroll', handleScroll);
-      }
       clearTimeout(timer);
-      clearTimeout(scrollTimeout);
     };
   }, [previewImage, roleProcess, isTouchDevice]);
 
@@ -175,36 +136,6 @@ const ProjectLayout = ({
     <div className="project-page-container">
         <CustomCursor />
         
-        {/* Fixed Social Links - Outside scrollable area */}
-        <div ref={socialRef} className={`project-right-sidebar-fixed ${socialIsSticky ? 'project-right-sidebar-sticky' : ''}`}>
-          <div className="social-links">
-            {socialLinks.map((social, index) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                aria-label={social.label}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.6,
-                  ease: "easeOut",
-                  delay: 0.7 + (index * 0.1)
-                }}
-                onMouseEnter={() => setHoveredSocial(social.label)}
-                onMouseLeave={() => setHoveredSocial(null)}
-                style={{
-                  color: hoveredSocial === social.label ? 'var(--foreground)' : 'inherit',
-                  transition: 'color 0.2s'
-                }}
-              >
-                <span className="social-text">{social.label}</span>
-              </motion.a>
-            ))}
-          </div>
-        </div>
       
       {/* Scrollable Content Wrapper */}
       <div className="project-scrollable-content">
@@ -425,6 +356,7 @@ const ProjectLayout = ({
           <div className="project-content-wrapper">
             {/* PROJECT CONTENT FRAME: Unified border system wrapping all project sections */}
             <ProjectBorderFrame />
+            
             <div className="project-section">
               <div className="project-title-border-wrapper">
                 <motion.h1 
@@ -521,11 +453,35 @@ const ProjectLayout = ({
                       }}
                     />
                   )}
+                  
+                  {/* DEBUG LABEL: Overview Section Vertical Border */}
+                  {!isTouchDevice && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: 5,
+                        top: 100,
+                        background: "#e74c3c",
+                        color: "white",
+                        padding: "2px 6px",
+                        fontSize: "10px",
+                        fontFamily: "monospace",
+                        borderRadius: "3px",
+                        zIndex: 1000,
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      OVERVIEW VERTICAL
+                    </div>
+                  )}
                   <span className="section-label">01.</span>
                   Overview
                 </div>
                 <div className="section-content">
                   {overview.description}
+                  
+                  {/* Social Buttons positioned relative to Overview vertical border */}
+                  <SocialButtons section="project" isMobile={isTouchDevice} />
                 </div>
               </div>
 
@@ -586,6 +542,27 @@ const ProjectLayout = ({
                         zIndex: 1
                       }}
                     />
+                  )}
+                  
+                  {/* DEBUG LABEL: Team Section Vertical Border */}
+                  {!isTouchDevice && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: 5,
+                        top: 150,
+                        background: "#27ae60",
+                        color: "white",
+                        padding: "2px 6px",
+                        fontSize: "10px",
+                        fontFamily: "monospace",
+                        borderRadius: "3px",
+                        zIndex: 1000,
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      TEAM VERTICAL
+                    </div>
                   )}
                   <span className="section-label">02.</span>
                   Team
@@ -652,6 +629,27 @@ const ProjectLayout = ({
                         zIndex: 1
                       }}
                     />
+                  )}
+                  
+                  {/* DEBUG LABEL: Goals Section Vertical Border */}
+                  {!isTouchDevice && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: 5,
+                        top: 200,
+                        background: "#3498db",
+                        color: "white",
+                        padding: "2px 6px",
+                        fontSize: "10px",
+                        fontFamily: "monospace",
+                        borderRadius: "3px",
+                        zIndex: 1000,
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      GOALS VERTICAL
+                    </div>
                   )}
                   <span className="section-label">03.</span>
                   Goals
@@ -724,6 +722,27 @@ const ProjectLayout = ({
                           zIndex: 1
                         }}
                       />
+                    )}
+                    
+                    {/* DEBUG LABEL: Role & Process Section Vertical Border */}
+                    {!isTouchDevice && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          right: 5,
+                          top: 250 + (index * 30),
+                          background: "#8e44ad",
+                          color: "white",
+                          padding: "2px 6px",
+                          fontSize: "10px",
+                          fontFamily: "monospace",
+                          borderRadius: "3px",
+                          zIndex: 1000,
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        {role.title.toUpperCase()} VERTICAL
+                      </div>
                     )}
                     <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
                     {role.title}

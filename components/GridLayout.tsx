@@ -3,14 +3,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaLinkedin } from "react-icons/fa";
-import { FaXTwitter, FaGithub } from "react-icons/fa6";
 import Image from "next/image";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
 import { useNavigation } from "./ClientWrapper";
 import About from "./About";
 import Contact from "./Contact";
+import SocialButtons from "./SocialButtons";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
@@ -20,7 +19,6 @@ const GridLayout = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
   const [isMobile, setIsMobile] = useState(false);
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
@@ -74,6 +72,7 @@ const GridLayout = () => {
     };
   }, []);
 
+
   const { triggerTransition } = useNavigation();
 
   const handleProjectClick = (slug: string) => {
@@ -82,11 +81,6 @@ const GridLayout = () => {
     });
   };
 
-  const socialLinks = [
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
-    { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
-    { icon: FaXTwitter, href: "https://x.com", label: "X" },
-  ];
 
   return (
     <div className="grid-container">
@@ -558,6 +552,10 @@ const GridLayout = () => {
                     }}
                   />
                 ))}
+                
+                {/* Social Buttons attached to right border */}
+                <SocialButtons section="work" isMobile={isMobile} />
+                
                 <motion.div
                   className="cases-fill"
                   ref={fillRef}
@@ -817,48 +815,6 @@ const GridLayout = () => {
       </div>
 
 
-      {/* Right Sidebar - Social Links */}
-      {!isMobile && (
-        <div className="grid-right-sidebar-fixed">
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            paddingLeft: '20px',
-            paddingTop: '30px'
-          }}
-        >
-          {socialLinks.map((social, index) => (
-            <motion.a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.6,
-                ease: "easeOut",
-                delay: 0.7 + (index * 0.1)
-              }}
-              onMouseEnter={() => setHoveredSocial(social.label)}
-              onMouseLeave={() => setHoveredSocial(null)}
-              style={{
-                color: hoveredSocial === social.label ? 'var(--foreground)' : '#ffffff',
-                textDecoration: 'none',
-                fontSize: '13px',
-                transition: 'color 0.2s',
-                fontWeight: 400
-              }}
-            >
-              {social.label}
-            </motion.a>
-          ))}
-        </div>
-        </div>
-      )}
 
       {/* Bottom Bar */}
       <div className="bottom-bar">

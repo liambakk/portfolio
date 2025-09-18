@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import AboutBorders from "./AboutBorders";
 import AboutProfileBorders from "./AboutProfileBorders";
+import SocialButtons from "./SocialButtons";
 
 interface AboutProps {
   initialHasLoaded?: boolean;
@@ -53,6 +54,10 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
             } : {}}
           >
             <AboutBorders hasInitialLoaded={false} isMobile={isMobile} />
+            
+            {/* Social Buttons attached to right border */}
+            <SocialButtons section="about" isMobile={isMobile} />
+            
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

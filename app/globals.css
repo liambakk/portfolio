@@ -172,25 +172,6 @@ body {
   position: relative;
 }
 
-.project-right-sidebar-fixed {
-  position: absolute;
-  right: 180px; /* Moved further left from 130px */
-  top: 145px; /* Precisely aligned with title bottom border */
-  width: 180px;
-  display: flex;
-  align-items: flex-start;
-  padding-left: 0;
-  justify-content: flex-start;
-  z-index: 100;
-  /* No transition on position - can't animate between absolute and fixed */
-}
-
-/* Sticky state - applied when scrolling down */
-.project-right-sidebar-sticky {
-  position: fixed !important;
-  right: 180px !important; /* Maintain same horizontal position when sticky */
-  top: 20px !important; /* Small gap from top when sticky */
-}
 
 /* Grid/Home page social sidebar - aligned with cases-inner right border */
 .grid-right-sidebar-fixed {
@@ -203,6 +184,41 @@ body {
   z-index: 100;
   padding-left: 20px; /* Gap from the border */
 }
+
+
+/* Section-specific social button containers - positioned closer to horizontal line */
+.social-buttons-container {
+  position: absolute;
+  right: -80px; /* Position further left on home screens */
+  top: 0px; /* Position further up on home screens */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 100;
+}
+
+/* Section-specific styling */
+.social-buttons-work {
+  /* Position for work section - inherits positioning from .social-buttons-container */
+  /* Positioned relative to work section's cases-inner right border */
+}
+
+.social-buttons-about {
+  /* Position for about section - inherits positioning from .social-buttons-container */
+  /* Positioned relative to about-content-box right border */
+}
+
+.social-buttons-contact {
+  /* Position for contact section - inherits positioning from .social-buttons-container */
+  /* Positioned relative to contact-content-box right border */
+}
+
+.social-buttons-project {
+  /* Position for project pages - positioned to the right of Overview vertical border */
+  right: -80px; /* Position further left from the Overview vertical border */
+  top: -400px; /* Position much further up relative to section content */
+}
+
 
 /* Top horizontal border now handled in GridLayout component */
 
@@ -550,6 +566,8 @@ body {
 
 /* First section top border now handled by motion.div animation */
 .project-section-bordered:first-child {
+  /* Top border styling handled by motion.div animation in ProjectLayout.tsx */
+  /* No additional CSS needed as border is rendered via motion.div */
 }
 
 /* Borders now handled by ProjectBorderFrame component */
@@ -604,11 +622,6 @@ body {
 
 /* Desktop styles for Relay images - move right on desktop */
 @media screen and (min-width: 1025px) {
-  /* Fixed position for project sidebar on all desktop sizes */
-  .project-right-sidebar-fixed {
-    right: 180px !important; /* Override any responsive values */
-    width: 180px !important; /* Fixed width */
-  }
   
   .relay-images-container {
     padding-left: 100px !important;
@@ -831,10 +844,6 @@ body {
     max-width: clamp(280px, 75vw, 900px);
   }
   
-  .project-right-sidebar-fixed {
-    right: clamp(10px, 5vw, 80px);
-    width: clamp(100px, 10vw, 150px);
-  }
   
   /* Title border positioning handled by BorderSystem */
   
@@ -982,13 +991,6 @@ body {
     margin: 20px;
   }
   
-  .project-right-sidebar-fixed {
-    position: static;
-    width: 100%;
-    padding: 20px;
-    margin-top: 20px;
-    border-top: 1px solid var(--border);
-  }
   
   .social-links {
     flex-direction: row;
@@ -1250,8 +1252,8 @@ body {
   }
   
   /* Hide desktop social links on mobile */
-  .project-right-sidebar-fixed,
-  .grid-right-sidebar-fixed {
+  .grid-right-sidebar-fixed,
+  .social-buttons-container {
     display: none;
   }
 }

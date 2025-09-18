@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ContactBorders from "./ContactBorders";
+import SocialButtons from "./SocialButtons";
 
 interface ContactProps {
   initialHasLoaded?: boolean;
@@ -44,6 +45,9 @@ const Contact: React.FC<ContactProps> = ({ initialHasLoaded = false }) => {
           } : {}}
         >
           <ContactBorders hasInitialLoaded={false} isMobile={isMobile} />
+          
+          {/* Social Buttons attached to right border */}
+          <SocialButtons section="contact" isMobile={isMobile} />
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
