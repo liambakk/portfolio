@@ -190,7 +190,7 @@ body {
 .social-buttons-container {
   position: absolute;
   right: -80px; /* Position further left on home screens */
-  top: 0px; /* Position further up on home screens */
+  top: -10px; /* Position further up on home screens */
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

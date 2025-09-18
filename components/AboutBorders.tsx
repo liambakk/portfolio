@@ -97,9 +97,9 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
           <div
             style={{
               position: 'absolute',
-              left: 0,
+              left: '0px',
+              right: '-385px',
               bottom: 0,
-              width: 'calc(100vw - 877.5px)',
               height: '1px',
               background: 'var(--border)',
               zIndex: 0
@@ -107,12 +107,13 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
           />
         ) : (
           <motion.div
-            initial={{ width: '0%' }}
-            animate={{ width: 'calc(100vw - 877.5px)' }}
+            initial={{ scaleX: 0, transformOrigin: 'left' }}
+            animate={{ scaleX: 1 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
             style={{
               position: 'absolute',
-              left: 0,
+              left: '0px',
+              right: '-385px',
               bottom: 0,
               height: '1px',
               background: 'var(--border)',
