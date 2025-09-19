@@ -11,6 +11,7 @@
     "optimize-project-images": "node scripts/optimize-project-images.js"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
     "next": "15.5.2",
