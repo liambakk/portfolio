@@ -37,14 +37,14 @@ export default function RelayProject() {
           { description: "Motion-First Interface - Smooth animations and transitions that mirror physical movement" },
           { description: "Community Focus - Visual elements that emphasize connection and shared experiences" }
         ],
-        images: ["/project-images-optimized/relaycolors-md.png", "/project-images-optimized/relaylogo-md.png"],
-        bottomImage: "/project-images-optimized/relayofull-md.png"
+        images: ["/relaycolors.png", "/project-images-optimized/relaylogo-md.png"],
+        bottomImage: "/relayofull.png"
       },
       {
         title: "Design System",
         description: "",
         tasks: [],
-        image: "/project-images-optimized/relaydesign-md.png"
+        image: "/relaydesign.png"
       },
       {
         title: "Contributions",

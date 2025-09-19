@@ -64,14 +64,15 @@ export default function NeuraProject() {
             margin: "1.5rem 0",
             display: "flex",
             justifyContent: "center",
+            alignItems: "flex-start",
             gap: "1rem",
             flexWrap: "wrap"
           }}>
             <Image
               src="/project-images-optimized/neuraext-md.png"
               alt="Neura Browser Extension Interface"
-              width={400}
-              height={300}
+              width={1280}
+              height={747}
               quality={85}
               sizes="(max-width: 768px) 100vw, 48vw"
               style={{
@@ -84,8 +85,8 @@ export default function NeuraProject() {
             <Image
               src="/project-images-optimized/box-md.png"
               alt="Neura Extension Settings"
-              width={400}
-              height={300}
+              width={1280}
+              height={1388}
               quality={85}
               sizes="(max-width: 768px) 100vw, 48vw"
               style={{

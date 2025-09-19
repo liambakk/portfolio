@@ -16,6 +16,12 @@ public/*.gif
 !public/neura.gif
 !public/neurabox.gif
 
+# Allow specific large images needed for projects
+!public/relaycolors.png
+!public/relayofull.png
+!public/relaydesign.png
+!public/poapdesign.png
+
 # Development files not needed for deployment
 node_modules/
 .next/
