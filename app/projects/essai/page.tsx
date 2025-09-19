@@ -22,11 +22,11 @@ export default function EssaiProject() {
     },
     goals: {
       items: [
-        { text: "Out-pace: Turn pitch decks into structured insights in minutes, not hours", image: "/relayfull.png" },
+        { text: "Out-pace: Turn pitch decks into structured insights in minutes, not hours" },
         { text: "Out-think: Find overlooked opportunities by aligning AI with your investment thesis" },
         { text: "Out-maneuver: Save 400+ hours per analyst by automating memo drafting and data entry" },
         { text: "Target €5B of inefficiency in the VC market through intelligent automation" },
-        { text: "Achieve €1.8M revenue with 150+ clients by Year 3" }
+        { text: "Achieve €1.8M revenue with 150+ clients by Year 3", image: "/heuristiclogo.png" }
       ]
     },
     roleProcess: [
@@ -53,7 +53,8 @@ export default function EssaiProject() {
           { description: "Implemented seamless integration with existing VC CRM workflows" },
           { description: "Created differentiated pricing model: Basic, Pro, and Enterprise tiers" },
           { description: "Positioned premium offering with superior ROI vs generic tools" }
-        ]
+        ],
+        bottomImage: "/companalysis.png"
       },
       {
         title: "Business Development & Go-to-Market",

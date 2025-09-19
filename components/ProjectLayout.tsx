@@ -622,13 +622,13 @@ const ProjectLayout = ({
                 <div className="section-content">
                   <ul className="goals-list">
                     {goals.items.map((goal, index) => (
-                      <li key={index}>
-                        {goal.text}
+                      <li key={index} style={{ display: "flex", flexDirection: "column" }}>
+                        <span>{goal.text}</span>
                         {(goal.image || goal.images) && (
                           <div className="goal-image-container" style={{
                             marginTop: "20px",
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "flex-start",
                             alignItems: "center",
                             gap: "20px",
                             flexWrap: "wrap"
@@ -832,14 +832,15 @@ const ProjectLayout = ({
                         <OptimizedImage 
                           src={role.bottomImage} 
                           alt={`${role.title} logo`}
-                          width={938}
-                          height={300}
+                          width={500}
+                          height={200}
                           quality={85}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 938px"
+                          sizes="(max-width: 768px) 80vw, (max-width: 1200px) 60vw, 500px"
                           useOptimized={false}
                           style={{
                             width: '100%',
-                            height: 'auto'
+                            height: 'auto',
+                            maxWidth: '500px'
                           }}
                         />
                       </div>
