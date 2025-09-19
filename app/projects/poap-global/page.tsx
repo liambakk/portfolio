@@ -38,7 +38,8 @@ export default function PoapGlobalProject() {
           { description: "Check in to receive your unique digital collectible" },
           { description: "View all collected stamps in your digital passport" },
           { description: "Compete on leaderboards and discover trending destinations" }
-        ]
+        ],
+        image: "/poapflow.png"
       },
       {
         title: "Design Principles",
@@ -49,7 +50,7 @@ export default function PoapGlobalProject() {
           { description: "Seamless Verification - Location check-ins use intuitive, frictionless verification methods" },
           { description: "Social Discovery - Community features that inspire exploration through shared experiences" }
         ],
-        images: ["/featured.png", "/collectible.png"]
+        images: ["/collectible.png", "/featured.png"]
       },
       {
         title: "Design System",

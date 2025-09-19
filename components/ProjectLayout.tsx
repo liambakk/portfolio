@@ -651,11 +651,11 @@ const ProjectLayout = ({
                               />
                             )}
                             {goal.images && goal.images.map((img, imgIndex) => {
-                              // Make record.png (first image) slightly larger
+                              // Make record.png wider to match post.png height
                               const isRecordImage = img.includes('record.png');
-                              const imageWidth = isRecordImage ? 325 : 250;
-                              const imageMaxWidth = isRecordImage ? "325px" : "250px";
-                              const imageSizes = isRecordImage ? "(max-width: 768px) 65vw, 325px" : "(max-width: 768px) 50vw, 250px";
+                              const imageWidth = isRecordImage ? 450 : 150;
+                              const imageMaxWidth = isRecordImage ? "450px" : "150px";
+                              const imageSizes = isRecordImage ? "(max-width: 768px) 80vw, 450px" : "(max-width: 768px) 30vw, 150px";
                               
                               return (
                                 <OptimizedImage 
@@ -666,6 +666,7 @@ const ProjectLayout = ({
                                   height={200}
                                   quality={85}
                                   sizes={imageSizes}
+                                  useOptimized={false}
                                   style={{
                                     borderRadius: "8px",
                                     maxWidth: imageMaxWidth,
@@ -767,34 +768,42 @@ const ProjectLayout = ({
                     {role.images && role.images.length > 0 && (
                       <div className="relay-images-container role-image-container" style={{
                         display: "flex",
-                        gap: "20px",
+                        flexDirection: isTouchDevice ? "row" : "column",
+                        gap: isTouchDevice ? "60px" : "30px",
                         padding: "20px 0",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexWrap: "wrap",
+                        justifyContent: isTouchDevice ? "center" : "flex-start",
+                        alignItems: isTouchDevice ? "center" : "flex-start",
                         maxWidth: "100%",
-                        overflow: "hidden"
+                        overflow: "visible"
                       }}>
                         {role.images.map((image, imgIndex) => {
                           // Move relayfull.png further to the right
                           const isRelayFullImage = image.includes('relayfull.png');
+                          // Make featured.png much smaller, but larger on mobile
+                          const isFeaturedImage = image.includes('featured.png');
+                          const imageWidth = isFeaturedImage ? (isTouchDevice ? 160 : 120) : (isTouchDevice ? 380 : 180);
+                          const imageMaxWidth = isFeaturedImage ? (isTouchDevice ? '160px' : '120px') : (isTouchDevice ? '380px' : '180px');
+                          const imageSizes = isFeaturedImage ? 
+                            (isTouchDevice ? "(max-width: 768px) 45vw, 160px" : "(max-width: 768px) 30vw, 120px") : 
+                            (isTouchDevice ? "(max-width: 768px) 75vw, 380px" : "(max-width: 768px) 40vw, 180px");
+                          
                           return (
                             <OptimizedImage 
                               key={imgIndex}
                               src={image} 
                               alt={`${role.title} image ${imgIndex + 1}`}
-                              width={450}
-                              height={300}
+                              width={imageWidth}
+                              height={isFeaturedImage ? (isTouchDevice ? 200 : 200) : (isTouchDevice ? 300 : 200)}
                               quality={85}
-                              sizes="(max-width: 768px) 100vw, 450px"
+                              sizes={imageSizes}
                               priority={index === 0}
+                              useOptimized={false}
                               style={{
-                                width: 'auto',
+                                borderRadius: "8px",
+                                maxWidth: imageMaxWidth,
                                 height: 'auto',
-                                maxWidth: '120px',
-                                maxHeight: '200px',
                                 objectFit: 'contain',
-                                marginLeft: isRelayFullImage ? '200px' : '0'
+                                marginLeft: '0'
                               }}
                             />
                           );
@@ -811,13 +820,16 @@ const ProjectLayout = ({
                         <OptimizedImage 
                           src={role.image} 
                           alt={`${role.title} design system`}
-                          width={1600}
-                          height={900}
+                          width={role.image.includes('poapflow.png') ? 600 : 1600}
+                          height={role.image.includes('poapflow.png') ? 400 : 900}
                           quality={85}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1600px"
+                          sizes={role.image.includes('poapflow.png') ? 
+                            "(max-width: 768px) 80vw, (max-width: 1200px) 60vw, 600px" : 
+                            "(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1600px"}
                           style={{
                             width: '100%',
-                            height: 'auto'
+                            height: 'auto',
+                            maxWidth: role.image.includes('poapflow.png') ? '600px' : '100%'
                           }}
                         />
                       </div>
