@@ -12,7 +12,7 @@ export default function PoapGlobalProject() {
       description: "POAP Global is a mobile application that transforms travel into a digital collecting experience. The app allows travelers to collect digital stamps by visiting real-world locations, similar to collecting passport stamps but in a digital format."
     },
     team: {
-      description: "When users visit different places around the world, they can \"check in\" using their phone's location services. If the location is verified, they receive a unique digital collectible featuring artwork of that landmark or place. These collectibles are stored in their digital passport within the app.",
+      description: "A multidisciplinary team combining blockchain expertise, design innovation, and community engagement to create an engaging travel experience that leverages location-based technology and digital collectibles.",
       members: [
         { name: "Lucas Chen", role: "Blockchain Developer" },
         { name: "Maria Silva", role: "Product Designer" },

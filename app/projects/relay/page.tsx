@@ -12,6 +12,7 @@ export default function RelayProject() {
       description: "Relay is a mobile app that helps you find compatible workout partners nearby when you want to exercise. Think of it as a social network specifically designed for fitness enthusiasts who want to connect with others for workouts."
     },
     team: {
+      title: "Problem",
       description: "Ever wanted to go for a run, hit the gym, or play a sport but didn't have anyone to join you? Or maybe your usual workout partner cancelled last minute? Relay instantly connects you with people nearby who share your fitness interests, so that you can connect through the shared medium of exercise. Over the past 3 years we have seen the proliferation of exercise clubs of all types- predeminantly running clubs. While these have been great, and responsible for the forming of numerous new relationships, they still lack the intamicy that working out provides- the ability to push each other, and grow together. Relay was created as the platform to enable this, by simplifying the process of finding those who have similar interests, and share the same goals as you do- allowing you to find people to train with, regardless of where you are.",
       members: [
         { name: "James Wilson", role: "System Architect" },
@@ -42,7 +43,7 @@ export default function RelayProject() {
       },
       {
         title: "Design System",
-        description: "",
+        description: "A comprehensive design system built from the ground up to ensure consistency across all touchpoints. The system includes modular components, responsive layouts, and accessibility-first patterns that scale seamlessly from mobile to tablet interfaces. Every element was crafted to balance aesthetic appeal with functional clarity, creating an intuitive experience for users of all fitness levels.",
         tasks: [],
         image: "/relaydesign.png"
       },

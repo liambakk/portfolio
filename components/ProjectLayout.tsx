@@ -538,7 +538,7 @@ const ProjectLayout = ({
                   )}
                   
                   <span className="section-label">02.</span>
-                  Team
+                  {team.title || "Team"}
                 </div>
                 <div className="section-content">
                   {team.description}
@@ -844,15 +844,14 @@ const ProjectLayout = ({
                         <OptimizedImage 
                           src={role.bottomImage} 
                           alt={`${role.title} logo`}
-                          width={500}
-                          height={200}
+                          width={isTouchDevice ? 380 : 180}
+                          height={isTouchDevice ? 300 : 200}
                           quality={85}
-                          sizes="(max-width: 768px) 80vw, (max-width: 1200px) 60vw, 500px"
+                          sizes={isTouchDevice ? "(max-width: 768px) 75vw, 380px" : "(max-width: 768px) 40vw, 180px"}
                           useOptimized={false}
                           style={{
-                            width: '100%',
                             height: 'auto',
-                            maxWidth: '500px'
+                            maxWidth: isTouchDevice ? '380px' : '180px'
                           }}
                         />
                       </div>

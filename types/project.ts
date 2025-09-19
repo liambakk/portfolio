@@ -31,6 +31,7 @@ export interface ProjectData {
     description: string;
   };
   team: {
+    title?: string;
     description: string;
     members?: TeamMember[];
   };

@@ -100,7 +100,7 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               style={{
                 position: 'absolute',
                 left: '0px',
-                right: '-385px',
+                right: '-600px',
                 bottom: 0,
                 height: '1px',
                 background: 'var(--border)',
@@ -115,7 +115,7 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               style={{
                 position: 'absolute',
                 left: '0px',
-                right: '-385px',
+                right: '-600px',
                 bottom: 0,
                 height: '1px',
                 background: 'var(--border)',

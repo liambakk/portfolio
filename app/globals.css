@@ -650,8 +650,8 @@ body {
   }
   
   .relay-logo-container img {
-    width: 938px !important;
-    max-width: none !important;
+    width: 450px !important;
+    max-width: 450px !important;
     height: auto !important;
   }
   
@@ -956,7 +956,7 @@ body {
   }
   
   .relay-logo-container img {
-    width: 300px !important;
+    width: 380px !important;
     height: auto !important;
   }
   
