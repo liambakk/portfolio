@@ -24,7 +24,7 @@ export default function RelayProject() {
         { text: "Broadcast Your Workout - When you're ready to exercise, simply open the app and share what activity you want to do (running, cycling, gym, yoga, etc.)." },
         { text: "Find Compatible Partners - The app shows you nearby users who match your fitness level, schedule, and activity preferences." },
         { text: "Connect Safely - Message potential workout partners, check out verified safe meeting spots, and coordinate your meetup—all within the app." },
-        { text: "Build Your Fitness Community - Over time, you'll discover regular workout partners, join fitness clubs, and build a network of like-minded friends." },
+        { text: "Build Your Fitness Community - Over time, you'll discover regular workout partners, join fitness clubs, and build a network of like-minded friends.", images: ["/record.png", "/post.png"] },
       ]
     },
     roleProcess: [
@@ -37,7 +37,7 @@ export default function RelayProject() {
           { description: "Motion-First Interface - Smooth animations and transitions that mirror physical movement" },
           { description: "Community Focus - Visual elements that emphasize connection and shared experiences" }
         ],
-        images: ["/relaycolors.png", "/project-images-optimized/relaylogo-md.png"],
+        images: ["/relaycolors.png", "/project-images-optimized/relaylogo-md.png", "/relayfull.png"],
         bottomImage: "/relayofull.png"
       },
       {

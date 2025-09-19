@@ -597,15 +597,19 @@ const GridLayout = () => {
                           - Full width (100%) horizontal line
                           - Animated left-to-right with staggered delay (0.65s + index * 0.1s)
                           - Not rendered after the last item */}
-                      {!isLastItem && (hasInitialLoaded ? (
+                      {!isLastItem && (
                         <motion.div
                           key={`work-divider-${index}-${activeTab}`}
                           initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ 
+                            once: true, 
+                            margin: "-100px 0px -100px 0px"
+                          }}
                           transition={{
                             duration: 0.6,
                             ease: "easeOut",
-                            delay: 0.65 + (index * 0.1)
+                            delay: 0.1
                           }}
                           style={{
                             height: '1px',
@@ -616,26 +620,7 @@ const GridLayout = () => {
                             transformOrigin: '0% 50%'
                           }}
                         />
-                      ) : (
-                        <motion.div
-                          key={`work-divider-initial-${index}-${activeTab}`}
-                          initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          transition={{
-                            duration: 0.6,
-                            ease: "easeOut",
-                            delay: 0.65 + (index * 0.1)
-                          }}
-                          style={{
-                            height: '1px',
-                            background: 'var(--border)',
-                            width: '100%',
-                            position: 'relative',
-                            zIndex: 0,
-                            transformOrigin: '0% 50%'
-                          }}
-                        />
-                      ))}
+                      )}
                     </React.Fragment>
                   );
                 })}
@@ -643,47 +628,30 @@ const GridLayout = () => {
                 {/* WORK SECTION FINAL DIVIDER: Horizontal border after last case study item
                     - Positioned after all case study items, before "More" button
                     - Full width (100%) horizontal separator
-                    - Animated left-to-right on initial load (1.05s delay)
+                    - Animated left-to-right when scrolled into view
                     - Creates visual separation between case studies and additional content */}
-                {hasInitialLoaded ? (
-                  <motion.div
-                    key={`work-final-divider-${activeTab}`}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: "easeOut",
-                      delay: 1.05
-                    }}
-                    style={{
-                      height: '1px',
-                      background: 'var(--border)',
-                      width: '100%',
-                      position: 'relative',
-                      zIndex: 0,
-                      transformOrigin: '0% 50%'
-                    }}
-                  />
-                ) : (
-                  <motion.div
-                    key={`work-final-divider-initial-${activeTab}`}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: "easeOut",
-                      delay: 1.05
-                    }}
-                    style={{
-                      height: '1px',
-                      background: 'var(--border)',
-                      width: '100%',
-                      position: 'relative',
-                      zIndex: 0,
-                      transformOrigin: '0% 50%'
-                    }}
-                  />
-                )}
+                <motion.div
+                  key={`work-final-divider-${activeTab}`}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ 
+                    once: true, 
+                    margin: "-100px 0px -100px 0px"
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                    delay: 0.1
+                  }}
+                  style={{
+                    height: '1px',
+                    background: 'var(--border)',
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 0,
+                    transformOrigin: '0% 50%'
+                  }}
+                />
                 
                 {/* More button */}
                 <motion.div
@@ -721,38 +689,21 @@ const GridLayout = () => {
                 {/* WORK SECTION MORE BOTTOM BORDER: Extended horizontal border connecting to vertical border
                     - Extends from cases container to connect with the right vertical border
                     - Positioned absolutely to span from cases-inner left edge to viewport right edge (30px margin)
-                    - Animated left-to-right on initial load (1.1s delay, after More button)
+                    - Animated left-to-right when scrolled into view
                     - Only visible in WORK section and desktop views */}
-                {!isMobile && hasInitialLoaded ? (
+                {!isMobile && (
                   <motion.div
                     key={`work-bottom-border-${activeTab}`}
                     initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ 
+                      once: true, 
+                      margin: "-100px 0px -100px 0px"
+                    }}
                     transition={{
                       duration: 0.6,
                       ease: "easeOut",
-                      delay: 1.1
-                    }}
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: '0', // Start from the left case border position
-                      width: 'calc(100vw - 877.5px)', // Extend to vertical border at right: 30px
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 0,
-                      transformOrigin: '0% 50%'
-                    }}
-                  />
-                ) : !isMobile && (
-                  <motion.div
-                    key={`work-bottom-border-initial-${activeTab}`}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1, width: 'calc(100vw - 877.5px)' }}
-                    transition={{
-                      duration: 0.6,
-                      ease: "easeOut",
-                      delay: 1.1
+                      delay: 0.15
                     }}
                     style={{
                       position: 'absolute',

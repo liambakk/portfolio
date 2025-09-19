@@ -5,6 +5,8 @@ export interface TeamMember {
 
 export interface ProjectGoal {
   text: string;
+  image?: string;
+  images?: string[];
 }
 
 export interface ProcessTask {

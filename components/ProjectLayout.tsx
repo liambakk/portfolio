@@ -418,8 +418,9 @@ const ProjectLayout = ({
                 {isTouchDevice && (
                   <motion.div
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: hasInitialLoaded ? 0 : 0.7 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -471,8 +472,12 @@ const ProjectLayout = ({
                 {!isTouchDevice && (
                   <motion.div
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ 
+                      once: true,
+                      margin: "-150px 0px -150px 0px"
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -488,8 +493,12 @@ const ProjectLayout = ({
                 {isTouchDevice && (
                   <motion.div
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ 
+                      once: true,
+                      margin: "-100px 0px -100px 0px"
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -510,8 +519,12 @@ const ProjectLayout = ({
                   {!isTouchDevice && (
                     <motion.div
                       initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.85 }}
+                      whileInView={{ scaleY: 1 }}
+                      viewport={{ 
+                        once: true,
+                        margin: "-200px 0px -200px 0px"
+                      }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
                       style={{
                         position: 'absolute',
                         top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
@@ -538,8 +551,12 @@ const ProjectLayout = ({
                 {!isTouchDevice && (
                   <motion.div
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ 
+                      once: true,
+                      margin: "-150px 0px -150px 0px"
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -555,8 +572,12 @@ const ProjectLayout = ({
                 {isTouchDevice && (
                   <motion.div
                     initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ 
+                      once: true,
+                      margin: "-100px 0px -100px 0px"
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -577,8 +598,12 @@ const ProjectLayout = ({
                   {!isTouchDevice && (
                     <motion.div
                       initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.95 }}
+                      whileInView={{ scaleY: 1 }}
+                      viewport={{ 
+                        once: true,
+                        margin: "-200px 0px -200px 0px"
+                      }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
                       style={{
                         position: 'absolute',
                         top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
@@ -597,7 +622,61 @@ const ProjectLayout = ({
                 <div className="section-content">
                   <ul className="goals-list">
                     {goals.items.map((goal, index) => (
-                      <li key={index}>{goal.text}</li>
+                      <li key={index}>
+                        {goal.text}
+                        {(goal.image || goal.images) && (
+                          <div className="goal-image-container" style={{
+                            marginTop: "20px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "20px",
+                            flexWrap: "wrap"
+                          }}>
+                            {goal.image && (
+                              <OptimizedImage 
+                                src={goal.image} 
+                                alt={`Goal ${index + 1} illustration`}
+                                width={150}
+                                height={100}
+                                quality={85}
+                                sizes="(max-width: 768px) 30vw, 150px"
+                                useOptimized={false}
+                                style={{
+                                  borderRadius: "8px",
+                                  maxWidth: "150px",
+                                  height: "auto",
+                                  objectFit: "contain"
+                                }}
+                              />
+                            )}
+                            {goal.images && goal.images.map((img, imgIndex) => {
+                              // Make record.png (first image) slightly larger
+                              const isRecordImage = img.includes('record.png');
+                              const imageWidth = isRecordImage ? 325 : 250;
+                              const imageMaxWidth = isRecordImage ? "325px" : "250px";
+                              const imageSizes = isRecordImage ? "(max-width: 768px) 65vw, 325px" : "(max-width: 768px) 50vw, 250px";
+                              
+                              return (
+                                <OptimizedImage 
+                                  key={imgIndex}
+                                  src={img} 
+                                  alt={`Goal ${index + 1} illustration ${imgIndex + 1}`}
+                                  width={imageWidth}
+                                  height={200}
+                                  quality={85}
+                                  sizes={imageSizes}
+                                  style={{
+                                    borderRadius: "8px",
+                                    maxWidth: imageMaxWidth,
+                                    height: "auto"
+                                  }}
+                                />
+                              );
+                            })}
+                          </div>
+                        )}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -610,8 +689,12 @@ const ProjectLayout = ({
                   {!isTouchDevice && (
                     <motion.div
                       initial={{ scaleX: 0, transformOrigin: 'left' }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ 
+                        once: true,
+                        margin: "-150px 0px -150px 0px"
+                      }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                       style={{
                         position: 'absolute',
                         top: 0,
@@ -627,8 +710,9 @@ const ProjectLayout = ({
                   {isTouchDevice && (
                     <motion.div
                       initial={{ scaleX: 0, transformOrigin: 'left' }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 + (index * 0.1) }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
                       style={{
                         position: 'absolute',
                         top: 0,
@@ -650,8 +734,12 @@ const ProjectLayout = ({
                     {!isTouchDevice && (
                       <motion.div
                         initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 1.05 + (index * 0.1) }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ 
+                          once: true,
+                          margin: "-200px 0px -200px 0px"
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
                         style={{
                           position: 'absolute',
                           top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
@@ -687,25 +775,30 @@ const ProjectLayout = ({
                         maxWidth: "100%",
                         overflow: "hidden"
                       }}>
-                        {role.images.map((image, imgIndex) => (
-                          <OptimizedImage 
-                            key={imgIndex}
-                            src={image} 
-                            alt={`${role.title} image ${imgIndex + 1}`}
-                            width={450}
-                            height={300}
-                            quality={85}
-                            sizes="(max-width: 768px) 100vw, 450px"
-                            priority={index === 0}
-                            style={{
-                              width: 'auto',
-                              height: 'auto',
-                              maxWidth: '120px',
-                              maxHeight: '200px',
-                              objectFit: 'contain'
-                            }}
-                          />
-                        ))}
+                        {role.images.map((image, imgIndex) => {
+                          // Move relayfull.png further to the right
+                          const isRelayFullImage = image.includes('relayfull.png');
+                          return (
+                            <OptimizedImage 
+                              key={imgIndex}
+                              src={image} 
+                              alt={`${role.title} image ${imgIndex + 1}`}
+                              width={450}
+                              height={300}
+                              quality={85}
+                              sizes="(max-width: 768px) 100vw, 450px"
+                              priority={index === 0}
+                              style={{
+                                width: 'auto',
+                                height: 'auto',
+                                maxWidth: '120px',
+                                maxHeight: '200px',
+                                objectFit: 'contain',
+                                marginLeft: isRelayFullImage ? '200px' : '0'
+                              }}
+                            />
+                          );
+                        })}
                       </div>
                     )}
                     {role.image && (
@@ -743,6 +836,7 @@ const ProjectLayout = ({
                           height={300}
                           quality={85}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 938px"
+                          useOptimized={false}
                           style={{
                             width: '100%',
                             height: 'auto'
