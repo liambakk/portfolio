@@ -669,7 +669,7 @@ const GridLayout = () => {
                     setPreviewImage(null);
                   }}
                   onClick={() => {
-                    window.open('https://drive.google.com/file/d/1xlb2JgP_P0qrBXVIl0h_QMbs3M3pu-Kv/view?usp=sharing', '_blank');
+                    window.open('https://drive.google.com/file/d/1_tFoTjw2u89Sysd-3XeBE_Mhke795qe0/view?usp=sharing', '_blank');
                   }}
                   style={{
                     padding: '24px 20px',
