@@ -198,20 +198,11 @@ body {
 }
 
 /* Section-specific styling */
-.social-buttons-work {
-  /* Position for work section - inherits positioning from .social-buttons-container */
-  /* Positioned relative to work section's cases-inner right border */
-}
-
-.social-buttons-about {
-  /* Position for about section - inherits positioning from .social-buttons-container */
-  /* Positioned relative to about-content-box right border */
-}
-
-.social-buttons-contact {
-  /* Position for contact section - inherits positioning from .social-buttons-container */
-  /* Positioned relative to contact-content-box right border */
-}
+/* Section-specific social button positioning - these classes can be used to override
+   the default positioning from .social-buttons-container if needed */
+/* .social-buttons-work - Position for work section */
+/* .social-buttons-about - Position for about section */
+/* .social-buttons-contact - Position for contact section */
 
 .social-buttons-project {
   /* Position for project pages - positioned to the right of Overview vertical border */
@@ -565,10 +556,8 @@ body {
 }
 
 /* First section top border now handled by motion.div animation */
-.project-section-bordered:first-child {
-  /* Top border styling handled by motion.div animation in ProjectLayout.tsx */
-  /* No additional CSS needed as border is rendered via motion.div */
-}
+/* First section top border handled by motion.div animation in ProjectLayout.tsx */
+/* .project-section-bordered:first-child - no additional CSS needed */
 
 /* Borders now handled by ProjectBorderFrame component */
 

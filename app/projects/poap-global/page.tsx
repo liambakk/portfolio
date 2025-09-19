@@ -7,7 +7,7 @@ import { ProjectData } from "@/types/project";
 export default function PoapGlobalProject() {
   const projectData: ProjectData = {
     title: "POAP Global",
-    previewImage: "/previews/poap1.png",
+    previewImage: "/previews-optimized/poap1-md.png",
     overview: {
       description: "POAP Global is a mobile application that transforms travel into a digital collecting experience. The app allows travelers to collect digital stamps by visiting real-world locations, similar to collecting passport stamps but in a digital format."
     },
@@ -61,7 +61,7 @@ export default function PoapGlobalProject() {
           { description: "Implemented responsive design for mobile claiming" },
           { description: "Established visual language for Web3 interactions" }
         ],
-        image: "/poapdesign.png",
+        image: "/project-images-optimized/poapdesign-md.png",
         customContent: (
           <div style={{ minHeight: "200px" }} />
         )

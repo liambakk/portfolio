@@ -1,0 +1,31 @@
+# Large video files
+public/mp4/
+
+# Large unoptimized previews (using optimized versions instead)
+public/previews/
+
+# Large PDF files  
+public/pdf/
+
+# Large unoptimized original images (using optimized versions instead)
+public/*.png
+public/*.jpg
+public/*.gif
+
+# Allow specific GIFs that are needed for Neura project demos
+!public/neura.gif
+!public/neurabox.gif
+
+# Development files not needed for deployment
+node_modules/
+.next/
+.git/
+scripts/
+
+# Keep optimized image directories
+!public/previews-optimized/
+!public/project-images-optimized/
+!public/remaining-images-optimized/
+
+# Keep essential SVG icons
+!public/*.svg

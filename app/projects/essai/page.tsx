@@ -7,7 +7,7 @@ import { ProjectData } from "@/types/project";
 export default function EssaiProject() {
   const projectData: ProjectData = {
     title: "Heuristic",
-    previewImage: "/previews/heuristic1.png",
+    previewImage: "/previews-optimized/heuristic1-md.png",
     overview: {
       description: "A data analytics platform that uses heuristic algorithms to identify patterns and insights. The system helps businesses make data-driven decisions through intelligent analysis and visualization."
     },

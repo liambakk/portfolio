@@ -7,7 +7,7 @@ const MobileFooter = () => {
   const socialLinks = [
     { icon: FaXTwitter, href: "https://x.com/liambakk", label: "X" },
     { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
+    { icon: FaLinkedin, href: "https://www.linkedin.com/in/liambakker/", label: "Linkedin" },
   ];
 
   return (

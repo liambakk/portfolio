@@ -7,7 +7,7 @@ import { ProjectData } from "@/types/project";
 export default function RelayProject() {
   const projectData: ProjectData = {
     title: "Relay",
-    previewImage: "/previews/relay1.png",
+    previewImage: "/previews-optimized/relay1-md.png",
     overview: {
       description: "Relay is a mobile app that helps you find compatible workout partners nearby when you want to exercise. Think of it as a social network specifically designed for fitness enthusiasts who want to connect with others for workouts."
     },
@@ -37,14 +37,14 @@ export default function RelayProject() {
           { description: "Motion-First Interface - Smooth animations and transitions that mirror physical movement" },
           { description: "Community Focus - Visual elements that emphasize connection and shared experiences" }
         ],
-        images: ["/relaycolors.png", "/relaylogo.png"],
-        bottomImage: "/relayofull.png"
+        images: ["/project-images-optimized/relaycolors-md.png", "/project-images-optimized/relaylogo-md.png"],
+        bottomImage: "/project-images-optimized/relayofull-md.png"
       },
       {
         title: "Design System",
         description: "",
         tasks: [],
-        image: "/relaydesign.png"
+        image: "/project-images-optimized/relaydesign-md.png"
       },
       {
         title: "Contributions",

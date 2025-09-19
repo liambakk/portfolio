@@ -15,7 +15,7 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({ section, isMobile = false
   const containerRef = useRef<HTMLDivElement>(null);
 
   const socialLinks = [
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "Linkedin" },
+    { icon: FaLinkedin, href: "https://www.linkedin.com/in/liambakker/", label: "Linkedin" },
     { icon: FaGithub, href: "https://github.com/liambakk", label: "Git" },
     { icon: FaXTwitter, href: "https://x.com/liambakk", label: "X" },
   ];

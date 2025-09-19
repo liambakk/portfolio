@@ -63,7 +63,7 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
             >
-              Designer and developer who finds satisfaction in solving everyday problems through thoughtful digital experiences. I'm driven by the belief that technology should feel intuitive and purposeful, not overwhelming or complicated.
+              Designer and developer who finds satisfaction in solving everyday problems through thoughtful digital experiences. I&apos;m driven by the belief that technology should feel intuitive and purposeful, not overwhelming or complicated.
             </motion.p>
             <motion.p
               className="mt-4"
@@ -71,7 +71,7 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
             >
-              I've learned that building great products isn't just about the tech—it's about understanding people, iterating quickly, and staying resilient through the inevitable challenges that come with bringing new ideas to life.
+              I&apos;ve learned that building great products isn&apos;t just about the tech—it&apos;s about understanding people, iterating quickly, and staying resilient through the inevitable challenges that come with bringing new ideas to life.
             </motion.p>
           </div>
           
@@ -106,7 +106,7 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
                   marginLeft: '300px'
                 }}>
                   <Image
-                    src="/liamlook.jpg"
+                    src="/remaining-images-optimized/liamlook-md.jpg"
                     alt="Liam Bakker"
                     fill
                     sizes="280px"

@@ -26,10 +26,10 @@ const GridLayout = () => {
   const router = useRouter();
 
   const cases = [
-    { id: 1, title: "Relay", preview: "/previews/relay.png", slug: "relay", width: 1920, height: 1080 },
-    { id: 2, title: "Neura Browser Extension", preview: "/previews/neura.png", slug: "neura", width: 1920, height: 1080 },
-    { id: 3, title: "Poap Global", preview: "/previews/poap.png", slug: "poap-global", width: 1920, height: 1080 },
-    { id: 4, title: "Heuristic", preview: "/previews/heuristic.png", slug: "essai", width: 1920, height: 1080 },
+    { id: 1, title: "Relay", preview: "/previews-optimized/relay-md.png", slug: "relay", width: 1920, height: 1080 },
+    { id: 2, title: "Neura Browser Extension", preview: "/previews-optimized/neura-md.png", slug: "neura", width: 1920, height: 1080 },
+    { id: 3, title: "Poap Global", preview: "/previews-optimized/poap-md.png", slug: "poap-global", width: 1920, height: 1080 },
+    { id: 4, title: "Heuristic", preview: "/previews-optimized/heuristic-md.png", slug: "essai", width: 1920, height: 1080 },
   ];
 
   useEffect(() => {

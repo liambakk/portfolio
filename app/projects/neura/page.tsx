@@ -5,7 +5,6 @@ import { FiExternalLink } from "react-icons/fi";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 import Image from "next/image";
-import OptimizedImage from "@/components/OptimizedImage";
 
 export default function NeuraProject() {
   const projectData: ProjectData = {
@@ -26,7 +25,7 @@ export default function NeuraProject() {
       />
     ),
     externalLink: "https://www.neura.fyi",
-    previewImage: "/previews/neura1.png",
+    previewImage: "/previews-optimized/neura1-md.png",
     overview: {
       description: "An intelligent browser extension that enhances web browsing with AI-powered features. Neura provides smart summarization, content extraction, and automated workflows to improve productivity."
     },
@@ -68,8 +67,8 @@ export default function NeuraProject() {
             gap: "1rem",
             flexWrap: "wrap"
           }}>
-            <OptimizedImage
-              src="/neuraext.png"
+            <Image
+              src="/project-images-optimized/neuraext-md.png"
               alt="Neura Browser Extension Interface"
               width={400}
               height={300}
@@ -82,8 +81,8 @@ export default function NeuraProject() {
                 borderRadius: "8px"
               }}
             />
-            <OptimizedImage
-              src="/box.png"
+            <Image
+              src="/project-images-optimized/box-md.png"
               alt="Neura Extension Settings"
               width={400}
               height={300}
@@ -119,8 +118,8 @@ export default function NeuraProject() {
               display: "flex",
               justifyContent: "center"
             }}>
-              <OptimizedImage
-                src="/neurabox.png"
+              <Image
+                src="/project-images-optimized/neurabox-md.png"
                 alt="Neura Extension Features"
                 width={600}
                 height={400}
