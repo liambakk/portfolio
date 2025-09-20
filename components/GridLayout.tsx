@@ -709,7 +709,7 @@ const GridLayout = () => {
                       position: 'absolute',
                       bottom: 0,
                       left: '0', // Start from the left case border position
-                      width: 'calc(100vw - 877.5px)', // Extend to vertical border at right: 30px
+                      width: 'calc(100vw - 777.5px)', // Extend to vertical border at right: 30px
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 0,

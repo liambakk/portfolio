@@ -64,7 +64,7 @@ const ContactBorders: React.FC<ContactBordersProps> = ({ hasInitialLoaded, isMob
               {/* Bottom border - connects left and right */}
               <motion.div
                 initial={{ width: '0%' }}
-                animate={{ width: 'calc(100vw - 877.5px)' }}
+                animate={{ width: 'calc(100vw - 777.5px)' }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
                 style={{
                   position: 'absolute',
