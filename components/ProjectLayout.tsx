@@ -356,20 +356,6 @@ const ProjectLayout = ({
                 pointerEvents: 'none'
               }}
             />
-            {/* Debug label */}
-            <div style={{
-              position: 'absolute',
-              top: '-10px',
-              left: '40px',
-              fontSize: '10px',
-              color: '#ff0000',
-              background: 'rgba(0,0,0,0.8)',
-              padding: '2px 4px',
-              borderRadius: '2px',
-              zIndex: 1000
-            }}>
-              HEADER BORDER (30px margins)
-            </div>
           </div>
         )}
 
@@ -425,22 +411,6 @@ const ProjectLayout = ({
                         zIndex: 1
                       }}
                     />
-                    {/* Debug label */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '-15px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      fontSize: '10px',
-                      color: '#ff00ff',
-                      background: 'rgba(0,0,0,0.8)',
-                      padding: '2px 4px',
-                      borderRadius: '2px',
-                      zIndex: 1001,
-                      whiteSpace: 'nowrap'
-                    }}>
-                      TITLE BORDER (above preview)
-                    </div>
                   </>
                 )}
                 {/* Mobile line under title */}
@@ -507,22 +477,6 @@ const ProjectLayout = ({
                         zIndex: 1
                       }}
                     />
-                    {/* Debug label */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '-15px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      fontSize: '10px',
-                      color: '#00ffff',
-                      background: 'rgba(0,0,0,0.8)',
-                      padding: '2px 4px',
-                      borderRadius: '2px',
-                      zIndex: 1001,
-                      whiteSpace: 'nowrap'
-                    }}>
-                      OVERVIEW SECTION TOP BORDER
-                    </div>
                   </>
                 )}
                 {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
