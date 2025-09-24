@@ -10,6 +10,15 @@ interface LoadingTransitionProps {
 const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [textOpacity, setTextOpacity] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if mobile on mount
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+  }, []);
 
   useEffect(() => {
     if (isLoading) {
@@ -43,14 +52,18 @@ const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
             position: 'fixed',
             top: 0,
             left: 0,
+            right: 0,
+            bottom: 0,
             width: '100vw',
             height: '100vh',
+            minHeight: '-webkit-fill-available', // For iOS Safari
             zIndex: 10000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#1a1a1a',
             pointerEvents: isLoading ? 'auto' : 'none',
+            touchAction: 'none', // Prevent scrolling on mobile
           }}
         >
           <motion.div
@@ -67,9 +80,9 @@ const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
             <h1
               className="loading-name-outline"
               style={{
-                fontSize: '120px',
+                fontSize: isMobile ? '60px' : '120px',
                 fontWeight: 400,
-                letterSpacing: '-4px',
+                letterSpacing: isMobile ? '-2px' : '-4px',
                 lineHeight: 1,
                 color: 'transparent',
                 WebkitTextStroke: '1px #ffffff',
@@ -103,9 +116,9 @@ const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
               <h1
                 className="loading-name-filled"
                 style={{
-                  fontSize: '120px',
+                  fontSize: isMobile ? '60px' : '120px',
                   fontWeight: 400,
-                  letterSpacing: '-4px',
+                  letterSpacing: isMobile ? '-2px' : '-4px',
                   lineHeight: 1,
                   color: '#ffffff',
                   margin: 0,

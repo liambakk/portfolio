@@ -347,6 +347,43 @@ select {
   bottom: 0;
 }
 
+/* Mobile overflow prevention */
+@media screen and (max-width: 1024px) {
+  /* Prevent horizontal scrolling */
+  html, body {
+    overflow-x: hidden !important;
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Ensure all containers respect viewport width */
+  .grid-container,
+  .main-area,
+  .main-content,
+  .project-page-container,
+  .project-scrollable-content {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Fix any elements with negative margins or absolute positioning */
+  * {
+    max-width: 100vw !important;
+  }
+  
+  /* Fix elements that might overflow */
+  .project-title-border-wrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .project-page-title {
+    padding-left: 0 !important;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .unified-project-header {
@@ -439,6 +476,8 @@ select {
 
 html, body {
   height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  max-width: 100%; /* Ensure no overflow */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -1233,12 +1272,17 @@ body {
   }
   
   .project-image-container {
-    margin-left: clamp(10px, 3vw, 40px);
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     margin-top: 20px; /* Consistent spacing */
+    width: 100% !important;
+    max-width: 100% !important;
   }
   
   .project-image-container img {
-    max-width: clamp(280px, 75vw, 900px);
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
   }
   
   
@@ -1257,7 +1301,15 @@ body {
 /* Responsive Design - Mobile */
 @media screen and (max-width: 1024px) {
   .project-page-container {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  
+  .project-scrollable-content {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
   
   .project-page-title {
@@ -1282,6 +1334,12 @@ body {
   .project-title-border-wrapper {
     height: auto; /* Auto height on mobile */
     margin-bottom: 10px;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   
   .project-main-area {
@@ -1668,6 +1726,20 @@ body {
 }
 
 /* Loading Animation Styles */
+.loading-overlay {
+  /* Ensure full viewport coverage on all devices */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important; /* Dynamic viewport height for mobile */
+  min-height: -webkit-fill-available !important; /* iOS Safari */
+  overflow: hidden !important;
+}
+
 .loading-name-outline,
 .loading-name-filled {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -1679,11 +1751,26 @@ body {
   paint-order: stroke fill;
 }
 
+/* Ensure text is centered on mobile */
+.loading-text-container {
+  width: 100%;
+  text-align: center;
+  padding: 0 20px; /* Add some padding on mobile */
+  box-sizing: border-box;
+}
+
 @media screen and (max-width: 768px) {
   .loading-name-outline,
   .loading-name-filled {
     font-size: 60px !important;
     letter-spacing: -2px !important;
+  }
+  
+  /* Ensure proper mobile viewport coverage */
+  .loading-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    touch-action: none !important; /* Prevent scrolling */
   }
 }
 
@@ -1716,5 +1803,47 @@ body {
     min-width: unset;
     max-width: 100%;
     height: auto;
+  }
+}
+
+/* Final mobile overflow prevention - highest specificity */
+@media screen and (max-width: 1024px) {
+  /* Force all elements to respect viewport */
+  body > * {
+    overflow-x: hidden !important;
+  }
+  
+  /* Reset any problematic styles */
+  .project-title-border-wrapper,
+  .project-section,
+  .project-section-bordered,
+  .project-sections-container,
+  .project-image-container,
+  .section-content,
+  .section-header {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Ensure images don't overflow */
+  img, video, iframe {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Fix any absolute positioned elements */
+  [style*="position: absolute"] {
+    max-width: 100vw !important;
+  }
+  
+  /* Disable horizontal touch scrolling */
+  body {
+    touch-action: pan-y !important;
   }
 }
