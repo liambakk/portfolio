@@ -577,18 +577,28 @@ const ProjectLayout = ({
                     }}
                   />
                 )}
-                <div className="section-header">
+                <motion.div 
+                  className="section-header"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 }}
+                >
                   {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">01.</span>
                   Overview
-                </div>
-                <div className="section-content">
+                </motion.div>
+                <motion.div 
+                  className="section-content"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 }}
+                >
                   {overview.description}
                   
                   {/* Social Buttons removed from project pages */}
                   {/* <SocialButtons section="project" isMobile={isTouchDevice} /> */}
-                </div>
+                </motion.div>
               </div>
 
               {/* Team Section */}
@@ -671,15 +681,27 @@ const ProjectLayout = ({
                     }}
                   />
                 )}
-                <div className="section-header">
+                <motion.div 
+                  className="section-header"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                >
                   {/* VERTICAL LINE 6: Team section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">02.</span>
                   {team.title || "Team"}
-                </div>
-                <div className="section-content">
+                </motion.div>
+                <motion.div 
+                  className="section-content"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                >
                   {team.description}
-                </div>
+                </motion.div>
               </div>
 
               {/* Goals Section */}
@@ -762,26 +784,52 @@ const ProjectLayout = ({
                     }}
                   />
                 )}
-                <div className="section-header">
+                <motion.div 
+                  className="section-header"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                >
                   {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">03.</span>
                   Goals
-                </div>
-                <div className="section-content">
+                </motion.div>
+                <motion.div 
+                  className="section-content"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                >
                   <ul className="goals-list">
                     {goals.items.map((goal, index) => (
-                      <li key={index} style={{ display: "flex", flexDirection: "column" }}>
+                      <motion.li 
+                        key={index} 
+                        style={{ display: "flex", flexDirection: "column" }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 + (index * 0.1) }}
+                      >
                         <span>{goal.text}</span>
                         {(goal.image || goal.images) && (
-                          <div className="goal-image-container" style={{
-                            marginTop: "20px",
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            alignItems: "center",
-                            gap: "20px",
-                            flexWrap: "wrap"
-                          }}>
+                          <motion.div 
+                            className="goal-image-container" 
+                            style={{
+                              marginTop: "20px",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                              gap: "20px",
+                              flexWrap: "wrap"
+                            }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 + (index * 0.1) }}
+                          >
                             {goal.image && (
                               <OptimizedImage 
                                 src={goal.image} 
@@ -824,12 +872,12 @@ const ProjectLayout = ({
                                 />
                               );
                             })}
-                          </div>
+                          </motion.div>
                         )}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               </div>
 
               {/* Role & Process Sections */}
@@ -910,32 +958,59 @@ const ProjectLayout = ({
                       }}
                     />
                   )}
-                  <div className="section-header">
+                  <motion.div 
+                    className="section-header"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                  >
                     {/* VERTICAL LINE 8+: Role & Process sections MEGA-EXTENDED vertical borders - REMOVED */}
                     
                     <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
                     {role.title}
-                  </div>
-                  <div className="section-content">
+                  </motion.div>
+                  <motion.div 
+                    className="section-content"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                  >
                     <p className="role-description">{role.description}</p>
                     {role.tasks && role.tasks.length > 0 && (
                       <ul className="process-tasks">
                         {role.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex}>{task.description}</li>
+                          <motion.li 
+                            key={taskIndex}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 + (taskIndex * 0.1) }}
+                          >
+                            {task.description}
+                          </motion.li>
                         ))}
                       </ul>
                     )}
                     {role.images && role.images.length > 0 && (
-                      <div className="relay-images-container role-image-container" style={{
-                        display: "flex",
-                        flexDirection: isTouchDevice ? "row" : "column",
-                        gap: isTouchDevice ? "60px" : "30px",
-                        padding: "20px 0",
-                        justifyContent: isTouchDevice ? "center" : "flex-start",
-                        alignItems: isTouchDevice ? "center" : "flex-start",
-                        maxWidth: "100%",
-                        overflow: "visible"
-                      }}>
+                      <motion.div 
+                        className="relay-images-container role-image-container" 
+                        style={{
+                          display: "flex",
+                          flexDirection: isTouchDevice ? "row" : "column",
+                          gap: isTouchDevice ? "60px" : "30px",
+                          padding: "20px 0",
+                          justifyContent: isTouchDevice ? "center" : "flex-start",
+                          alignItems: isTouchDevice ? "center" : "flex-start",
+                          maxWidth: "100%",
+                          overflow: "visible"
+                        }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                      >
                         {role.images.map((image, imgIndex) => {
                           // Make featured.png much smaller, but larger on mobile
                           const isFeaturedImage = image.includes('featured.png');
@@ -966,15 +1041,22 @@ const ProjectLayout = ({
                             />
                           );
                         })}
-                      </div>
+                      </motion.div>
                     )}
                     {role.image && (
-                      <div className="relay-design-system-container" style={{
-                        display: "flex",
-                        padding: "40px 0",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
+                      <motion.div 
+                        className="relay-design-system-container" 
+                        style={{
+                          display: "flex",
+                          padding: "40px 0",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                      >
                         <OptimizedImage 
                           src={role.image} 
                           alt={`${role.title} design system`}
@@ -990,15 +1072,22 @@ const ProjectLayout = ({
                             maxWidth: role.image.includes('poapflow.png') ? '600px' : '100%'
                           }}
                         />
-                      </div>
+                      </motion.div>
                     )}
                     {role.bottomImage && (
-                      <div className="relay-logo-container role-image-container" style={{
-                        display: "flex",
-                        padding: "20px 0",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
+                      <motion.div 
+                        className="relay-logo-container role-image-container" 
+                        style={{
+                          display: "flex",
+                          padding: "20px 0",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                      >
                         <OptimizedImage 
                           src={role.bottomImage} 
                           alt={`${role.title} logo`}
@@ -1012,10 +1101,10 @@ const ProjectLayout = ({
                             maxWidth: isTouchDevice ? '380px' : '180px'
                           }}
                         />
-                      </div>
+                      </motion.div>
                     )}
                     {role.customContent}
-                  </div>
+                  </motion.div>
                   {/* Bottom border for last section only */}
                   {!isTouchDevice && index === roleProcess.length - 1 && (
                     <motion.div
