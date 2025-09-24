@@ -28,17 +28,13 @@ const ProjectPageUnified = ({
   const { triggerTransition, setIsReturningFromProject } = useNavigation();
 
   useEffect(() => {
-    const checkTouchDevice = () => {
-      setIsTouchDevice(
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia('(pointer: coarse)').matches
-      );
-    };
+    // Check touch device only once on mount
+    const isTouch = 'ontouchstart' in window ||
+                   navigator.maxTouchPoints > 0 ||
+                   window.matchMedia('(pointer: coarse)').matches;
     
-    checkTouchDevice();
-    window.addEventListener('resize', checkTouchDevice);
-    return () => window.removeEventListener('resize', checkTouchDevice);
+    setIsTouchDevice(isTouch);
+    // No resize listener needed - touch capability doesn't change during session
   }, []);
 
   const handleBackToWork = () => {

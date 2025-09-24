@@ -38,36 +38,14 @@ const ProjectLayout = ({
   const router = useRouter();
 
   useEffect(() => {
-    // Re-check on mount and resize with debouncing
-    let resizeTimeout: NodeJS.Timeout;
+    // Check touch device only once on mount
+    const isTouch = 'ontouchstart' in window ||
+                   navigator.maxTouchPoints > 0 ||
+                   window.matchMedia('(pointer: coarse)').matches;
     
-    const checkTouchDevice = () => {
-      const isTouch = 'ontouchstart' in window ||
-                     navigator.maxTouchPoints > 0 ||
-                     window.matchMedia('(pointer: coarse)').matches;
-      
-      // Only update state if the value actually changed
-      setIsTouchDevice(prev => {
-        if (prev !== isTouch) {
-          return isTouch;
-        }
-        return prev;
-      });
-    };
-
-    // Initial check
-    checkTouchDevice();
+    setIsTouchDevice(isTouch);
     
-    // Only add resize listener for non-touch devices
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(checkTouchDevice, 300); // Debounce with 300ms delay
-    };
-    
-    // Only listen to resize on desktop devices
-    if (!('ontouchstart' in window)) {
-      window.addEventListener('resize', handleResize);
-    }
+    // No resize listeners needed - touch capability doesn't change during session
     
     // Check if initial animations have already played
     const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
@@ -122,15 +100,11 @@ const ProjectLayout = ({
       }
     });
 
-    // Scroll detection for sticky social buttons
+    // Cleanup
     return () => {
-      if (!('ontouchstart' in window)) {
-        window.removeEventListener('resize', handleResize);
-      }
-      clearTimeout(resizeTimeout);
       clearTimeout(timer);
     };
-  }, [previewImage, roleProcess, isTouchDevice]);
+  }, [previewImage, roleProcess]);
 
 
   const { triggerTransition, setIsReturningFromProject } = useNavigation();
