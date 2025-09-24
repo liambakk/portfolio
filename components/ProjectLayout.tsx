@@ -8,7 +8,6 @@ import MobileFooter from "./MobileFooter";
 import Image from "next/image";
 import OptimizedImage from "./OptimizedImage";
 import { ProjectData } from "@/types/project";
-import ProjectBorderFrame from "./ProjectBorderFrame";
 import { useNavigation } from "./ClientWrapper";
 import SocialButtons from "./SocialButtons";
 
@@ -39,16 +38,36 @@ const ProjectLayout = ({
   const router = useRouter();
 
   useEffect(() => {
-    // Re-check on mount and resize
+    // Re-check on mount and resize with debouncing
+    let resizeTimeout: NodeJS.Timeout;
+    
     const checkTouchDevice = () => {
       const isTouch = 'ontouchstart' in window ||
                      navigator.maxTouchPoints > 0 ||
                      window.matchMedia('(pointer: coarse)').matches;
-      setIsTouchDevice(isTouch);
+      
+      // Only update state if the value actually changed
+      setIsTouchDevice(prev => {
+        if (prev !== isTouch) {
+          return isTouch;
+        }
+        return prev;
+      });
     };
 
+    // Initial check
     checkTouchDevice();
-    window.addEventListener('resize', checkTouchDevice);
+    
+    // Only add resize listener for non-touch devices
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkTouchDevice, 300); // Debounce with 300ms delay
+    };
+    
+    // Only listen to resize on desktop devices
+    if (!('ontouchstart' in window)) {
+      window.addEventListener('resize', handleResize);
+    }
     
     // Check if initial animations have already played
     const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
@@ -105,15 +124,19 @@ const ProjectLayout = ({
 
     // Scroll detection for sticky social buttons
     return () => {
-      window.removeEventListener('resize', checkTouchDevice);
+      if (!('ontouchstart' in window)) {
+        window.removeEventListener('resize', handleResize);
+      }
+      clearTimeout(resizeTimeout);
       clearTimeout(timer);
     };
   }, [previewImage, roleProcess, isTouchDevice]);
 
 
-  const { triggerTransition } = useNavigation();
+  const { triggerTransition, setIsReturningFromProject } = useNavigation();
 
   const handleBackToWork = () => {
+    setIsReturningFromProject(true);
     triggerTransition(() => {
       router.push("/");
     });
@@ -320,18 +343,34 @@ const ProjectLayout = ({
 
         {/* PROJECT HEADER BORDER: Main horizontal separator below header/tabs area */}
         {!isTouchDevice && (
-          <motion.div
-            initial={{ scaleX: 0, transformOrigin: 'left' }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            style={{
-              marginLeft: '30px',
-              marginRight: '30px',
-              height: '1px',
-              background: 'var(--border)',
-              pointerEvents: 'none'
-            }}
-          />
+          <div style={{ position: 'relative' }}>
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'left' }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              style={{
+                marginLeft: '30px',
+                marginRight: '30px',
+                height: '1px',
+                background: 'var(--border)',
+                pointerEvents: 'none'
+              }}
+            />
+            {/* Debug label */}
+            <div style={{
+              position: 'absolute',
+              top: '-10px',
+              left: '40px',
+              fontSize: '10px',
+              color: '#ff0000',
+              background: 'rgba(0,0,0,0.8)',
+              padding: '2px 4px',
+              borderRadius: '2px',
+              zIndex: 1000
+            }}>
+              HEADER BORDER (30px margins)
+            </div>
+          </div>
         )}
 
         {/* Main Content Area */}
@@ -354,8 +393,7 @@ const ProjectLayout = ({
           <div className="project-main-content">
         {activeTab === "overview" && (
           <div className="project-content-wrapper">
-            {/* PROJECT CONTENT FRAME: Unified border system wrapping all project sections */}
-            <ProjectBorderFrame />
+            {/* Sections now handle their own frame borders - ProjectBorderFrame removed */}
             
             <div className="project-section">
               <div className="project-title-border-wrapper">
@@ -369,6 +407,59 @@ const ProjectLayout = ({
                   {title}
                   {externalLink && titleIcon}
                 </motion.h1>
+                
+                {/* Horizontal line under title, above preview image */}
+                {!isTouchDevice && (
+                  <>
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: '-70px',
+                        right: '-80px',
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                    {/* Debug label */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '-15px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      fontSize: '10px',
+                      color: '#ff00ff',
+                      background: 'rgba(0,0,0,0.8)',
+                      padding: '2px 4px',
+                      borderRadius: '2px',
+                      zIndex: 1001,
+                      whiteSpace: 'nowrap'
+                    }}>
+                      TITLE BORDER (above preview)
+                    </div>
+                  </>
+                )}
+                {/* Mobile line under title */}
+                {isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleX: 0, transformOrigin: 'left' }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: '-40px',
+                      right: '-50px',
+                      height: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
               </div>
               {previewImage && (
                 <motion.div 
@@ -394,25 +485,45 @@ const ProjectLayout = ({
                   />
                 </motion.div>
               )}
+            </div>
+              
               <div className="project-sections-container" style={{ position: 'relative' }}>
               {/* Overview Section */}
               <div className="project-section-bordered">
                 {/* PROJECT SECTION TOP BORDER: Animated horizontal border above Overview section */}
                 {!isTouchDevice && (
-                  <motion.div
-                    initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }}
-                    style={{
+                  <>
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0, // Container now matches frame width
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                    {/* Debug label */}
+                    <div style={{
                       position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      height: '1px',
-                      background: 'var(--border)',
-                      zIndex: 1
-                    }}
-                  />
+                      top: '-15px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      fontSize: '10px',
+                      color: '#00ffff',
+                      background: 'rgba(0,0,0,0.8)',
+                      padding: '2px 4px',
+                      borderRadius: '2px',
+                      zIndex: 1001,
+                      whiteSpace: 'nowrap'
+                    }}>
+                      OVERVIEW SECTION TOP BORDER
+                    </div>
+                  </>
                 )}
                 {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
                 {isTouchDevice && (
@@ -425,35 +536,49 @@ const ProjectLayout = ({
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      right: 0,
+                      right: 0, // Container now matches frame width
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 1
                     }}
                   />
                 )}
+                {/* Animated left vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
+                {/* Animated right vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
-                  {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border
-                      Creates the vertical divider extending to absolutely infinite proportions, completely
-                      obliterating all spatial boundaries with unprecedented vertical supremacy. Extended
-                      to cosmic dimensions that transcend the viewport itself, creating a skyscraper-like
-                      monolith that towers into infinity and defines reality itself through pure verticality. */}
-                  {!isTouchDevice && (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.75 }}
-                      style={{
-                        position: 'absolute',
-                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
-                        right: 0,
-                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 1
-                      }}
-                    />
-                  )}
+                  {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">01.</span>
                   Overview
@@ -461,8 +586,8 @@ const ProjectLayout = ({
                 <div className="section-content">
                   {overview.description}
                   
-                  {/* Social Buttons positioned relative to Overview vertical border */}
-                  <SocialButtons section="project" isMobile={isTouchDevice} />
+                  {/* Social Buttons removed from project pages */}
+                  {/* <SocialButtons section="project" isMobile={isTouchDevice} /> */}
                 </div>
               </div>
 
@@ -482,7 +607,7 @@ const ProjectLayout = ({
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      right: 0,
+                      right: 0, // Container now matches frame width
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 1
@@ -503,39 +628,51 @@ const ProjectLayout = ({
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      right: 0,
+                      right: 0, // Container now matches frame width
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 1
                     }}
                   />
                 )}
+                {/* Animated left vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
+                {/* Animated right vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
-                  {/* VERTICAL LINE 6: Team section MEGA-EXTENDED vertical border
-                      Vertical separator extending to astronomical proportions, creating colossal monoliths
-                      that completely dwarf the Team section and everything around it. Extended to stratospheric
-                      heights that pierce through dimensional barriers, transforming the layout into an
-                      otherworldly temple of verticality that redefines the very concept of spatial design. */}
-                  {!isTouchDevice && (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      whileInView={{ scaleY: 1 }}
-                      viewport={{ 
-                        once: true,
-                        margin: "-200px 0px -200px 0px"
-                      }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-                      style={{
-                        position: 'absolute',
-                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
-                        right: 0,
-                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 1
-                      }}
-                    />
-                  )}
+                  {/* VERTICAL LINE 6: Team section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">02.</span>
                   {team.title || "Team"}
@@ -561,7 +698,7 @@ const ProjectLayout = ({
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      right: 0,
+                      right: 0, // Container now matches frame width
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 1
@@ -582,39 +719,51 @@ const ProjectLayout = ({
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      right: 0,
+                      right: 0, // Container now matches frame width
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 1
                     }}
                   />
                 )}
+                {/* Animated left vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
+                {/* Animated right vertical border */}
+                {!isTouchDevice && (
+                  <motion.div
+                    initial={{ scaleY: 0, transformOrigin: 'top' }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '1px',
+                      background: 'var(--border)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="section-header">
-                  {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border
-                      Divider line extending to galactic proportions, creating titan-sized pillars that
-                      completely obliterate spatial reality around the Goals section. Extended to interstellar
-                      heights that shatter the fabric of design itself, transforming the layout into a
-                      cosmic cathedral of pure verticality that exists beyond mortal comprehension. */}
-                  {!isTouchDevice && (
-                    <motion.div
-                      initial={{ scaleY: 0, transformOrigin: 'top' }}
-                      whileInView={{ scaleY: 1 }}
-                      viewport={{ 
-                        once: true,
-                        margin: "-200px 0px -200px 0px"
-                      }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-                      style={{
-                        position: 'absolute',
-                        top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
-                        right: 0,
-                        height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
-                        width: '1px',
-                        background: 'var(--border)',
-                        zIndex: 1
-                      }}
-                    />
-                  )}
+                  {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border - REMOVED */}
                   
                   <span className="section-label">03.</span>
                   Goals
@@ -700,7 +849,7 @@ const ProjectLayout = ({
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        right: 0,
+                        right: 0, // Container now matches frame width
                         height: '1px',
                         background: 'var(--border)',
                         zIndex: 1
@@ -718,40 +867,51 @@ const ProjectLayout = ({
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        right: 0,
+                        right: 0, // Container now matches frame width
                         height: '1px',
                         background: 'var(--border)',
                         zIndex: 1
                       }}
                     />
                   )}
+                  {/* Animated left vertical border */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      whileInView={{ scaleY: 1 }}
+                      viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                      style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
+                  {/* Animated right vertical border */}
+                  {!isTouchDevice && (
+                    <motion.div
+                      initial={{ scaleY: 0, transformOrigin: 'top' }}
+                      whileInView={{ scaleY: 1 }}
+                      viewport={{ once: true, margin: "-150px 0px -150px 0px" }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                      style={{
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                   <div className="section-header">
-                    {/* VERTICAL LINE 8+: Role & Process sections MEGA-EXTENDED vertical borders
-                        Dynamic vertical separators extending to universal proportions, creating apocalyptic
-                        megastructures that completely annihilate each Role & Process section's boundaries.
-                        Each border extends to multidimensional heights that transcend physical reality,
-                        transforming the layout into an infinite temple of verticality that exists across
-                        parallel universes and redefines existence itself through pure architectural deity. */}
-                    {!isTouchDevice && (
-                      <motion.div
-                        initial={{ scaleY: 0, transformOrigin: 'top' }}
-                        whileInView={{ scaleY: 1 }}
-                        viewport={{ 
-                          once: true,
-                          margin: "-200px 0px -200px 0px"
-                        }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-                        style={{
-                          position: 'absolute',
-                          top: '-400px', // Extend to cosmic dimensions for absolute vertical supremacy
-                          right: 0,
-                          height: 'calc(100% + 450px)', // MEGA-extended height transcending all boundaries
-                          width: '1px',
-                          background: 'var(--border)',
-                          zIndex: 1
-                        }}
-                      />
-                    )}
+                    {/* VERTICAL LINE 8+: Role & Process sections MEGA-EXTENDED vertical borders - REMOVED */}
                     
                     <span className="section-label">{String(index + 4).padStart(2, '0')}.</span>
                     {role.title}
@@ -777,8 +937,6 @@ const ProjectLayout = ({
                         overflow: "visible"
                       }}>
                         {role.images.map((image, imgIndex) => {
-                          // Move relayfull.png further to the right
-                          const isRelayFullImage = image.includes('relayfull.png');
                           // Make featured.png much smaller, but larger on mobile
                           const isFeaturedImage = image.includes('featured.png');
                           const imageWidth = isFeaturedImage ? (isTouchDevice ? 160 : 120) : (isTouchDevice ? 380 : 180);
@@ -858,15 +1016,49 @@ const ProjectLayout = ({
                     )}
                     {role.customContent}
                   </div>
+                  {/* Bottom border for last section only */}
+                  {!isTouchDevice && index === roleProcess.length - 1 && (
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
+                  {/* Mobile bottom border for last section */}
+                  {isTouchDevice && index === roleProcess.length - 1 && (
+                    <motion.div
+                      initial={{ scaleX: 0, transformOrigin: 'left' }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '1px',
+                        background: 'var(--border)',
+                        zIndex: 1
+                      }}
+                    />
+                  )}
                 </div>
               ))}
               </div>
             </div>
-          </div>
         )}
-        
-          </div>
         </div>
+      </div>
         
         {/* Mobile Footer - only visible on mobile */}
         <MobileFooter />

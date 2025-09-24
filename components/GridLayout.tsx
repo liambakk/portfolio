@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import CustomCursor from "./CustomCursor";
 import MobileFooter from "./MobileFooter";
@@ -21,16 +21,31 @@ const GridLayout = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
+  const [animationKey, setAnimationKey] = useState(Date.now());
+  const [shouldAnimate, setShouldAnimate] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { triggerTransition, isReturningFromProject } = useNavigation();
 
-  const cases = [
+  const cases = useMemo(() => [
     { id: 1, title: "Relay", preview: "/previews-optimized/relay-md.png", slug: "relay", width: 1920, height: 1080 },
     { id: 2, title: "Neura Browser Extension", preview: "/previews-optimized/neura-md.png", slug: "neura", width: 1920, height: 1080 },
     { id: 3, title: "Poap Global", preview: "/previews-optimized/poap-md.png", slug: "poap-global", width: 1920, height: 1080 },
     { id: 4, title: "Heuristic", preview: "/previews-optimized/heuristic-md.png", slug: "essai", width: 1920, height: 1080 },
-  ];
+  ], []);
+
+  // Capture returning state on mount
+  useEffect(() => {
+    if (isReturningFromProject) {
+      setShouldAnimate(true);
+      setAnimationKey(Date.now());
+      setHasInitialLoaded(false);
+      setTabFillAnimated(false);
+      // Clear session storage to force animations
+      sessionStorage.removeItem('hasPlayedInitialAnimations');
+    }
+  }, []); // Only run on mount
 
   useEffect(() => {
     const checkMobile = () => {
@@ -42,13 +57,15 @@ const GridLayout = () => {
     // Check if initial animations have already played
     const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
     
-    if (hasPlayedInitialAnimations) {
+    if (hasPlayedInitialAnimations && !isReturningFromProject && !shouldAnimate) {
       setHasInitialLoaded(true);
     } else {
       // Mark initial load as complete after animations finish
       const timer = setTimeout(() => {
         setHasInitialLoaded(true);
-        sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
+        if (!isReturningFromProject && !shouldAnimate) {
+          sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
+        }
       }, 1000);
       
       return () => {
@@ -70,10 +87,7 @@ const GridLayout = () => {
     return () => {
       window.removeEventListener('resize', checkMobile);
     };
-  }, []);
-
-
-  const { triggerTransition } = useNavigation();
+  }, [isReturningFromProject, shouldAnimate, cases, isMobile]);
 
   const handleProjectClick = (slug: string) => {
     triggerTransition(() => {
@@ -83,7 +97,7 @@ const GridLayout = () => {
 
 
   return (
-    <div className="grid-container">
+    <div className="grid-container" key={shouldAnimate ? `grid-${animationKey}` : 'grid-default'}>
       <CustomCursor />
 
       {/* GLOBAL HEADER BORDER: Top horizontal border separating header from main content
@@ -94,6 +108,7 @@ const GridLayout = () => {
       {!isMobile && (
         <>
           <motion.div
+            key={`global-header-border-${animationKey}`}
             initial={{ scaleX: 0, transformOrigin: 'left' }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -118,6 +133,7 @@ const GridLayout = () => {
           - Creates visual frame for work content area */}
       {!isMobile && activeTab === 'work' && (
         <motion.div
+          key={`work-l-border-${animationKey}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -161,6 +177,7 @@ const GridLayout = () => {
           - Visible on all sections */}
       {!isMobile && (
         <motion.div
+          key={`content-separator-${animationKey}`}
           initial={{ scaleX: 0, transformOrigin: 'left' }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -186,7 +203,7 @@ const GridLayout = () => {
       {!isMobile && (activeTab === 'about' || activeTab === 'contact') && (
         <>
           <motion.div
-            key={`about-contact-border-${activeTab}`}
+            key={`about-contact-border-${activeTab}-${animationKey}`}
             initial={{ scaleY: 0, transformOrigin: 'top' }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -228,6 +245,7 @@ const GridLayout = () => {
           {!isMobile && (
             <>
               <motion.div
+                key={`copyright-border-${animationKey}`}
                 initial={{ scaleY: 0, transformOrigin: 'top' }}
                 animate={{ scaleY: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
@@ -256,6 +274,7 @@ const GridLayout = () => {
               - Animated left-to-right scale with 0.35s delay */}
           {!isMobile && (
             <motion.div
+              key={`nav-accent-${animationKey}`}
               initial={{ scaleX: 0, transformOrigin: 'left' }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
@@ -276,6 +295,7 @@ const GridLayout = () => {
               - Animated top-to-bottom with 0.3s delay */}
           {!isMobile && (
             <motion.div
+              key={`nav-left-border-${animationKey}`}
               initial={{ scaleY: 0, transformOrigin: 'top' }}
               animate={{ scaleY: 1 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
@@ -512,6 +532,7 @@ const GridLayout = () => {
                     - Only visible in WORK section */}
                 {!isMobile && (
                   <motion.div
+                    key={`cases-right-border-${animationKey}`}
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
@@ -726,6 +747,7 @@ const GridLayout = () => {
                     - Only visible in WORK section */}
                 {!isMobile && activeTab === 'work' && (
                   <motion.div
+                    key={`work-left-border-${animationKey}`}
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1 }}
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
@@ -766,7 +788,7 @@ const GridLayout = () => {
             - Different delay timing for initial vs subsequent loads */}
         {!isMobile && (
           <motion.div
-            key="white-accent"
+            key={`white-accent-${animationKey}`}
             initial={{ scaleX: 0, transformOrigin: 'left' }}
             animate={{ scaleX: 1 }}
             transition={{

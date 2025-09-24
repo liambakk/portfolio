@@ -38,7 +38,7 @@ const ProjectBorderFrame: React.FC<ProjectBorderFrameProps> = ({
 
   return (
     <div
-      className={`project-border-frame hidden lg:block ${className}`}
+      className={`project-border-frame hidden lg:block ${className} debug-frame`}
       style={{
         position: "absolute",
         left: "-70px",
