@@ -27,7 +27,6 @@ const ProjectLayout = ({
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({});
   const [tabFillAnimated, setTabFillAnimated] = useState(false);
-  const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
   // Initialize touch device detection properly
   const [isTouchDevice, setIsTouchDevice] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -51,12 +50,9 @@ const ProjectLayout = ({
     const hasPlayedInitialAnimations = sessionStorage.getItem('hasPlayedInitialAnimations') === 'true';
     
     let timer: NodeJS.Timeout;
-    if (hasPlayedInitialAnimations) {
-      setHasInitialLoaded(true);
-    } else {
+    if (!hasPlayedInitialAnimations) {
       // Mark initial load as complete after animations finish
       timer = setTimeout(() => {
-        setHasInitialLoaded(true);
         sessionStorage.setItem('hasPlayedInitialAnimations', 'true');
       }, 1000);
     }
@@ -108,6 +104,39 @@ const ProjectLayout = ({
 
 
   const { triggerTransition, setIsReturningFromProject } = useNavigation();
+
+  // Helper function to conditionally apply animations
+  const getAnimationProps = (delay = 0) => {
+    if (isTouchDevice) {
+      return {
+        initial: { opacity: 1, y: 0 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0 }
+      };
+    }
+    return {
+      initial: { opacity: 0, y: 20 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true, margin: "-100px" },
+      transition: { duration: 0.6, ease: "easeOut" as const, delay }
+    };
+  };
+
+  const getScaleAnimationProps = (delay = 0) => {
+    if (isTouchDevice) {
+      return {
+        initial: { opacity: 1, scale: 1 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0 }
+      };
+    }
+    return {
+      initial: { opacity: 0, scale: 0.95 },
+      whileInView: { opacity: 1, scale: 1 },
+      viewport: { once: true, margin: "-50px" },
+      transition: { duration: 0.6, ease: "easeOut" as const, delay }
+    };
+  };
 
   const handleBackToWork = () => {
     setIsReturningFromProject(true);
@@ -455,11 +484,7 @@ const ProjectLayout = ({
                 )}
                 {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
                 {isTouchDevice && (
-                  <motion.div
-                    initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: hasInitialLoaded ? 0 : 0.7 }}
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -507,9 +532,11 @@ const ProjectLayout = ({
                 )}
                 <motion.div 
                   className="section-header"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.0 }}
+                  {...(isTouchDevice ? {} : {
+                    initial: { opacity: 0, y: 20 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: { duration: 0.6, ease: "easeOut", delay: 1.0 }
+                  })}
                 >
                   {/* VERTICAL LINE 5: Overview section MEGA-EXTENDED vertical border - REMOVED */}
                   
@@ -518,9 +545,11 @@ const ProjectLayout = ({
                 </motion.div>
                 <motion.div 
                   className="section-content"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 1.1 }}
+                  {...(isTouchDevice ? {} : {
+                    initial: { opacity: 0, y: 20 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: { duration: 0.6, ease: "easeOut", delay: 1.1 }
+                  })}
                 >
                   {overview.description}
                   
@@ -554,14 +583,7 @@ const ProjectLayout = ({
                 )}
                 {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
                 {isTouchDevice && (
-                  <motion.div
-                    initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ 
-                      once: true,
-                      margin: "-100px 0px -100px 0px"
-                    }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -611,10 +633,7 @@ const ProjectLayout = ({
                 )}
                 <motion.div 
                   className="section-header"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                  {...getAnimationProps(0.4)}
                 >
                   {/* VERTICAL LINE 6: Team section MEGA-EXTENDED vertical border - REMOVED */}
                   
@@ -623,10 +642,7 @@ const ProjectLayout = ({
                 </motion.div>
                 <motion.div 
                   className="section-content"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                  {...getAnimationProps(0.5)}
                 >
                   {team.description}
                 </motion.div>
@@ -657,14 +673,7 @@ const ProjectLayout = ({
                 )}
                 {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
                 {isTouchDevice && (
-                  <motion.div
-                    initial={{ scaleX: 0, transformOrigin: 'left' }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ 
-                      once: true,
-                      margin: "-100px 0px -100px 0px"
-                    }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -714,10 +723,7 @@ const ProjectLayout = ({
                 )}
                 <motion.div 
                   className="section-header"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                  {...getAnimationProps(0.4)}
                 >
                   {/* VERTICAL LINE 7: Goals section MEGA-EXTENDED vertical border - REMOVED */}
                   
@@ -726,20 +732,14 @@ const ProjectLayout = ({
                 </motion.div>
                 <motion.div 
                   className="section-content"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                  {...getAnimationProps(0.5)}
                 >
                   <ul className="goals-list">
                     {goals.items.map((goal, index) => (
                       <motion.li 
                         key={index} 
                         style={{ display: "flex", flexDirection: "column" }}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 + (index * 0.1) }}
+                        {...getAnimationProps(0.6 + (index * 0.1))}
                       >
                         <span>{goal.text}</span>
                         {(goal.image || goal.images) && (
@@ -753,10 +753,7 @@ const ProjectLayout = ({
                               gap: "20px",
                               flexWrap: "wrap"
                             }}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 + (index * 0.1) }}
+                            {...getScaleAnimationProps(0.7 + (index * 0.1))}
                           >
                             {goal.image && (
                               <OptimizedImage 
@@ -834,11 +831,7 @@ const ProjectLayout = ({
                   )}
                   {/* MOBILE SECTION TOP BORDER: Horizontal border for mobile view */}
                   {isTouchDevice && (
-                    <motion.div
-                      initial={{ scaleX: 0, transformOrigin: 'left' }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true, amount: 0.2 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
+                    <div
                       style={{
                         position: 'absolute',
                         top: 0,
@@ -888,10 +881,7 @@ const ProjectLayout = ({
                   )}
                   <motion.div 
                     className="section-header"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                    {...getAnimationProps(0.4)}
                   >
                     {/* VERTICAL LINE 8+: Role & Process sections MEGA-EXTENDED vertical borders - REMOVED */}
                     
@@ -900,10 +890,7 @@ const ProjectLayout = ({
                   </motion.div>
                   <motion.div 
                     className="section-content"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                    {...getAnimationProps(0.5)}
                   >
                     <p className="role-description">{role.description}</p>
                     {role.tasks && role.tasks.length > 0 && (
@@ -911,10 +898,7 @@ const ProjectLayout = ({
                         {role.tasks.map((task, taskIndex) => (
                           <motion.li 
                             key={taskIndex}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 + (taskIndex * 0.1) }}
+                            {...getAnimationProps(0.6 + (taskIndex * 0.1))}
                           >
                             {task.description}
                           </motion.li>
@@ -934,10 +918,7 @@ const ProjectLayout = ({
                           maxWidth: "100%",
                           overflow: "visible"
                         }}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                        {...getScaleAnimationProps(0.7)}
                       >
                         {role.images.map((image, imgIndex) => {
                           // Make featured.png much smaller, but larger on mobile
@@ -980,10 +961,7 @@ const ProjectLayout = ({
                           justifyContent: "center",
                           alignItems: "center"
                         }}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                        {...getScaleAnimationProps(0.7)}
                       >
                         <OptimizedImage 
                           src={role.image} 
@@ -1011,10 +989,7 @@ const ProjectLayout = ({
                           justifyContent: "center",
                           alignItems: "center"
                         }}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+                        {...getScaleAnimationProps(0.7)}
                       >
                         <OptimizedImage 
                           src={role.bottomImage} 
@@ -1053,11 +1028,7 @@ const ProjectLayout = ({
                   )}
                   {/* Mobile bottom border for last section */}
                   {isTouchDevice && index === roleProcess.length - 1 && (
-                    <motion.div
-                      initial={{ scaleX: 0, transformOrigin: 'left' }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true, amount: 0.2 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
+                    <div
                       style={{
                         position: 'absolute',
                         bottom: 0,
