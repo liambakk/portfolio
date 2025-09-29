@@ -1144,6 +1144,18 @@ body {
   color: var(--foreground);
 }
 
+/* Reduce spacing for empty descriptions on mobile */
+@media screen and (max-width: 768px) {
+  .role-description:empty {
+    margin-bottom: 0;
+  }
+  
+  /* Also reduce spacing when description exists but we want tighter mobile layout */
+  .role-description {
+    margin-bottom: 8px;
+  }
+}
+
 .process-tasks {
   list-style: none;
   padding: 0;

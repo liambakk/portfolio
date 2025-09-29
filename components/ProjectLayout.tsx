@@ -454,7 +454,7 @@ const ProjectLayout = ({
                       height: 'auto',
                       maxWidth: '780px'
                     }}
-                    useOptimized={false} // Disable optimization for now as these are in previews folder
+                    useOptimized={true} // Enable optimization for mobile performance
                   />
                 </motion.div>
               )}
@@ -763,7 +763,7 @@ const ProjectLayout = ({
                                 height={100}
                                 quality={85}
                                 sizes="(max-width: 768px) 30vw, 150px"
-                                useOptimized={false}
+                                useOptimized={true}
                                 style={{
                                   borderRadius: "8px",
                                   maxWidth: "150px",
@@ -788,7 +788,7 @@ const ProjectLayout = ({
                                   height={200}
                                   quality={85}
                                   sizes={imageSizes}
-                                  useOptimized={false}
+                                  useOptimized={true}
                                   style={{
                                     borderRadius: "8px",
                                     maxWidth: imageMaxWidth,
@@ -939,7 +939,7 @@ const ProjectLayout = ({
                               quality={85}
                               sizes={imageSizes}
                               priority={index === 0}
-                              useOptimized={false}
+                              useOptimized={true}
                               style={{
                                 borderRadius: "8px",
                                 maxWidth: imageMaxWidth,
@@ -998,7 +998,7 @@ const ProjectLayout = ({
                           height={isTouchDevice ? 300 : 200}
                           quality={85}
                           sizes={isTouchDevice ? "(max-width: 768px) 75vw, 380px" : "(max-width: 768px) 40vw, 180px"}
-                          useOptimized={false}
+                          useOptimized={true}
                           style={{
                             height: 'auto',
                             maxWidth: isTouchDevice ? '380px' : '180px'

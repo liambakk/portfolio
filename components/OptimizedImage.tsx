@@ -50,7 +50,10 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       return originalSrc;
     }
 
-    // Return optimized path
+    // Return optimized path based on original path
+    if (originalSrc.includes('/previews/')) {
+      return `/previews-optimized/${nameWithoutExt}-${size}.${format}`;
+    }
     return `/project-images-optimized/${nameWithoutExt}-${size}.${format}`;
   };
 
