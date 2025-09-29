@@ -25,7 +25,7 @@ export default function NeuraProject() {
       />
     ),
     externalLink: "https://www.neura.fyi",
-    previewImage: "/previews-optimized/neura1-md.png",
+    previewImage: "/previews/neura1.png",
     overview: {
       description: "An intelligent browser extension that enhances web browsing with AI-powered features. Neura provides smart summarization, content extraction, and automated workflows to improve productivity."
     },

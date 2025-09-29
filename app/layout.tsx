@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Liam Bakker",
   description: "Product generalist with expertise in user experience",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.svg",
   },
   viewport: {
     width: "device-width",

@@ -7,7 +7,7 @@ import { ProjectData } from "@/types/project";
 export default function EssaiProject() {
   const projectData: ProjectData = {
     title: "Heuristic",
-    previewImage: "/previews-optimized/heuristic1-md.png",
+    previewImage: "/previews/heuristic1.png",
     overview: {
       description: "An AI-powered deal flow automation platform addressing a critical inefficiency in venture capital: ~62% of analysts spend less than 12 hours per week on high-value work. Heuristic transforms pitch decks, documents, and investment theses into structured insights in minutes, enabling VCs to reclaim 400+ hours per analyst annually while uncovering overlooked opportunities through thesis-aligned AI analysis."
     },
