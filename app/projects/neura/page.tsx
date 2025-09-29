@@ -1,12 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 import Image from "next/image";
 
 export default function NeuraProject() {
+  useEffect(() => {
+    document.title = 'Neura';
+  }, []);
+
   const projectData: ProjectData = {
     title: "Neura Browser Extension",
     titleIcon: (

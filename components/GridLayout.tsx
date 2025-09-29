@@ -47,6 +47,16 @@ const GridLayout = () => {
     }
   }, []); // Only run on mount
 
+  // Update document title based on active tab
+  useEffect(() => {
+    const titles = {
+      work: 'Work',
+      about: 'About',
+      contact: 'Contact'
+    };
+    document.title = titles[activeTab as keyof typeof titles] || 'Liam Bakker';
+  }, [activeTab]);
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1025);

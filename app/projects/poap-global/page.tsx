@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 
 export default function PoapGlobalProject() {
+  useEffect(() => {
+    document.title = 'POAP Global';
+  }, []);
+
   const projectData: ProjectData = {
     title: "POAP Global",
     previewImage: "/previews/poap1.png",

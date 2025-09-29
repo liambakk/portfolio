@@ -59,6 +59,9 @@ export default function BabkaProject() {
   ];
 
   useEffect(() => {
+    // Set document title
+    document.title = 'Babka';
+
     // Scroll detection for sticky social buttons
     let scrollTimeout: NodeJS.Timeout;
     const handleScroll = () => {

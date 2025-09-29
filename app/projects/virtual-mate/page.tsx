@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import ProjectPageUnified from "@/components/ProjectPageUnified";
 import { ProjectData } from "@/types/project";
 
 export default function VirtualMateProject() {
+  useEffect(() => {
+    document.title = 'Virtual Mate';
+  }, []);
   const projectData: ProjectData = {
     title: "Virtual Mate",
     previewImage: undefined, // No preview image provided
