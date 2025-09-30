@@ -756,19 +756,19 @@ const ProjectLayout = ({
                             {...getScaleAnimationProps(0.7 + (index * 0.1))}
                           >
                             {goal.image && (
-                              <OptimizedImage 
-                                src={goal.image} 
+                              <OptimizedImage
+                                src={goal.image}
                                 alt={`Goal ${index + 1} illustration`}
                                 width={150}
-                                height={100}
+                                height={200}
                                 quality={85}
                                 sizes="(max-width: 768px) 30vw, 150px"
                                 useOptimized={true}
                                 style={{
                                   borderRadius: "8px",
                                   maxWidth: "150px",
-                                  height: "auto",
-                                  objectFit: "contain"
+                                  height: "200px",
+                                  objectFit: "cover"
                                 }}
                               />
                             )}
@@ -778,11 +778,11 @@ const ProjectLayout = ({
                               const imageWidth = isRecordImage ? 450 : 150;
                               const imageMaxWidth = isRecordImage ? "450px" : "150px";
                               const imageSizes = isRecordImage ? "(max-width: 768px) 80vw, 450px" : "(max-width: 768px) 30vw, 150px";
-                              
+
                               return (
-                                <OptimizedImage 
+                                <OptimizedImage
                                   key={imgIndex}
-                                  src={img} 
+                                  src={img}
                                   alt={`Goal ${index + 1} illustration ${imgIndex + 1}`}
                                   width={imageWidth}
                                   height={200}
@@ -792,7 +792,8 @@ const ProjectLayout = ({
                                   style={{
                                     borderRadius: "8px",
                                     maxWidth: imageMaxWidth,
-                                    height: "auto"
+                                    height: "200px",
+                                    objectFit: "cover"
                                   }}
                                 />
                               );

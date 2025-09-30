@@ -165,7 +165,7 @@ export default function NeuraProject() {
       },
       {
         title: "Live Demo",
-        description: "Experience Neura in action as it intelligently extracts and processes information from web pages, providing instant insights and summaries.",
+        description: "Experience Neura in action as it extracts and processes information from web pages, providing instant insights and summaries.",
         tasks: [],
         customContent: (
           <div style={{
