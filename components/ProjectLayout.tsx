@@ -760,24 +760,25 @@ const ProjectLayout = ({
                                 src={goal.image}
                                 alt={`Goal ${index + 1} illustration`}
                                 width={150}
-                                height={200}
+                                height={100}
                                 quality={85}
                                 sizes="(max-width: 768px) 30vw, 150px"
                                 useOptimized={true}
                                 style={{
                                   borderRadius: "8px",
                                   maxWidth: "150px",
-                                  height: "200px",
-                                  objectFit: "cover"
+                                  height: "auto",
+                                  objectFit: "contain"
                                 }}
                               />
                             )}
                             {goal.images && goal.images.map((img, imgIndex) => {
                               // Make record.png wider to match post.png height
                               const isRecordImage = img.includes('record.png');
-                              const imageWidth = isRecordImage ? 450 : 150;
-                              const imageMaxWidth = isRecordImage ? "450px" : "150px";
-                              const imageSizes = isRecordImage ? "(max-width: 768px) 80vw, 450px" : "(max-width: 768px) 30vw, 150px";
+                              const isPostImage = img.includes('post.png');
+                              const imageWidth = isRecordImage ? 450 : isPostImage ? 350 : 150;
+                              const imageMaxWidth = isRecordImage ? "450px" : isPostImage ? "350px" : "150px";
+                              const imageSizes = isRecordImage ? "(max-width: 768px) 80vw, 450px" : isPostImage ? "(max-width: 768px) 70vw, 350px" : "(max-width: 768px) 30vw, 150px";
 
                               return (
                                 <OptimizedImage
@@ -792,8 +793,7 @@ const ProjectLayout = ({
                                   style={{
                                     borderRadius: "8px",
                                     maxWidth: imageMaxWidth,
-                                    height: "200px",
-                                    objectFit: "cover"
+                                    height: "auto"
                                   }}
                                 />
                               );
