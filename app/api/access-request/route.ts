@@ -36,9 +36,13 @@ function checkRateLimit(identifier: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  console.log("[Access Request] Received new request");
+  
   try {
     const body = await request.json();
     const { name, email, reason } = body;
+    
+    console.log("[Access Request] Request data:", { name, email, reason: reason.substring(0, 50) + "..." });
 
     // Validate required fields
     if (!name || !email || !reason) {
@@ -84,9 +88,9 @@ export async function POST(request: NextRequest) {
     const resendApiKey = process.env.RESEND_API_KEY;
 
     if (!resendApiKey) {
-      console.error("RESEND_API_KEY is not configured");
+      console.error("[Access Request] ERROR: RESEND_API_KEY is not configured");
       // Fallback to logging the request if email service is not configured
-      console.log("Access Request:", { name, email, reason, timestamp: new Date().toISOString() });
+      console.log("[Access Request] Fallback - logging request:", { name, email, reason, timestamp: new Date().toISOString() });
 
       // You can still return success to the user
       return NextResponse.json(
@@ -94,6 +98,8 @@ export async function POST(request: NextRequest) {
         { status: 200 }
       );
     }
+    
+    console.log("[Access Request] API key found, sending email...");
 
     // Send email using Resend
     const response = await fetch("https://api.resend.com/emails", {
@@ -110,6 +116,8 @@ export async function POST(request: NextRequest) {
         reply_to: email,
       }),
     });
+    
+    console.log("[Access Request] Resend API response status:", response.status);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -137,8 +145,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const responseData = await response.json();
+    console.log("[Access Request] Email sent successfully! ID:", responseData.id);
+    
     return NextResponse.json(
-      { message: "Request sent successfully" },
+      { message: "Request sent successfully", emailId: responseData.id },
       { status: 200 }
     );
   } catch (error) {
