@@ -96,8 +96,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email using Resend
-    // Note: For production, replace 'onboarding@resend.dev' with your verified domain email
-    // Example: 'Portfolio <no-reply@yourdomain.com>'
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -105,7 +103,7 @@ export async function POST(request: NextRequest) {
         Authorization: `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "Portfolio <onboarding@resend.dev>", // Using Resend's test domain for development
+        from: "Portfolio <contact@noreply.bakk3r.com>", // Using verified domain
         to: "liam@bakk3r.com",
         subject: emailSubject,
         html: emailBody,

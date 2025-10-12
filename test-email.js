@@ -55,7 +55,7 @@ async function testResendDirectly() {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: 'Portfolio <onboarding@resend.dev>',
+        from: 'Portfolio <contact@noreply.bakk3r.com>',
         to: 'liam@bakk3r.com',
         subject: 'Test Email from Portfolio',
         html: '<p>This is a test email to verify Resend configuration.</p>',
