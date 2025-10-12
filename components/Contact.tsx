@@ -14,7 +14,7 @@ const Contact: React.FC<ContactProps> = ({ initialHasLoaded = false }) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1025);
+      setIsMobile(window.innerWidth <= 1024);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);

@@ -10,6 +10,7 @@ import { useNavigation } from "./ClientWrapper";
 import About from "./About";
 import Contact from "./Contact";
 import SocialButtons from "./SocialButtons";
+import AccessRequestModal from "./AccessRequestModal";
 
 const GridLayout = () => {
   const [activeTab, setActiveTab] = useState("work");
@@ -23,6 +24,7 @@ const GridLayout = () => {
   const [hasInitialLoaded, setHasInitialLoaded] = useState(false);
   const [animationKey, setAnimationKey] = useState(Date.now());
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [showAccessModal, setShowAccessModal] = useState(false);
   const casesListRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -59,7 +61,7 @@ const GridLayout = () => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1025);
+      setIsMobile(window.innerWidth <= 1024);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -700,7 +702,7 @@ const GridLayout = () => {
                     setPreviewImage(null);
                   }}
                   onClick={() => {
-                    window.open('https://drive.google.com/file/d/1_tFoTjw2u89Sysd-3XeBE_Mhke795qe0/view?usp=sharing', '_blank');
+                    setShowAccessModal(true);
                   }}
                   style={{
                     padding: '24px 20px',
@@ -834,6 +836,12 @@ const GridLayout = () => {
 
       {/* Mobile Footer - only visible on mobile */}
       <MobileFooter />
+
+      {/* Access Request Modal */}
+      <AccessRequestModal
+        isOpen={showAccessModal}
+        onClose={() => setShowAccessModal(false)}
+      />
     </div>
   );
 };
