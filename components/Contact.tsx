@@ -62,7 +62,7 @@ const Contact: React.FC<ContactProps> = ({ initialHasLoaded = false }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
           >
-            Based in London, Availible Globally
+            Based in London, Available Globally
           </motion.p>
         </div>
       </div>
