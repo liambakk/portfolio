@@ -248,7 +248,7 @@ const GridLayout = () => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
           style={{ position: 'relative' }}
         >
-          © 2025
+          © 2026
           {/* COPYRIGHT LEFT BORDER: Vertical border extending down from copyright text
               - Positioned at left edge of copyright text (left: 0)
               - Extends from 24px below text down to header bottom
@@ -741,8 +741,11 @@ const GridLayout = () => {
                     style={{
                       position: 'absolute',
                       bottom: 0,
-                      left: '0', // Start from the left case border position
-                      width: 'calc(100vw - 777.5px)', // Extend to vertical border at right: 30px
+                      left: '0',
+                      // cases-inner's left edge sits at (50vw - 20) due to cases-list padding-left calc(50% + 20) + cases-inner marginLeft: 20.
+                      // Outer vertical border lives at viewport right: 30px (≈ left edge at 100vw - 31).
+                      // So bottom border must span: (100vw - 31) - (50vw - 20) = 50vw - 11.
+                      width: 'calc(50vw - 11px)',
                       height: '1px',
                       background: 'var(--border)',
                       zIndex: 0,

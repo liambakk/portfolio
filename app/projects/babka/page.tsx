@@ -123,7 +123,7 @@ export default function BabkaProject() {
       <div className="project-scrollable-content">
         {/* Top Bar */}
         <div className="project-top-bar">
-          <div className="copyright">© 2025</div>
+          <div className="copyright">© 2026</div>
           
           <div 
             className="nav-tabs-right"

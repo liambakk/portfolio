@@ -175,7 +175,7 @@ const ProjectPageUnified = ({
           <div className="unified-logo" onClick={handleBackToWork}>
             LB
           </div>
-          <div className="unified-copyright">© 2025</div>
+          <div className="unified-copyright">© 2026</div>
         </div>
         
         <nav className="unified-header-nav">

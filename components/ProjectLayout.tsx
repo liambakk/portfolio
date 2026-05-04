@@ -174,7 +174,7 @@ const ProjectLayout = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
           >
-            © 2025
+            © 2026
             {/* VERTICAL LINE 1: Copyright section left edge marker
                 Creates a subtle vertical accent line extending down from the copyright text,
                 positioned at the left edge (left: 0) and spanning from 24px below the text
