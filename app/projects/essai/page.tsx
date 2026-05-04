@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 
 export default function EssaiProject() {
-  useEffect(() => {
-    document.title = 'Heuristic';
-  }, []);
-
   const projectData: ProjectData = {
     title: "Heuristic",
     previewImage: "/previews/heuristic1.png",

@@ -43,3 +43,12 @@ next-env.d.ts
 # large video files
 public/mp4/*.mp4
 *.mp4
+
+# local email/deliverability test scripts (live API calls — keep local)
+/test-email.js
+/test-email-advanced.js
+/test-deliverability.js
+
+# enforce pnpm — drop npm/yarn lockfiles
+/package-lock.json
+/yarn.lock

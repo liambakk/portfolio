@@ -5,6 +5,15 @@ const requestMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
 const MAX_REQUESTS_PER_WINDOW = 5;
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function checkRateLimit(identifier: string): boolean {
   const now = Date.now();
   const requests = requestMap.get(identifier) || [];
@@ -41,8 +50,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, reason } = body;
-    
-    console.log("[Access Request] Request data:", { name, email, reason: reason.substring(0, 50) + "..." });
 
     // Validate required fields
     if (!name || !email || !reason) {
@@ -51,6 +58,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    console.log("[Access Request] Request data:", { name, email, reason: reason.substring(0, 50) + "..." });
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,14 +78,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create email content
-    const emailSubject = `Portfolio Access Request from ${name}`;
+    // Create email content (escape user input to prevent HTML injection)
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeReason = escapeHtml(reason).replace(/\n/g, "<br>");
+    const emailSubject = `Portfolio Access Request from ${safeName}`;
     const emailBody = `
       <h2>New Portfolio Access Request</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Name:</strong> ${safeName}</p>
+      <p><strong>Email:</strong> ${safeEmail}</p>
       <p><strong>Reason:</strong></p>
-      <p>${reason}</p>
+      <p>${safeReason}</p>
       <hr>
       <p><small>Sent from portfolio contact form at ${new Date().toLocaleString()}</small></p>
     `;
@@ -147,9 +159,9 @@ export async function POST(request: NextRequest) {
 
     const responseData = await response.json();
     console.log("[Access Request] Email sent successfully! ID:", responseData.id);
-    
+
     return NextResponse.json(
-      { message: "Request sent successfully", emailId: responseData.id },
+      { message: "Request sent successfully" },
       { status: 200 }
     );
   } catch (error) {

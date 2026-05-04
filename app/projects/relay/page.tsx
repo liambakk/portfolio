@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import ProjectLayout from "@/components/ProjectLayout";
 import { ProjectData } from "@/types/project";
 
 export default function RelayProject() {
-  useEffect(() => {
-    document.title = 'Relay';
-  }, []);
-
   const projectData: ProjectData = {
     title: "Relay",
     previewImage: "/previews/relay1.png",
