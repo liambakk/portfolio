@@ -100,7 +100,9 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               style={{
                 position: 'absolute',
                 left: '0px',
-                right: '-600px',
+                // Extends to outer vertical border at viewport right: 30px.
+                // Same derivation as GridLayout work-bottom-border: (100vw - 31) - (50vw - 20) = 50vw - 11.
+                width: 'calc(50vw - 11px)',
                 bottom: 0,
                 height: '1px',
                 background: 'var(--border)',
@@ -115,7 +117,9 @@ const AboutBorders: React.FC<AboutBordersProps> = ({ hasInitialLoaded, isMobile 
               style={{
                 position: 'absolute',
                 left: '0px',
-                right: '-600px',
+                // Extends to outer vertical border at viewport right: 30px.
+                // Same derivation as GridLayout work-bottom-border: (100vw - 31) - (50vw - 20) = 50vw - 11.
+                width: 'calc(50vw - 11px)',
                 bottom: 0,
                 height: '1px',
                 background: 'var(--border)',

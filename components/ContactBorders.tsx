@@ -61,10 +61,11 @@ const ContactBorders: React.FC<ContactBordersProps> = ({ hasInitialLoaded, isMob
                   background: 'var(--border)'
                 }}
               />
-              {/* Bottom border - connects left and right */}
+              {/* Bottom border - extends from content-box left to outer vertical border at viewport right: 30px.
+                  See GridLayout work-bottom-border for the same calc derivation: (100vw - 31) - (50vw - 20) = 50vw - 11. */}
               <motion.div
                 initial={{ width: '0%' }}
-                animate={{ width: 'calc(100vw - 777.5px)' }}
+                animate={{ width: 'calc(50vw - 11px)' }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
                 style={{
                   position: 'absolute',
