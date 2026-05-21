@@ -24,17 +24,9 @@ const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
     if (isLoading) {
       setShowOverlay(true);
       setTextOpacity(1);
-      // Start fading text after fill animation completes (200ms delay + 800ms animation)
-      const fadeTimeout = setTimeout(() => {
-        setTextOpacity(0);
-      }, 1000);
-      return () => clearTimeout(fadeTimeout);
     } else {
-      // Wait a bit before removing to allow fade out
-      const timeout = setTimeout(() => {
-        setShowOverlay(false);
-      }, 300);
-      return () => clearTimeout(timeout);
+      // Drop the overlay immediately on isLoading=false; AnimatePresence handles the exit fade.
+      setShowOverlay(false);
     }
   }, [isLoading]);
 

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import LoadingTransition from "./LoadingTransition";
 
 interface NavigationContextType {
@@ -23,35 +24,55 @@ interface ClientWrapperProps {
   children: React.ReactNode;
 }
 
+const FILL_ANIMATION_MS = 1000; // 200ms delay + 800ms clip-path fill in LoadingTransition
+const NAV_FALLBACK_MS = 2000;   // safety timeout if pathname never changes
+
 export default function ClientWrapper({ children }: ClientWrapperProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isReturningFromProject, setIsReturningFromProject] = useState(false);
+  const pathname = usePathname();
+  const prevPathnameRef = useRef(pathname);
+  const pendingNavRef = useRef(false);
 
-  // Reset the returning state after animations have had a chance to trigger
   useEffect(() => {
     if (isReturningFromProject) {
       const timer = setTimeout(() => {
         setIsReturningFromProject(false);
-      }, 500); // Increased from 100ms to give GridLayout time to mount and read the state
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [isReturningFromProject]);
 
+  // Dismiss overlay only after Next.js commits the new route — prevents the
+  // home from peeking through if the exit fade started while still on '/'.
+  useEffect(() => {
+    if (pendingNavRef.current && pathname !== prevPathnameRef.current) {
+      pendingNavRef.current = false;
+      setIsLoading(false);
+    }
+    prevPathnameRef.current = pathname;
+  }, [pathname]);
+
   const triggerTransition = useCallback((callback: () => void) => {
     setIsLoading(true);
-    
-    // Wait for the animation to complete, then navigate
+    pendingNavRef.current = true;
+
+    // Fire navigation the instant the name-fill finishes; pathname-watcher above
+    // takes the overlay down once the new route mounts.
     setTimeout(() => {
       callback();
-      // Reset loading state after navigation
+      // Safety net: if pathname never changes (e.g. navigation cancelled), still clear loading.
       setTimeout(() => {
-        setIsLoading(false);
-      }, 100);
-    }, 1800); // Total animation time: 200ms delay + 800ms fill + 400ms fade text + 300ms fade overlay + 100ms buffer
+        if (pendingNavRef.current) {
+          pendingNavRef.current = false;
+          setIsLoading(false);
+        }
+      }, NAV_FALLBACK_MS);
+    }, FILL_ANIMATION_MS);
   }, []);
 
   return (
-    <NavigationContext.Provider value={{ 
+    <NavigationContext.Provider value={{
       triggerTransition,
       isReturningFromProject,
       setIsReturningFromProject
