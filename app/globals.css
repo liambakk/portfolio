@@ -1051,6 +1051,43 @@ body {
   align-items: center;
 }
 
+/* Scholara: text on the left, demo media stacked on the right */
+.section-content:has(.scholara-split) {
+  max-width: none !important;
+}
+
+.scholara-split {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.scholara-split .scholara-text {
+  flex: 0 0 42%;
+  max-width: 460px;
+}
+
+.scholara-split .scholara-media {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media screen and (max-width: 1024px) {
+  .scholara-split {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .scholara-split .scholara-text {
+    flex-basis: auto;
+    max-width: none;
+  }
+}
+
 /* Desktop styles for Relay images - move right on desktop */
 @media screen and (min-width: 1025px) {
   

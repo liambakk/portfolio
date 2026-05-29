@@ -35,6 +35,7 @@ const GridLayout = () => {
     { id: 2, title: "Neura Browser Extension", preview: "/previews-optimized/neura-md.png", slug: "neura", width: 1920, height: 1080 },
     { id: 3, title: "Poap Global", preview: "/previews-optimized/poap-md.png", slug: "poap-global", width: 1920, height: 1080 },
     { id: 4, title: "Heuristic", preview: "/previews-optimized/heuristic-md.png", slug: "essai", width: 1920, height: 1080 },
+    { id: 5, title: "Scholara", preview: "/previews-optimized/scholara-md.png", slug: "scholara", width: 1920, height: 1080 },
   ], []);
 
   // Capture returning state on mount
@@ -154,7 +155,7 @@ const GridLayout = () => {
             top: '152px',
             right: '30px',
             width: '1px',
-            height: '403px',
+            height: '484px',
             background: 'transparent',
             zIndex: 10,
             pointerEvents: 'none'
@@ -575,6 +576,7 @@ const GridLayout = () => {
                        hoveredIndex === 2 ? 160 :
                        hoveredIndex === 3 ? 241 :
                        hoveredIndex === 4 ? 322 :
+                       hoveredIndex === 5 ? 403 :
                        hoveredIndex * 74 + 5
                   }}
                   transition={{
