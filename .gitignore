@@ -43,6 +43,8 @@ next-env.d.ts
 # large video files
 public/mp4/*.mp4
 *.mp4
+# ...but keep the Scholara demo clips (needed for deployment)
+!public/scholara/*.mp4
 
 # local email/deliverability test scripts (live API calls — keep local)
 /test-email.js
