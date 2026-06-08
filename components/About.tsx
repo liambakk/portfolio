@@ -19,10 +19,10 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
       setIsMobile(window.innerWidth <= 1024);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
@@ -36,34 +36,45 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
       >
         About
       </motion.h1>
-      
+
       <div className="about-content">
         <div
           className="about-content-wrapper"
-          style={!isMobile ? {
-            position: 'relative',
-            width: '100%'
-          } : {}}
+          style={
+            !isMobile
+              ? {
+                  position: "relative",
+                  width: "100%",
+                }
+              : {}
+          }
         >
           <div
             className="about-content-box"
-            style={!isMobile ? {
-              marginLeft: '20px',
-              marginRight: '-1px',
-              position: 'relative'
-            } : {}}
+            style={
+              !isMobile
+                ? {
+                    marginLeft: "20px",
+                    marginRight: "-1px",
+                    position: "relative",
+                  }
+                : {}
+            }
           >
             <AboutBorders hasInitialLoaded={false} isMobile={isMobile} />
-            
+
             {/* Social Buttons attached to right border */}
             <SocialButtons section="about" isMobile={isMobile} />
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
             >
-              Designer and developer who finds satisfaction in solving everyday problems through thoughtful digital experiences. I&apos;m driven by the belief that technology should feel intuitive and purposeful, not overwhelming or complicated.
+              I find satisfaction in solving everyday problems through
+              thoughtful digital experiences. I&apos;m driven by the belief that
+              technology should feel intuitive and purposeful, not overwhelming
+              or complicated.
             </motion.p>
             <motion.p
               className="mt-4"
@@ -71,40 +82,48 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
             >
-              I&apos;ve learned that building great products isn&apos;t just about the tech—it&apos;s about understanding people, iterating quickly, and staying resilient through the inevitable challenges that come with bringing new ideas to life.
+              I&apos;ve learned that building great products isn&apos;t just
+              about the tech—it&apos;s about understanding people, iterating
+              quickly, and staying resilient through the inevitable challenges
+              that come with bringing new ideas to life.
             </motion.p>
           </div>
-          
+
           {/* Extended border container for profile image - only on about page */}
           {!isMobile && (
             <>
-              <AboutProfileBorders hasInitialLoaded={false} isMobile={isMobile} />
-              
+              <AboutProfileBorders
+                hasInitialLoaded={false}
+                isMobile={isMobile}
+              />
+
               {/* Profile image container */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 1.3 }}
                 style={{
-                  position: 'absolute',
-                  left: 'calc(-50vw + 1px)',
-                  top: '-279px',
-                  right: '19px',
-                  height: 'calc(100% + 579px)',
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  justifyContent: 'flex-start',
-                  overflow: 'hidden',
-                  padding: '40px'
+                  position: "absolute",
+                  left: "calc(-50vw + 1px)",
+                  top: "-279px",
+                  right: "19px",
+                  height: "calc(100% + 579px)",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "flex-start",
+                  overflow: "hidden",
+                  padding: "40px",
                 }}
               >
-                <div style={{ 
-                  position: 'relative', 
-                  width: '280px', 
-                  height: '380px',
-                  marginBottom: '80px',
-                  marginLeft: '300px'
-                }}>
+                <div
+                  style={{
+                    position: "relative",
+                    width: "280px",
+                    height: "380px",
+                    marginBottom: "80px",
+                    marginLeft: "300px",
+                  }}
+                >
                   <Image
                     src="/remaining-images-optimized/liamlook-md.jpg"
                     alt="Liam Bakker"
@@ -112,8 +131,8 @@ const About: React.FC<AboutProps> = ({ initialHasLoaded = false }) => {
                     sizes="280px"
                     quality={90}
                     style={{
-                      objectFit: 'cover',
-                      objectPosition: 'center'
+                      objectFit: "cover",
+                      objectPosition: "center",
                     }}
                   />
                 </div>
